@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "florafauna-ai/*": ["./dist/src/*"],
-      "florafauna-ai": ["./dist/src/index.ts"]
+      "flora/*": ["./dist/src/*"],
+      "flora": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

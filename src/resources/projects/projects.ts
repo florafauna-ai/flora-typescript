@@ -2,8 +2,15 @@
 
 import { APIResource } from '../../core/resource';
 import * as AssetsAPI from './assets';
-import { AssetAttachParams, AssetAttachResponse, Assets } from './assets';
+import { AssetAttachAssetParams, AssetAttachAssetResponse, Assets } from './assets';
 import { APIPromise } from '../../core/api-promise';
+import {
+  CanvasNodesCursorPage,
+  type CanvasNodesCursorPageParams,
+  PagePromise,
+  ProjectsCursorPage,
+  type ProjectsCursorPageParams,
+} from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -48,13 +55,22 @@ export class Projects extends APIResource {
    *
    * @example
    * ```ts
-   * const projects = await client.projects.list({
-   *   workspace_id: 'ws_abc123',
-   * });
+   * // Automatically fetches more pages as needed.
+   * for await (const projectListResponse of client.projects.list(
+   *   { workspace_id: 'ws_abc123' },
+   * )) {
+   *   // ...
+   * }
    * ```
    */
-  list(query: ProjectListParams, options?: RequestOptions): APIPromise<ProjectListResponse> {
-    return this._client.get('/projects', { query, ...options });
+  list(
+    query: ProjectListParams,
+    options?: RequestOptions,
+  ): PagePromise<ProjectListResponsesProjectsCursorPage, ProjectListResponse> {
+    return this._client.getAPIList('/projects', ProjectsCursorPage<ProjectListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -64,19 +80,30 @@ export class Projects extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.projects.listNodes(
+   * // Automatically fetches more pages as needed.
+   * for await (const projectListNodesResponse of client.projects.listNodes(
    *   'prj_abc123',
-   * );
+   * )) {
+   *   // ...
+   * }
    * ```
    */
   listNodes(
     projectID: string,
     query: ProjectListNodesParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ProjectListNodesResponse> {
-    return this._client.get(path`/projects/${projectID}/nodes`, { query, ...options });
+  ): PagePromise<ProjectListNodesResponsesCanvasNodesCursorPage, ProjectListNodesResponse> {
+    return this._client.getAPIList(
+      path`/projects/${projectID}/nodes`,
+      CanvasNodesCursorPage<ProjectListNodesResponse>,
+      { query, ...options },
+    );
   }
 }
+
+export type ProjectListResponsesProjectsCursorPage = ProjectsCursorPage<ProjectListResponse>;
+
+export type ProjectListNodesResponsesCanvasNodesCursorPage = CanvasNodesCursorPage<ProjectListNodesResponse>;
 
 export interface ProjectCreateResponse {
   created_at: number;
@@ -131,110 +158,60 @@ export interface ProjectRetrieveResponse {
 }
 
 export interface ProjectListResponse {
-  meta: ProjectListResponse.Meta;
+  created_at: number;
 
-  projects: Array<ProjectListResponse.Project>;
-}
+  last_modified: number | null;
 
-export namespace ProjectListResponse {
-  export interface Meta {
-    /**
-     * Opaque cursor for fetching the next page
-     */
-    next_cursor: string | null;
-
-    /**
-     * Estimated total matching items
-     */
-    total_estimate?: number | null;
-  }
-
-  export interface Project {
-    created_at: number;
-
-    last_modified: number | null;
-
-    /**
-     * Project name
-     */
-    name: string;
-
-    /**
-     * Project origin
-     */
-    origin: string | null;
-
-    /**
-     * Project identifier
-     */
-    project_id: string;
-
-    /**
-     * Workspace identifier
-     */
-    workspace_id: string;
-  }
-}
-
-export interface ProjectListNodesResponse {
   /**
-   * Project canvas URL
+   * Project name
    */
-  canvas_url: string;
+  name: string;
 
-  meta: ProjectListNodesResponse.Meta;
-
-  nodes: Array<ProjectListNodesResponse.Node>;
+  /**
+   * Project origin
+   */
+  origin: string | null;
 
   /**
    * Project identifier
    */
   project_id: string;
+
+  /**
+   * Workspace identifier
+   */
+  workspace_id: string;
 }
 
-export namespace ProjectListNodesResponse {
-  export interface Meta {
-    /**
-     * Opaque cursor for fetching the next page
-     */
-    next_cursor: string | null;
+export interface ProjectListNodesResponse {
+  /**
+   * Canvas node identifier
+   */
+  node_id: string;
 
-    /**
-     * Estimated total matching items
-     */
-    total_estimate?: number | null;
-  }
+  /**
+   * Canvas node media type
+   */
+  type: 'image' | 'video' | 'audio' | 'text';
 
-  export interface Node {
-    /**
-     * Canvas node identifier
-     */
-    node_id: string;
+  /**
+   * Asset identifier
+   */
+  asset_id?: string | null;
 
-    /**
-     * Canvas node media type
-     */
-    type: 'image' | 'video' | 'audio' | 'text';
+  height?: number | null;
 
-    /**
-     * Asset identifier
-     */
-    asset_id?: string | null;
+  /**
+   * Canvas node label
+   */
+  label?: string | null;
 
-    height?: number | null;
+  /**
+   * Canvas node media URL
+   */
+  url?: string | null;
 
-    /**
-     * Canvas node label
-     */
-    label?: string | null;
-
-    /**
-     * Canvas node media URL
-     */
-    url?: string | null;
-
-    width?: number | null;
-  }
+  width?: number | null;
 }
 
 export interface ProjectCreateParams {
@@ -249,21 +226,11 @@ export interface ProjectCreateParams {
   workspace_id: string;
 }
 
-export interface ProjectListParams {
+export interface ProjectListParams extends ProjectsCursorPageParams {
   /**
    * Workspace identifier
    */
   workspace_id: string;
-
-  /**
-   * Opaque cursor for fetching the next page
-   */
-  cursor?: string;
-
-  /**
-   * Maximum number of results to return
-   */
-  limit?: number;
 
   /**
    * Search query
@@ -271,17 +238,7 @@ export interface ProjectListParams {
   query?: string;
 }
 
-export interface ProjectListNodesParams {
-  /**
-   * Opaque cursor for fetching the next page
-   */
-  cursor?: string;
-
-  /**
-   * Maximum number of results to return
-   */
-  limit?: number;
-}
+export interface ProjectListNodesParams extends CanvasNodesCursorPageParams {}
 
 Projects.Assets = Assets;
 
@@ -291,6 +248,8 @@ export declare namespace Projects {
     type ProjectRetrieveResponse as ProjectRetrieveResponse,
     type ProjectListResponse as ProjectListResponse,
     type ProjectListNodesResponse as ProjectListNodesResponse,
+    type ProjectListResponsesProjectsCursorPage as ProjectListResponsesProjectsCursorPage,
+    type ProjectListNodesResponsesCanvasNodesCursorPage as ProjectListNodesResponsesCanvasNodesCursorPage,
     type ProjectCreateParams as ProjectCreateParams,
     type ProjectListParams as ProjectListParams,
     type ProjectListNodesParams as ProjectListNodesParams,
@@ -298,7 +257,7 @@ export declare namespace Projects {
 
   export {
     Assets as Assets,
-    type AssetAttachResponse as AssetAttachResponse,
-    type AssetAttachParams as AssetAttachParams,
+    type AssetAttachAssetResponse as AssetAttachAssetResponse,
+    type AssetAttachAssetParams as AssetAttachAssetParams,
   };
 }

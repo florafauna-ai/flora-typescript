@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'florafauna-ai/internal/uploads';
-import { toFile } from 'florafauna-ai/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'flora/internal/uploads';
+import { toFile } from 'flora/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

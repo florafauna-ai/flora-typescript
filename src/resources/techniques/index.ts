@@ -2,14 +2,15 @@
 
 export {
   Runs,
+  type RunCreateResponse,
   type RunRetrieveResponse,
-  type RunStartResponse,
+  type RunCreateParams,
   type RunRetrieveParams,
-  type RunStartParams,
 } from './runs';
 export {
   Techniques,
   type TechniqueRetrieveResponse,
   type TechniqueListResponse,
   type TechniqueListParams,
+  type TechniqueListResponsesTechniquesCursorPage,
 } from './techniques';
