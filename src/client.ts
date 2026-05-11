@@ -14,17 +14,30 @@ import * as Opts from './internal/request-options';
 import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import {
+  AbstractPage,
+  type AssetsCursorPageParams,
+  AssetsCursorPageResponse,
+  type CanvasNodesCursorPageParams,
+  CanvasNodesCursorPageResponse,
+  type ProjectsCursorPageParams,
+  ProjectsCursorPageResponse,
+  type TechniquesCursorPageParams,
+  TechniquesCursorPageResponse,
+} from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
-  AssetCompleteUploadResponse,
+  AssetCompleteResponse,
   AssetCreateParams,
   AssetCreateResponse,
   AssetListParams,
   AssetListResponse,
+  AssetListResponsesAssetsCursorPage,
   AssetRetrieveResponse,
-  AssetRetryUploadResponse,
+  AssetRetryResponse,
   Assets,
 } from './resources/assets';
 import { Feedback, FeedbackRecordParams, FeedbackRecordResponse } from './resources/feedback';
@@ -42,14 +55,17 @@ import {
   ProjectCreateResponse,
   ProjectListNodesParams,
   ProjectListNodesResponse,
+  ProjectListNodesResponsesCanvasNodesCursorPage,
   ProjectListParams,
   ProjectListResponse,
+  ProjectListResponsesProjectsCursorPage,
   ProjectRetrieveResponse,
   Projects,
 } from './resources/projects/projects';
 import {
   TechniqueListParams,
   TechniqueListResponse,
+  TechniqueListResponsesTechniquesCursorPage,
   TechniqueRetrieveResponse,
   Techniques,
 } from './resources/techniques/techniques';
@@ -68,14 +84,14 @@ import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['FLORAFAUNA_AI_API_KEY'].
+   * Defaults to process.env['FLORA_API_KEY'].
    */
   apiKey?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['FLORAFAUNA_AI_BASE_URL'].
+   * Defaults to process.env['FLORA_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -129,7 +145,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['FLORAFAUNA_AI_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['FLORA_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -142,9 +158,9 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Florafauna AI API.
+ * API Client for interfacing with the Flora API.
  */
-export class FlorafaunaAI {
+export class Flora {
   apiKey: string | null;
 
   baseURL: string;
@@ -160,10 +176,10 @@ export class FlorafaunaAI {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Florafauna AI API.
+   * API Client for interfacing with the Flora API.
    *
-   * @param {string | null | undefined} [opts.apiKey=process.env['FLORAFAUNA_AI_API_KEY'] ?? null]
-   * @param {string} [opts.baseURL=process.env['FLORAFAUNA_AI_BASE_URL'] ?? https://api.example.com] - Override the default base URL for the API.
+   * @param {string | null | undefined} [opts.apiKey=process.env['FLORA_API_KEY'] ?? null]
+   * @param {string} [opts.baseURL=process.env['FLORA_BASE_URL'] ?? https://api.example.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -172,8 +188,8 @@ export class FlorafaunaAI {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('FLORAFAUNA_AI_BASE_URL'),
-    apiKey = readEnv('FLORAFAUNA_AI_API_KEY') ?? null,
+    baseURL = readEnv('FLORA_BASE_URL'),
+    apiKey = readEnv('FLORA_API_KEY') ?? null,
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {
@@ -183,21 +199,21 @@ export class FlorafaunaAI {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? FlorafaunaAI.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? Flora.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('FLORAFAUNA_AI_LOG'), "process.env['FLORAFAUNA_AI_LOG']", this) ??
+      parseLogLevel(readEnv('FLORA_LOG'), "process.env['FLORA_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
     this.#encoder = Opts.FallbackEncoder;
 
-    const customHeadersEnv = readEnv('FLORAFAUNA_AI_CUSTOM_HEADERS');
+    const customHeadersEnv = readEnv('FLORA_CUSTOM_HEADERS');
     if (customHeadersEnv) {
       const parsed: Record<string, string> = {};
       for (const line of customHeadersEnv.split('\n')) {
@@ -524,6 +540,30 @@ export class FlorafaunaAI {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: PromiseOrValue<RequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(
+      Page,
+      opts && 'then' in opts ?
+        opts.then((opts) => ({ method: 'get', path, ...opts }))
+      : { method: 'get', path, ...opts },
+    );
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: PromiseOrValue<FinalRequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as Flora, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -752,10 +792,10 @@ export class FlorafaunaAI {
     }
   }
 
-  static FlorafaunaAI = this;
+  static Flora = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static FlorafaunaAIError = Errors.FlorafaunaAIError;
+  static FloraError = Errors.FloraError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -771,25 +811,69 @@ export class FlorafaunaAI {
 
   static toFile = Uploads.toFile;
 
+  techniques: API.Techniques = new API.Techniques(this);
+  assets: API.Assets = new API.Assets(this);
   workspaces: API.Workspaces = new API.Workspaces(this);
   projects: API.Projects = new API.Projects(this);
   models: API.Models = new API.Models(this);
-  techniques: API.Techniques = new API.Techniques(this);
-  assets: API.Assets = new API.Assets(this);
   runs: API.Runs = new API.Runs(this);
   feedback: API.Feedback = new API.Feedback(this);
 }
 
-FlorafaunaAI.Workspaces = Workspaces;
-FlorafaunaAI.Projects = Projects;
-FlorafaunaAI.Models = Models;
-FlorafaunaAI.Techniques = Techniques;
-FlorafaunaAI.Assets = Assets;
-FlorafaunaAI.Runs = Runs;
-FlorafaunaAI.Feedback = Feedback;
+Flora.Techniques = Techniques;
+Flora.Assets = Assets;
+Flora.Workspaces = Workspaces;
+Flora.Projects = Projects;
+Flora.Models = Models;
+Flora.Runs = Runs;
+Flora.Feedback = Feedback;
 
-export declare namespace FlorafaunaAI {
+export declare namespace Flora {
   export type RequestOptions = Opts.RequestOptions;
+
+  export import ProjectsCursorPage = Pagination.ProjectsCursorPage;
+  export {
+    type ProjectsCursorPageParams as ProjectsCursorPageParams,
+    type ProjectsCursorPageResponse as ProjectsCursorPageResponse,
+  };
+
+  export import TechniquesCursorPage = Pagination.TechniquesCursorPage;
+  export {
+    type TechniquesCursorPageParams as TechniquesCursorPageParams,
+    type TechniquesCursorPageResponse as TechniquesCursorPageResponse,
+  };
+
+  export import AssetsCursorPage = Pagination.AssetsCursorPage;
+  export {
+    type AssetsCursorPageParams as AssetsCursorPageParams,
+    type AssetsCursorPageResponse as AssetsCursorPageResponse,
+  };
+
+  export import CanvasNodesCursorPage = Pagination.CanvasNodesCursorPage;
+  export {
+    type CanvasNodesCursorPageParams as CanvasNodesCursorPageParams,
+    type CanvasNodesCursorPageResponse as CanvasNodesCursorPageResponse,
+  };
+
+  export {
+    Techniques as Techniques,
+    type TechniqueRetrieveResponse as TechniqueRetrieveResponse,
+    type TechniqueListResponse as TechniqueListResponse,
+    type TechniqueListResponsesTechniquesCursorPage as TechniqueListResponsesTechniquesCursorPage,
+    type TechniqueListParams as TechniqueListParams,
+  };
+
+  export {
+    Assets as Assets,
+    type AssetCreateResponse as AssetCreateResponse,
+    type AssetRetrieveResponse as AssetRetrieveResponse,
+    type AssetListResponse as AssetListResponse,
+    type AssetCompleteResponse as AssetCompleteResponse,
+    type AssetRetryResponse as AssetRetryResponse,
+    type AssetListResponsesAssetsCursorPage as AssetListResponsesAssetsCursorPage,
+    type AssetCreateParams as AssetCreateParams,
+    type AssetListParams as AssetListParams,
+  };
 
   export { Workspaces as Workspaces, type WorkspaceListResponse as WorkspaceListResponse };
 
@@ -799,6 +883,8 @@ export declare namespace FlorafaunaAI {
     type ProjectRetrieveResponse as ProjectRetrieveResponse,
     type ProjectListResponse as ProjectListResponse,
     type ProjectListNodesResponse as ProjectListNodesResponse,
+    type ProjectListResponsesProjectsCursorPage as ProjectListResponsesProjectsCursorPage,
+    type ProjectListNodesResponsesCanvasNodesCursorPage as ProjectListNodesResponsesCanvasNodesCursorPage,
     type ProjectCreateParams as ProjectCreateParams,
     type ProjectListParams as ProjectListParams,
     type ProjectListNodesParams as ProjectListNodesParams,
@@ -808,24 +894,6 @@ export declare namespace FlorafaunaAI {
     Models as Models,
     type ModelListResponse as ModelListResponse,
     type ModelListParams as ModelListParams,
-  };
-
-  export {
-    Techniques as Techniques,
-    type TechniqueRetrieveResponse as TechniqueRetrieveResponse,
-    type TechniqueListResponse as TechniqueListResponse,
-    type TechniqueListParams as TechniqueListParams,
-  };
-
-  export {
-    Assets as Assets,
-    type AssetCreateResponse as AssetCreateResponse,
-    type AssetRetrieveResponse as AssetRetrieveResponse,
-    type AssetListResponse as AssetListResponse,
-    type AssetCompleteUploadResponse as AssetCompleteUploadResponse,
-    type AssetRetryUploadResponse as AssetRetryUploadResponse,
-    type AssetCreateParams as AssetCreateParams,
-    type AssetListParams as AssetListParams,
   };
 
   export {

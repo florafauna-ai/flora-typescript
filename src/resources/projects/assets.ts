@@ -13,23 +13,23 @@ export class Assets extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.projects.assets.attach(
+   * const response = await client.projects.assets.attachAsset(
    *   'asset_abc123',
    *   { projectId: 'prj_abc123' },
    * );
    * ```
    */
-  attach(
+  attachAsset(
     assetID: string,
-    params: AssetAttachParams,
+    params: AssetAttachAssetParams,
     options?: RequestOptions,
-  ): APIPromise<AssetAttachResponse> {
+  ): APIPromise<AssetAttachAssetResponse> {
     const { projectId } = params;
     return this._client.post(path`/projects/${projectId}/assets/${assetID}/attach`, options);
   }
 }
 
-export interface AssetAttachResponse {
+export interface AssetAttachAssetResponse {
   /**
    * Asset identifier
    */
@@ -51,7 +51,7 @@ export interface AssetAttachResponse {
   project_id: string;
 }
 
-export interface AssetAttachParams {
+export interface AssetAttachAssetParams {
   /**
    * Project identifier
    */
@@ -59,5 +59,8 @@ export interface AssetAttachParams {
 }
 
 export declare namespace Assets {
-  export { type AssetAttachResponse as AssetAttachResponse, type AssetAttachParams as AssetAttachParams };
+  export {
+    type AssetAttachAssetResponse as AssetAttachAssetResponse,
+    type AssetAttachAssetParams as AssetAttachAssetParams,
+  };
 }

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { type FlorafaunaAI } from '../client';
+import { type Flora } from '../client';
 
 import { type PromiseOrValue } from '../internal/types';
 import { APIResponseProps, defaultParseResponse } from '../internal/parse';
@@ -11,13 +11,13 @@ import { APIResponseProps, defaultParseResponse } from '../internal/parse';
  */
 export class APIPromise<T> extends Promise<T> {
   private parsedPromise: Promise<T> | undefined;
-  #client: FlorafaunaAI;
+  #client: Flora;
 
   constructor(
-    client: FlorafaunaAI,
+    client: Flora,
     private responsePromise: Promise<APIResponseProps>,
     private parseResponse: (
-      client: FlorafaunaAI,
+      client: Flora,
       props: APIResponseProps,
     ) => PromiseOrValue<T> = defaultParseResponse,
   ) {

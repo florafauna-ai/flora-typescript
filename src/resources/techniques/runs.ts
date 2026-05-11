@@ -7,6 +7,20 @@ import { path } from '../../internal/utils/path';
 
 export class Runs extends APIResource {
   /**
+   * Starts a run for a specific technique using the backward-compatible nested
+   * route. Mutating public API requests support an optional Idempotency-Key header
+   * for client retries; duplicate keys within two hours return
+   * idempotency_duplicate.
+   */
+  create(
+    techniqueID: string,
+    body: RunCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<RunCreateResponse> {
+    return this._client.post(path`/techniques/${techniqueID}/runs`, { body, ...options });
+  }
+
+  /**
    * Returns status, progress, outputs, and error details for a technique run when it
    * is accessible to the authenticated public API key.
    */
@@ -18,15 +32,57 @@ export class Runs extends APIResource {
     const { techniqueId } = params;
     return this._client.get(path`/techniques/${techniqueId}/runs/${runID}`, options);
   }
+}
+
+export interface RunCreateResponse {
+  createdAt: number;
+
+  progress: number;
 
   /**
-   * Starts a run for a specific technique using the backward-compatible nested
-   * route. Mutating public API requests support an optional Idempotency-Key header
-   * for client retries; duplicate keys within two hours return
-   * idempotency_duplicate.
+   * Run identifier
    */
-  start(techniqueID: string, body: RunStartParams, options?: RequestOptions): APIPromise<RunStartResponse> {
-    return this._client.post(path`/techniques/${techniqueID}/runs`, { body, ...options });
+  runId: string;
+
+  status: 'pending' | 'running' | 'completed' | 'failed';
+
+  chargedCost?: number;
+
+  completedAt?: number;
+
+  /**
+   * Machine-readable run error code
+   */
+  errorCode?: string;
+
+  /**
+   * Human-readable run error message
+   */
+  errorMessage?: string;
+
+  outputs?: Array<RunCreateResponse.Output>;
+
+  pollUrl?: string;
+
+  startedAt?: number;
+}
+
+export namespace RunCreateResponse {
+  export interface Output {
+    /**
+     * Run output identifier
+     */
+    outputId: string;
+
+    /**
+     * Run output media type
+     */
+    type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
+
+    /**
+     * Run output URL
+     */
+    url: string;
   }
 }
 
@@ -82,67 +138,8 @@ export namespace RunRetrieveResponse {
   }
 }
 
-export interface RunStartResponse {
-  createdAt: number;
-
-  progress: number;
-
-  /**
-   * Run identifier
-   */
-  runId: string;
-
-  status: 'pending' | 'running' | 'completed' | 'failed';
-
-  chargedCost?: number;
-
-  completedAt?: number;
-
-  /**
-   * Machine-readable run error code
-   */
-  errorCode?: string;
-
-  /**
-   * Human-readable run error message
-   */
-  errorMessage?: string;
-
-  outputs?: Array<RunStartResponse.Output>;
-
-  pollUrl?: string;
-
-  startedAt?: number;
-}
-
-export namespace RunStartResponse {
-  export interface Output {
-    /**
-     * Run output identifier
-     */
-    outputId: string;
-
-    /**
-     * Run output media type
-     */
-    type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
-
-    /**
-     * Run output URL
-     */
-    url: string;
-  }
-}
-
-export interface RunRetrieveParams {
-  /**
-   * Technique identifier or slug
-   */
-  techniqueId: string;
-}
-
-export interface RunStartParams {
-  inputs: Array<RunStartParams.Input>;
+export interface RunCreateParams {
+  inputs: Array<RunCreateParams.Input>;
 
   mode: 'async' | 'stream';
 
@@ -154,7 +151,7 @@ export interface RunStartParams {
   idempotency_key?: string;
 }
 
-export namespace RunStartParams {
+export namespace RunCreateParams {
   export interface Input {
     /**
      * Technique input identifier
@@ -173,11 +170,18 @@ export namespace RunStartParams {
   }
 }
 
+export interface RunRetrieveParams {
+  /**
+   * Technique identifier or slug
+   */
+  techniqueId: string;
+}
+
 export declare namespace Runs {
   export {
+    type RunCreateResponse as RunCreateResponse,
     type RunRetrieveResponse as RunRetrieveResponse,
-    type RunStartResponse as RunStartResponse,
+    type RunCreateParams as RunCreateParams,
     type RunRetrieveParams as RunRetrieveParams,
-    type RunStartParams as RunStartParams,
   };
 }

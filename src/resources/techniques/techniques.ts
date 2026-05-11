@@ -2,8 +2,9 @@
 
 import { APIResource } from '../../core/resource';
 import * as RunsAPI from './runs';
-import { RunRetrieveParams, RunRetrieveResponse, RunStartParams, RunStartResponse, Runs } from './runs';
+import { RunCreateParams, RunCreateResponse, RunRetrieveParams, RunRetrieveResponse, Runs } from './runs';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, TechniquesCursorPage, type TechniquesCursorPageParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -25,10 +26,15 @@ export class Techniques extends APIResource {
   list(
     query: TechniqueListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<TechniqueListResponse> {
-    return this._client.get('/techniques', { query, ...options });
+  ): PagePromise<TechniqueListResponsesTechniquesCursorPage, TechniqueListResponse> {
+    return this._client.getAPIList('/techniques', TechniquesCursorPage<TechniqueListResponse>, {
+      query,
+      ...options,
+    });
   }
 }
+
+export type TechniqueListResponsesTechniquesCursorPage = TechniquesCursorPage<TechniqueListResponse>;
 
 export interface TechniqueRetrieveResponse {
   inputs: Array<TechniqueRetrieveResponse.Input>;
@@ -120,125 +126,95 @@ export namespace TechniqueRetrieveResponse {
 }
 
 export interface TechniqueListResponse {
-  meta: TechniqueListResponse.Meta;
+  inputs: Array<TechniqueListResponse.Input>;
 
-  techniques: Array<TechniqueListResponse.Technique>;
+  /**
+   * Technique name
+   */
+  name: string;
+
+  outputs: Array<TechniqueListResponse.Output>;
+
+  run_cost: number;
+
+  /**
+   * Technique identifier
+   */
+  technique_id: string;
+
+  /**
+   * Technique description
+   */
+  description?: string;
 }
 
 export namespace TechniqueListResponse {
-  export interface Meta {
+  export interface Input {
     /**
-     * Opaque cursor for fetching the next page
+     * Technique input or output identifier
      */
-    next_cursor: string | null;
+    id: string;
 
     /**
-     * Estimated total matching items
-     */
-    total_estimate?: number | null;
-  }
-
-  export interface Technique {
-    inputs: Array<Technique.Input>;
-
-    /**
-     * Technique name
+     * Technique input or output display name
      */
     name: string;
 
-    outputs: Array<Technique.Output>;
-
-    run_cost: number;
-
     /**
-     * Technique identifier
+     * Technique input or output media type
      */
-    technique_id: string;
+    type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
 
     /**
-     * Technique description
+     * Technique input or output description
      */
     description?: string;
+
+    /**
+     * Required aspect ratio
+     */
+    specifiedAspectRatio?: string;
+
+    /**
+     * Required duration in seconds
+     */
+    specifiedDuration?: number;
   }
 
-  export namespace Technique {
-    export interface Input {
-      /**
-       * Technique input or output identifier
-       */
-      id: string;
+  export interface Output {
+    /**
+     * Technique input or output identifier
+     */
+    id: string;
 
-      /**
-       * Technique input or output display name
-       */
-      name: string;
+    /**
+     * Technique input or output display name
+     */
+    name: string;
 
-      /**
-       * Technique input or output media type
-       */
-      type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
+    /**
+     * Technique input or output media type
+     */
+    type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
 
-      /**
-       * Technique input or output description
-       */
-      description?: string;
+    /**
+     * Technique input or output description
+     */
+    description?: string;
 
-      /**
-       * Required aspect ratio
-       */
-      specifiedAspectRatio?: string;
+    /**
+     * Required aspect ratio
+     */
+    specifiedAspectRatio?: string;
 
-      /**
-       * Required duration in seconds
-       */
-      specifiedDuration?: number;
-    }
-
-    export interface Output {
-      /**
-       * Technique input or output identifier
-       */
-      id: string;
-
-      /**
-       * Technique input or output display name
-       */
-      name: string;
-
-      /**
-       * Technique input or output media type
-       */
-      type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
-
-      /**
-       * Technique input or output description
-       */
-      description?: string;
-
-      /**
-       * Required aspect ratio
-       */
-      specifiedAspectRatio?: string;
-
-      /**
-       * Required duration in seconds
-       */
-      specifiedDuration?: number;
-    }
+    /**
+     * Required duration in seconds
+     */
+    specifiedDuration?: number;
   }
 }
 
-export interface TechniqueListParams {
-  /**
-   * Opaque cursor for fetching the next page
-   */
-  cursor?: string;
-
-  /**
-   * Maximum number of results to return
-   */
-  limit?: number;
-
+export interface TechniqueListParams extends TechniquesCursorPageParams {
   /**
    * Search query
    */
@@ -256,14 +232,15 @@ export declare namespace Techniques {
   export {
     type TechniqueRetrieveResponse as TechniqueRetrieveResponse,
     type TechniqueListResponse as TechniqueListResponse,
+    type TechniqueListResponsesTechniquesCursorPage as TechniqueListResponsesTechniquesCursorPage,
     type TechniqueListParams as TechniqueListParams,
   };
 
   export {
     Runs as Runs,
+    type RunCreateResponse as RunCreateResponse,
     type RunRetrieveResponse as RunRetrieveResponse,
-    type RunStartResponse as RunStartResponse,
+    type RunCreateParams as RunCreateParams,
     type RunRetrieveParams as RunRetrieveParams,
-    type RunStartParams as RunStartParams,
   };
 }

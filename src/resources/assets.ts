@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { AssetsCursorPage, type AssetsCursorPageParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -43,14 +44,17 @@ export class Assets extends APIResource {
    *
    * @example
    * ```ts
-   * const assets = await client.assets.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const assetListResponse of client.assets.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: AssetListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<AssetListResponse> {
-    return this._client.get('/assets', { query, ...options });
+  ): PagePromise<AssetListResponsesAssetsCursorPage, AssetListResponse> {
+    return this._client.getAPIList('/assets', AssetsCursorPage<AssetListResponse>, { query, ...options });
   }
 
   /**
@@ -60,12 +64,12 @@ export class Assets extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.assets.completeUpload(
+   * const response = await client.assets.complete(
    *   'asset_abc123',
    * );
    * ```
    */
-  completeUpload(assetID: string, options?: RequestOptions): APIPromise<AssetCompleteUploadResponse> {
+  complete(assetID: string, options?: RequestOptions): APIPromise<AssetCompleteResponse> {
     return this._client.post(path`/assets/${assetID}/complete`, options);
   }
 
@@ -76,15 +80,15 @@ export class Assets extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.assets.retryUpload(
-   *   'asset_abc123',
-   * );
+   * const response = await client.assets.retry('asset_abc123');
    * ```
    */
-  retryUpload(assetID: string, options?: RequestOptions): APIPromise<AssetRetryUploadResponse> {
+  retry(assetID: string, options?: RequestOptions): APIPromise<AssetRetryResponse> {
     return this._client.post(path`/assets/${assetID}/retry`, options);
   }
 }
+
+export type AssetListResponsesAssetsCursorPage = AssetsCursorPage<AssetListResponse>;
 
 export interface AssetCreateResponse {
   /**
@@ -205,88 +209,68 @@ export interface AssetRetrieveResponse {
 }
 
 export interface AssetListResponse {
-  assets: Array<AssetListResponse.Asset>;
+  /**
+   * Asset identifier
+   */
+  asset_id: string | null;
 
-  meta: AssetListResponse.Meta;
+  /**
+   * Asset content type
+   */
+  content_type: string;
+
+  created_at: number | null;
+
+  /**
+   * Asset description
+   */
+  description: string | null;
+
+  height: number | null;
+
+  /**
+   * Asset name
+   */
+  name: string | null;
+
+  size_bytes: number | null;
+
+  status: 'pending_upload' | 'ready' | 'failed';
+
+  /**
+   * Content type provided at upload time
+   */
+  upload_content_type: string | null;
+
+  /**
+   * Asset source
+   */
+  uploaded_via: string;
+
+  /**
+   * Asset URL
+   */
+  url: string | null;
+
+  width: number | null;
+
+  /**
+   * Workspace identifier
+   */
+  workspace_id: string | null;
+
+  /**
+   * Associated node identifier
+   */
+  node_id?: string | null;
+
+  /**
+   * Project identifier
+   */
+  project_id?: string | null;
 }
 
-export namespace AssetListResponse {
-  export interface Asset {
-    /**
-     * Asset identifier
-     */
-    asset_id: string | null;
-
-    /**
-     * Asset content type
-     */
-    content_type: string;
-
-    created_at: number | null;
-
-    /**
-     * Asset description
-     */
-    description: string | null;
-
-    height: number | null;
-
-    /**
-     * Asset name
-     */
-    name: string | null;
-
-    size_bytes: number | null;
-
-    status: 'pending_upload' | 'ready' | 'failed';
-
-    /**
-     * Content type provided at upload time
-     */
-    upload_content_type: string | null;
-
-    /**
-     * Asset source
-     */
-    uploaded_via: string;
-
-    /**
-     * Asset URL
-     */
-    url: string | null;
-
-    width: number | null;
-
-    /**
-     * Workspace identifier
-     */
-    workspace_id: string | null;
-
-    /**
-     * Associated node identifier
-     */
-    node_id?: string | null;
-
-    /**
-     * Project identifier
-     */
-    project_id?: string | null;
-  }
-
-  export interface Meta {
-    /**
-     * Opaque cursor for fetching the next page
-     */
-    next_cursor: string | null;
-
-    /**
-     * Estimated total matching items
-     */
-    total_estimate?: number | null;
-  }
-}
-
-export interface AssetCompleteUploadResponse {
+export interface AssetCompleteResponse {
   /**
    * Asset identifier
    */
@@ -316,7 +300,7 @@ export interface AssetCompleteUploadResponse {
    */
   failure_message?: string | null;
 
-  upload?: AssetCompleteUploadResponse.Upload;
+  upload?: AssetCompleteResponse.Upload;
 
   /**
    * Upload URL (serialized)
@@ -324,7 +308,7 @@ export interface AssetCompleteUploadResponse {
   upload_url?: string;
 }
 
-export namespace AssetCompleteUploadResponse {
+export namespace AssetCompleteResponse {
   export interface Upload {
     contentType: 'multipart/form-data';
 
@@ -344,7 +328,7 @@ export namespace AssetCompleteUploadResponse {
   }
 }
 
-export interface AssetRetryUploadResponse {
+export interface AssetRetryResponse {
   /**
    * Asset identifier
    */
@@ -374,7 +358,7 @@ export interface AssetRetryUploadResponse {
    */
   failure_message?: string | null;
 
-  upload?: AssetRetryUploadResponse.Upload;
+  upload?: AssetRetryResponse.Upload;
 
   /**
    * Upload URL (serialized)
@@ -382,7 +366,7 @@ export interface AssetRetryUploadResponse {
   upload_url?: string;
 }
 
-export namespace AssetRetryUploadResponse {
+export namespace AssetRetryResponse {
   export interface Upload {
     contentType: 'multipart/form-data';
 
@@ -429,17 +413,7 @@ export interface AssetCreateParams {
   folder?: string;
 }
 
-export interface AssetListParams {
-  /**
-   * Opaque cursor for fetching the next page
-   */
-  cursor?: string;
-
-  /**
-   * Maximum number of results to return
-   */
-  limit?: number;
-
+export interface AssetListParams extends AssetsCursorPageParams {
   /**
    * Project identifier
    */
@@ -461,8 +435,9 @@ export declare namespace Assets {
     type AssetCreateResponse as AssetCreateResponse,
     type AssetRetrieveResponse as AssetRetrieveResponse,
     type AssetListResponse as AssetListResponse,
-    type AssetCompleteUploadResponse as AssetCompleteUploadResponse,
-    type AssetRetryUploadResponse as AssetRetryUploadResponse,
+    type AssetCompleteResponse as AssetCompleteResponse,
+    type AssetRetryResponse as AssetRetryResponse,
+    type AssetListResponsesAssetsCursorPage as AssetListResponsesAssetsCursorPage,
     type AssetCreateParams as AssetCreateParams,
     type AssetListParams as AssetListParams,
   };

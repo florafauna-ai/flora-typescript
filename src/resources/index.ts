@@ -5,10 +5,11 @@ export {
   type AssetCreateResponse,
   type AssetRetrieveResponse,
   type AssetListResponse,
-  type AssetCompleteUploadResponse,
-  type AssetRetryUploadResponse,
+  type AssetCompleteResponse,
+  type AssetRetryResponse,
   type AssetCreateParams,
   type AssetListParams,
+  type AssetListResponsesAssetsCursorPage,
 } from './assets';
 export { Feedback, type FeedbackRecordResponse, type FeedbackRecordParams } from './feedback';
 export { Models, type ModelListResponse, type ModelListParams } from './models';
@@ -21,6 +22,8 @@ export {
   type ProjectCreateParams,
   type ProjectListParams,
   type ProjectListNodesParams,
+  type ProjectListResponsesProjectsCursorPage,
+  type ProjectListNodesResponsesCanvasNodesCursorPage,
 } from './projects/projects';
 export {
   Runs,
@@ -34,5 +37,6 @@ export {
   type TechniqueRetrieveResponse,
   type TechniqueListResponse,
   type TechniqueListParams,
+  type TechniqueListResponsesTechniquesCursorPage,
 } from './techniques/techniques';
 export { Workspaces, type WorkspaceListResponse } from './workspaces';
