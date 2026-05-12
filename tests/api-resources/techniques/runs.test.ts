@@ -9,8 +9,17 @@ const client = new Flora({
 
 describe('resource runs', () => {
   // Mock server tests are disabled
-  test.skip('create', async () => {
-    const responsePromise = client.techniques.runs.create('tech_def_abc123');
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.techniques.runs.create('tech_def_abc123', {
+      inputs: [
+        {
+          id: 'id',
+          type: 'imageUrl',
+          value: 'value',
+        },
+      ],
+      mode: 'async',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -18,6 +27,22 @@ describe('resource runs', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('create: required and optional params', async () => {
+    const response = await client.techniques.runs.create('tech_def_abc123', {
+      inputs: [
+        {
+          id: 'id',
+          type: 'imageUrl',
+          value: 'value',
+        },
+      ],
+      mode: 'async',
+      callback_url: 'https://example.com',
+      idempotency_key: 'idempotency_key',
+    });
   });
 
   // Mock server tests are disabled
