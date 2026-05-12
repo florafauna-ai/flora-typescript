@@ -76,7 +76,7 @@ importers:
       '@cloudflare/cabidela':
         specifier: ^0.2.4
         version: 0.2.4
-      '@flora-ai/sdk':
+      '@flora-ai/flora':
         specifier: workspace:*
         version: link:../..
       '@hono/node-server':

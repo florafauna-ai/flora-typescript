@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^@flora-ai/sdk$': '<rootDir>/src/index.ts',
-    '^@flora-ai/sdk/(.*)$': '<rootDir>/src/$1',
+    '^@flora-ai/flora$': '<rootDir>/src/index.ts',
+    '^@flora-ai/flora/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',

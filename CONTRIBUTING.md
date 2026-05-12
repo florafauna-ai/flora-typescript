@@ -55,12 +55,12 @@ $ cd flora-typescript
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link @flora-ai/sdk
+$ yarn link @flora-ai/flora
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link --global @flora-ai/sdk
+$ pnpm link --global @flora-ai/flora
 ```
 
 ## Running tests

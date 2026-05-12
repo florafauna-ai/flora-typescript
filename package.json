@@ -1,5 +1,5 @@
 {
-  "name": "@flora-ai/sdk",
+  "name": "@flora-ai/flora",
   "version": "0.0.1",
   "description": "The official TypeScript library for the Flora API",
   "author": "Flora <>",

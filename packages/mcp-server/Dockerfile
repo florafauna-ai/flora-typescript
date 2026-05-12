@@ -59,8 +59,8 @@ WORKDIR /app
 # Copy the build results, preserving directory structure
 COPY --from=builder /build .
 
-# Copy the built @flora-ai/sdk into node_modules
-COPY --from=builder /build/dist ./node_modules/@flora-ai/sdk
+# Copy the built @flora-ai/flora into node_modules
+COPY --from=builder /build/dist ./node_modules/@flora-ai/flora
 
 # Change ownership to nodejs user
 RUN chown -R nodejs:nodejs /app

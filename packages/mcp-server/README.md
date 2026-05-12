@@ -23,7 +23,7 @@ For clients with a configuration JSON, it might look something like this:
 ```json
 {
   "mcpServers": {
-    "flora_ai_sdk_api": {
+    "flora_ai_flora_api": {
       "command": "npx",
       "args": ["-y", "flora-mcp"],
       "env": {
@@ -90,7 +90,7 @@ A configuration JSON for this server might look like this, assuming the server i
 ```json
 {
   "mcpServers": {
-    "flora_ai_sdk_api": {
+    "flora_ai_flora_api": {
       "url": "http://localhost:3000",
       "headers": {
         "Authorization": "Bearer <auth value>"
