@@ -8,10 +8,10 @@
   "type": "commonjs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stainless-sdks/florafauna-ai-typescript.git",
+    "url": "git+https://github.com/florafauna-ai/flora-typescript.git",
     "directory": "packages/mcp-server"
   },
-  "homepage": "https://github.com/stainless-sdks/florafauna-ai-typescript/tree/main/packages/mcp-server#readme",
+  "homepage": "https://github.com/florafauna-ai/flora-typescript/tree/main/packages/mcp-server#readme",
   "license": "Apache-2.0",
   "packageManager": "pnpm@10.30.1",
   "private": false,
