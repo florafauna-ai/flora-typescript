@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "flora/*": ["./src/*"],
-      "flora": ["./src/index.ts"]
+      "@flora-ai/sdk/*": ["./src/*"],
+      "@flora-ai/sdk": ["./src/index.ts"]
     },
     "noEmit": true,
 
