@@ -82,7 +82,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/techniques/$TECHNIQUE_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -116,7 +116,8 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example: "flora techniques list \\\n  --api-key 'My API Key'",
       },
       http: {
-        example: 'curl https://api.example.com/techniques \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+        example:
+          'curl https://app.flora.ai/api/v1/techniques \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -158,7 +159,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/techniques/$TECHNIQUE_ID/runs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": [\n            {\n              "id": "id",\n              "type": "imageUrl",\n              "value": "value"\n            }\n          ],\n          "mode": "async"\n        }\'',
+          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID/runs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": [\n            {\n              "id": "id",\n              "type": "imageUrl",\n              "value": "value"\n            }\n          ],\n          "mode": "async"\n        }\'',
       },
     },
   },
@@ -194,7 +195,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/techniques/$TECHNIQUE_ID/runs/$RUN_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID/runs/$RUN_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -236,7 +237,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/assets \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "source": "signed-url",\n          "workspace_id": "ws_abc123",\n          "content_type": "image/png",\n          "file_name": "hero.png",\n          "folder": "campaign-assets"\n        }\'',
+          'curl https://app.flora.ai/api/v1/assets \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "source": "signed-url",\n          "workspace_id": "ws_abc123",\n          "content_type": "image/png",\n          "file_name": "hero.png",\n          "folder": "campaign-assets"\n        }\'',
       },
     },
   },
@@ -271,7 +272,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/assets/$ASSET_ID/complete \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID/complete \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -306,7 +307,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/assets/$ASSET_ID/retry \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID/retry \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -346,7 +347,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example: "flora assets list \\\n  --api-key 'My API Key'",
       },
       http: {
-        example: 'curl https://api.example.com/assets \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+        example: 'curl https://app.flora.ai/api/v1/assets \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -381,7 +382,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/assets/$ASSET_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -413,7 +414,8 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example: "flora workspaces list \\\n  --api-key 'My API Key'",
       },
       http: {
-        example: 'curl https://api.example.com/workspaces \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -447,7 +449,8 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example: "flora projects list \\\n  --api-key 'My API Key' \\\n  --workspace-id ws_abc123",
       },
       http: {
-        example: 'curl https://api.example.com/projects \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+        example:
+          'curl https://app.flora.ai/api/v1/projects \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -483,7 +486,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/projects \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "name": "Spring Campaign",\n          "workspace_id": "ws_abc123"\n        }\'',
+          'curl https://app.flora.ai/api/v1/projects \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "name": "Spring Campaign",\n          "workspace_id": "ws_abc123"\n        }\'',
       },
     },
   },
@@ -518,7 +521,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/projects/$PROJECT_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -553,7 +556,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/projects/$PROJECT_ID/nodes \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/nodes \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -588,7 +591,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/projects/$PROJECT_ID/assets/$ASSET_ID/attach \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/assets/$ASSET_ID/attach \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -622,7 +625,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example: "flora models list \\\n  --api-key 'My API Key'",
       },
       http: {
-        example: 'curl https://api.example.com/models \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+        example: 'curl https://app.flora.ai/api/v1/models \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -665,7 +668,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/runs/generation \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "project_id": "prj_abc123",\n          "prompt": "A cinematic product photo of a ceramic mug on a sunlit table",\n          "type": "image",\n          "workspace_id": "ws_abc123",\n          "model": "t2i-flux-2-pro"\n        }\'',
+          'curl https://app.flora.ai/api/v1/runs/generation \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "project_id": "prj_abc123",\n          "prompt": "A cinematic product photo of a ceramic mug on a sunlit table",\n          "type": "image",\n          "workspace_id": "ws_abc123",\n          "model": "t2i-flux-2-pro"\n        }\'',
       },
     },
   },
@@ -701,7 +704,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/runs/technique \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": {\n            "foo": "bar"\n          },\n          "technique_id": "tech_abcd1234",\n          "workspace_id": "ws_abc123"\n        }\'',
+          'curl https://app.flora.ai/api/v1/runs/technique \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": {\n            "foo": "bar"\n          },\n          "technique_id": "tech_abcd1234",\n          "workspace_id": "ws_abc123"\n        }\'',
       },
     },
   },
@@ -744,7 +747,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.example.com/feedback \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "detail": "I want to export all generated campaign images at once.",\n          "kind": "feature_request",\n          "summary": "Need batch export support",\n          "project_id": "prj_abc123",\n          "run_id": "run_abc123",\n          "workspace_id": "ws_abc123"\n        }\'',
+          'curl https://app.flora.ai/api/v1/feedback \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "detail": "I want to export all generated campaign images at once.",\n          "kind": "feature_request",\n          "summary": "Need batch export support",\n          "project_id": "prj_abc123",\n          "run_id": "run_abc123",\n          "workspace_id": "ws_abc123"\n        }\'',
       },
     },
   },

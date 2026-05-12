@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0 (2026-05-12)
+
+Full Changelog: [v0.0.2...v0.1.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.0.2...v0.1.0)
+
+### Features
+
+* **api:** api update ([a25084c](https://github.com/florafauna-ai/flora-typescript/commit/a25084cb3c986eea234bfcddf670756624f14947))
+
 ## 0.0.2 (2026-05-12)
 
 Full Changelog: [v0.0.1...v0.0.2](https://github.com/florafauna-ai/flora-typescript/compare/v0.0.1...v0.0.2)
