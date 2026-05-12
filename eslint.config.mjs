@@ -22,7 +22,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^@flora-ai/sdk(/.*)?',
+              regex: '^@flora-ai/flora(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],
