@@ -1,7 +1,7 @@
 {
   "dxt_version": "0.2",
   "name": "flora-mcp",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "The official MCP Server for the Flora API",
   "author": {
     "name": "Flora"
