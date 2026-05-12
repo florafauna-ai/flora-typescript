@@ -1,4 +1,4 @@
 configured_endpoints: 19
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/flora/florafauna-ai-98c38b33427d1d9a61b4dff05d1c53757d833462d343da3ec16b1146bb4da3ac.yml
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/flora/florafauna-ai-cd08350b8439f61228ec3437a92d866ba064962d7ac10d6a40d1690ff7ab8354.yml
 openapi_spec_hash: 25053cae1c9eb149bc1245d490f89cef
-config_hash: f66bd3f57ed9dd62dd644934f31a531b
+config_hash: 6c5d9b1762ec967f807217263d86d164
