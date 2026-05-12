@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "flora/*": ["./dist/src/*"],
-      "flora": ["./dist/src/index.ts"]
+      "@flora-ai/sdk/*": ["./dist/src/*"],
+      "@flora-ai/sdk": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

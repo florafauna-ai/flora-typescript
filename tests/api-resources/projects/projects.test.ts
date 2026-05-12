@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Flora from 'flora';
+import Flora from '@flora-ai/sdk';
 
 const client = new Flora({
   apiKey: 'My API Key',

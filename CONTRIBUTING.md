@@ -55,12 +55,12 @@ $ cd flora-typescript
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link flora
+$ yarn link @flora-ai/sdk
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link --global flora
+$ pnpm link --global @flora-ai/sdk
 ```
 
 ## Running tests
@@ -85,3 +85,17 @@ To format and fix all lint issues automatically:
 ```sh
 $ pnpm fix
 ```
+
+## Publishing and releases
+
+Changes made to this repository via the automated release PR pipeline should publish to npm automatically. If
+the changes aren't made through the automated pipeline, you may want to make releases manually.
+
+### Publish with a GitHub workflow
+
+You can release to package managers by using [the `Publish NPM` GitHub action](https://www.github.com/florafauna-ai/flora-typescript/actions/workflows/publish-npm.yml). This requires a setup organization or repository secret to be set up.
+
+### Publish manually
+
+If you need to manually release a package, you can run the `bin/publish-npm` script with an `NPM_TOKEN` set on
+the environment.
