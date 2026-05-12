@@ -12,8 +12,12 @@ export class Runs extends APIResource {
    * for client retries; duplicate keys within two hours return
    * idempotency_duplicate.
    */
-  create(techniqueID: string, options?: RequestOptions): APIPromise<RunCreateResponse> {
-    return this._client.post(path`/techniques/${techniqueID}/runs`, options);
+  create(
+    techniqueID: string,
+    body: RunCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<RunCreateResponse> {
+    return this._client.post(path`/techniques/${techniqueID}/runs`, { body, ...options });
   }
 
   /**
@@ -134,6 +138,38 @@ export namespace RunRetrieveResponse {
   }
 }
 
+export interface RunCreateParams {
+  inputs: Array<RunCreateParams.Input>;
+
+  mode: 'async' | 'stream';
+
+  callback_url?: string;
+
+  /**
+   * Idempotency key for safely retrying requests
+   */
+  idempotency_key?: string;
+}
+
+export namespace RunCreateParams {
+  export interface Input {
+    /**
+     * Technique input identifier
+     */
+    id: string;
+
+    /**
+     * Technique input type
+     */
+    type: 'imageUrl' | 'videoUrl' | 'text';
+
+    /**
+     * Technique input value
+     */
+    value: string;
+  }
+}
+
 export interface RunRetrieveParams {
   /**
    * Technique identifier or slug
@@ -145,6 +181,7 @@ export declare namespace Runs {
   export {
     type RunCreateResponse as RunCreateResponse,
     type RunRetrieveResponse as RunRetrieveResponse,
+    type RunCreateParams as RunCreateParams,
     type RunRetrieveParams as RunRetrieveParams,
   };
 }

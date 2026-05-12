@@ -10,7 +10,12 @@ const client = new Flora({
 describe('resource runs', () => {
   // Mock server tests are disabled
   test.skip('startGeneration: only required params', async () => {
-    const responsePromise = client.runs.startGeneration({ body: {} });
+    const responsePromise = client.runs.startGeneration({
+      project_id: 'prj_abc123',
+      prompt: 'A cinematic product photo of a ceramic mug on a sunlit table',
+      type: 'image',
+      workspace_id: 'ws_abc123',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,12 +27,23 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('startGeneration: required and optional params', async () => {
-    const response = await client.runs.startGeneration({ body: {} });
+    const response = await client.runs.startGeneration({
+      project_id: 'prj_abc123',
+      prompt: 'A cinematic product photo of a ceramic mug on a sunlit table',
+      type: 'image',
+      workspace_id: 'ws_abc123',
+      model: 't2i-flux-2-pro',
+      params: { foo: 'bar' },
+    });
   });
 
   // Mock server tests are disabled
   test.skip('startTechnique: only required params', async () => {
-    const responsePromise = client.runs.startTechnique({ body: {} });
+    const responsePromise = client.runs.startTechnique({
+      inputs: { foo: 'bar' },
+      technique_id: 'tech_abcd1234',
+      workspace_id: 'ws_abc123',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -39,6 +55,10 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('startTechnique: required and optional params', async () => {
-    const response = await client.runs.startTechnique({ body: {} });
+    const response = await client.runs.startTechnique({
+      inputs: { foo: 'bar' },
+      technique_id: 'tech_abcd1234',
+      workspace_id: 'ws_abc123',
+    });
   });
 });
