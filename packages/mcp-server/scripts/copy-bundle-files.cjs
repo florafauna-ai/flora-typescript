@@ -25,7 +25,7 @@ async function copyFiles() {
 
   // replace package.json reference with local reference
   for (const dep in pkgJson.dependencies) {
-    if (dep === 'flora') {
+    if (dep === '@flora-ai/flora') {
       pkgJson.dependencies[dep] = 'file:../../../dist/';
     }
   }

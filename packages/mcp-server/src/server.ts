@@ -7,8 +7,8 @@ import {
   ListToolsRequestSchema,
   SetLevelRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { ClientOptions } from 'flora';
-import Flora from 'flora';
+import { ClientOptions } from '@flora-ai/flora';
+import Flora from '@flora-ai/flora';
 import { codeTool } from './code-tool';
 import docsSearchTool from './docs-search-tool';
 import { setLocalSearch } from './docs-search-tool';
@@ -27,8 +27,8 @@ export const newMcpServer = async ({
 }) =>
   new McpServer(
     {
-      name: 'flora_api',
-      version: '0.0.1',
+      name: 'flora_ai_flora_api',
+      version: '0.0.2',
     },
     {
       instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),

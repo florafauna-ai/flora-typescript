@@ -5,7 +5,7 @@ import util from 'node:util';
 import Fuse from 'fuse.js';
 import ts from 'typescript';
 import { WorkerOutput } from './code-tool-types';
-import { Flora, ClientOptions } from 'flora';
+import { Flora, ClientOptions } from '@flora-ai/flora';
 
 async function tseval(code: string) {
   return import('data:application/typescript;charset=utf-8;base64,' + Buffer.from(code).toString('base64'));
@@ -57,7 +57,7 @@ function getRunFunctionSource(code: string): {
 function getTSDiagnostics(code: string): string[] {
   const functionSource = getRunFunctionSource(code)!;
   const codeWithImport = [
-    'import { Flora } from "flora";',
+    'import { Flora } from "@flora-ai/flora";',
     functionSource.type === 'declaration' ?
       `async function run(${functionSource.client}: Flora)`
     : `const run: (${functionSource.client}: Flora) => Promise<unknown> =`,

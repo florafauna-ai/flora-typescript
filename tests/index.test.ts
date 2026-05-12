@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'flora/core/api-promise';
+import { APIPromise } from '@flora-ai/flora/core/api-promise';
 
 import util from 'node:util';
-import Flora from 'flora';
-import { APIUserAbortError } from 'flora';
+import Flora from '@flora-ai/flora';
+import { APIUserAbortError } from '@flora-ai/flora';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

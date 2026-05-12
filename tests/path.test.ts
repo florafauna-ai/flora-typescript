@@ -1,4 +1,4 @@
-import { createPathTagFunction, encodeURIPath } from 'flora/internal/utils/path';
+import { createPathTagFunction, encodeURIPath } from '@flora-ai/flora/internal/utils/path';
 import { inspect } from 'node:util';
 import { runInNewContext } from 'node:vm';
 

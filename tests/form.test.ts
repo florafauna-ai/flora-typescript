@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'flora/internal/uploads';
-import { toFile } from 'flora/core/uploads';
+import { multipartFormRequestOptions, createForm } from '@flora-ai/flora/internal/uploads';
+import { toFile } from '@flora-ai/flora/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

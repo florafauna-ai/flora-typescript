@@ -76,6 +76,9 @@ importers:
       '@cloudflare/cabidela':
         specifier: ^0.2.4
         version: 0.2.4
+      '@flora-ai/flora':
+        specifier: workspace:*
+        version: link:../..
       '@hono/node-server':
         specifier: ^1.19.10
         version: 1.19.11(hono@4.12.5)
@@ -97,9 +100,6 @@ importers:
       express:
         specifier: ^5.1.0
         version: 5.2.1
-      flora:
-        specifier: workspace:*
-        version: link:../..
       fuse.js:
         specifier: ^7.1.0
         version: 7.1.0

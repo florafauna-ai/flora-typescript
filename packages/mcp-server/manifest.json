@@ -1,16 +1,16 @@
 {
   "dxt_version": "0.2",
   "name": "flora-mcp",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The official MCP Server for the Flora API",
   "author": {
     "name": "Flora"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stainless-sdks/florafauna-ai-typescript.git"
+    "url": "git+https://github.com/florafauna-ai/flora-typescript.git"
   },
-  "homepage": "https://github.com/stainless-sdks/florafauna-ai-typescript/tree/main/packages/mcp-server#readme",
+  "homepage": "https://github.com/florafauna-ai/flora-typescript/tree/main/packages/mcp-server#readme",
   "server": {
     "type": "node",
     "entry_point": "index.js",
