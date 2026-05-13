@@ -10,44 +10,26 @@ export class Runs extends APIResource {
    * project, optional model, and optional model parameters. Mutating public API
    * requests support an optional Idempotency-Key header for client retries;
    * duplicate keys within two hours return idempotency_duplicate.
-   *
-   * @example
-   * ```ts
-   * const response = await client.runs.startGeneration({
-   *   project_id: 'prj_abc123',
-   *   prompt:
-   *     'A cinematic product photo of a ceramic mug on a sunlit table',
-   *   type: 'image',
-   *   workspace_id: 'ws_abc123',
-   * });
-   * ```
    */
   startGeneration(
-    body: RunStartGenerationParams,
+    params: RunStartGenerationParams,
     options?: RequestOptions,
   ): APIPromise<RunStartGenerationResponse> {
-    return this._client.post('/runs/generation', { body, ...options });
+    const { body } = params;
+    return this._client.post('/runs/generation', { body: body, ...options });
   }
 
   /**
    * Starts a technique run through the normalized top-level run resource. Mutating
    * public API requests support an optional Idempotency-Key header for client
    * retries; duplicate keys within two hours return idempotency_duplicate.
-   *
-   * @example
-   * ```ts
-   * const response = await client.runs.startTechnique({
-   *   inputs: { foo: 'bar' },
-   *   technique_id: 'tech_abcd1234',
-   *   workspace_id: 'ws_abc123',
-   * });
-   * ```
    */
   startTechnique(
-    body: RunStartTechniqueParams,
+    params: RunStartTechniqueParams,
     options?: RequestOptions,
   ): APIPromise<RunStartTechniqueResponse> {
-    return this._client.post('/runs/technique', { body, ...options });
+    const { body } = params;
+    return this._client.post('/runs/technique', { body: body, ...options });
   }
 }
 
@@ -65,11 +47,6 @@ export interface RunStartGenerationResponse {
    * Run type
    */
   type: 'generation' | 'technique';
-
-  /**
-   * Workflow run identifier
-   */
-  workflow_run_id: string;
 
   model?: RunStartGenerationResponse.Model | null;
 
@@ -119,11 +96,6 @@ export interface RunStartTechniqueResponse {
    */
   type: 'generation' | 'technique';
 
-  /**
-   * Workflow run identifier
-   */
-  workflow_run_id: string;
-
   model?: RunStartTechniqueResponse.Model | null;
 
   poll_url?: string | null;
@@ -158,52 +130,11 @@ export namespace RunStartTechniqueResponse {
 }
 
 export interface RunStartGenerationParams {
-  /**
-   * Project identifier
-   */
-  project_id: string;
-
-  /**
-   * Generation prompt
-   */
-  prompt: string;
-
-  /**
-   * Generation type
-   */
-  type: 'image' | 'video' | 'audio' | 'text';
-
-  /**
-   * Workspace identifier
-   */
-  workspace_id: string;
-
-  /**
-   * Model endpoint ID
-   */
-  model?: string;
-
-  /**
-   * Model parameters
-   */
-  params?: { [key: string]: unknown };
+  body: unknown;
 }
 
 export interface RunStartTechniqueParams {
-  /**
-   * Technique inputs
-   */
-  inputs: { [key: string]: unknown };
-
-  /**
-   * Technique identifier
-   */
-  technique_id: string;
-
-  /**
-   * Workspace identifier
-   */
-  workspace_id: string;
+  body: unknown;
 }
 
 export declare namespace Runs {
