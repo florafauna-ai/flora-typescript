@@ -38,7 +38,7 @@ describe('resource techniques', () => {
     await expect(
       client.techniques.list(
         {
-          cursor: 'cursor',
+          cursor: 'eyJvZmZzZXQiOjIwfQ',
           limit: 1,
           query: 'logo',
           workspace_id: 'ws_abc123',

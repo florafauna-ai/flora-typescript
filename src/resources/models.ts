@@ -23,6 +23,9 @@ export interface ModelListResponse {
 
 export namespace ModelListResponse {
   export interface Model {
+    /**
+     * Model capabilities
+     */
     capabilities: Array<string>;
 
     /**
@@ -60,6 +63,9 @@ export namespace ModelListResponse {
      */
     type: 'image' | 'video' | 'audio' | 'text';
 
+    /**
+     * Whether this model is in beta
+     */
     beta?: boolean;
   }
 

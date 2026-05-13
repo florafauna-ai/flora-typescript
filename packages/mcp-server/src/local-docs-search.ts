@@ -130,30 +130,36 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'Starts a run for a specific technique using the backward-compatible nested route. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.',
     stainlessPath: '(resource) techniques.runs > (method) create',
     qualified: 'client.techniques.runs.create',
-    params: ['techniqueId: string;'],
+    params: [
+      'techniqueId: string;',
+      "inputs: { id: string; type: 'text' | 'imageUrl' | 'videoUrl'; value: string; }[];",
+      "mode: 'async' | 'stream';",
+      'callback_url?: string;',
+      'idempotency_key?: string;',
+    ],
     response:
       "{ createdAt: number; progress: number; runId: string; status: 'pending' | 'running' | 'completed' | 'failed'; chargedCost?: number; completedAt?: number; errorCode?: string; errorMessage?: string; outputs?: { outputId: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; url: string; }[]; pollUrl?: string; startedAt?: number; }",
     markdown:
-      "## create\n\n`client.techniques.runs.create(techniqueId: string): { createdAt: number; progress: number; runId: string; status: 'pending' | 'running' | 'completed' | 'failed'; chargedCost?: number; completedAt?: number; errorCode?: string; errorMessage?: string; outputs?: object[]; pollUrl?: string; startedAt?: number; }`\n\n**post** `/techniques/{techniqueId}/runs`\n\nStarts a run for a specific technique using the backward-compatible nested route. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `techniqueId: string`\n  Technique identifier or slug\n\n### Returns\n\n- `{ createdAt: number; progress: number; runId: string; status: 'pending' | 'running' | 'completed' | 'failed'; chargedCost?: number; completedAt?: number; errorCode?: string; errorMessage?: string; outputs?: { outputId: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; url: string; }[]; pollUrl?: string; startedAt?: number; }`\n\n  - `createdAt: number`\n  - `progress: number`\n  - `runId: string`\n  - `status: 'pending' | 'running' | 'completed' | 'failed'`\n  - `chargedCost?: number`\n  - `completedAt?: number`\n  - `errorCode?: string`\n  - `errorMessage?: string`\n  - `outputs?: { outputId: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; url: string; }[]`\n  - `pollUrl?: string`\n  - `startedAt?: number`\n\n### Example\n\n```typescript\nimport Flora from '@flora-ai/flora';\n\nconst client = new Flora();\n\nconst run = await client.techniques.runs.create('tech_def_abc123');\n\nconsole.log(run);\n```",
+      "## create\n\n`client.techniques.runs.create(techniqueId: string, inputs: { id: string; type: 'text' | 'imageUrl' | 'videoUrl'; value: string; }[], mode: 'async' | 'stream', callback_url?: string, idempotency_key?: string): { createdAt: number; progress: number; runId: string; status: 'pending' | 'running' | 'completed' | 'failed'; chargedCost?: number; completedAt?: number; errorCode?: string; errorMessage?: string; outputs?: object[]; pollUrl?: string; startedAt?: number; }`\n\n**post** `/techniques/{techniqueId}/runs`\n\nStarts a run for a specific technique using the backward-compatible nested route. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `techniqueId: string`\n  Technique identifier or slug\n\n- `inputs: { id: string; type: 'text' | 'imageUrl' | 'videoUrl'; value: string; }[]`\n  Technique inputs\n\n- `mode: 'async' | 'stream'`\n  Technique run execution mode\n\n- `callback_url?: string`\n  HTTPS callback URL for asynchronous run completion notifications\n\n- `idempotency_key?: string`\n  Idempotency key for safely retrying requests\n\n### Returns\n\n- `{ createdAt: number; progress: number; runId: string; status: 'pending' | 'running' | 'completed' | 'failed'; chargedCost?: number; completedAt?: number; errorCode?: string; errorMessage?: string; outputs?: { outputId: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; url: string; }[]; pollUrl?: string; startedAt?: number; }`\n\n  - `createdAt: number`\n  - `progress: number`\n  - `runId: string`\n  - `status: 'pending' | 'running' | 'completed' | 'failed'`\n  - `chargedCost?: number`\n  - `completedAt?: number`\n  - `errorCode?: string`\n  - `errorMessage?: string`\n  - `outputs?: { outputId: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; url: string; }[]`\n  - `pollUrl?: string`\n  - `startedAt?: number`\n\n### Example\n\n```typescript\nimport Flora from '@flora-ai/flora';\n\nconst client = new Flora();\n\nconst run = await client.techniques.runs.create('tech_def_abc123', { inputs: [{\n  id: 'id',\n  type: 'text',\n  value: 'value',\n}], mode: 'async' });\n\nconsole.log(run);\n```",
     perLanguage: {
       typescript: {
         method: 'client.techniques.runs.create',
         example:
-          "import Flora from '@flora-ai/flora';\n\nconst client = new Flora({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst run = await client.techniques.runs.create('tech_def_abc123');\n\nconsole.log(run.createdAt);",
+          "import Flora from '@flora-ai/flora';\n\nconst client = new Flora({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst run = await client.techniques.runs.create('tech_def_abc123', {\n  inputs: [\n    {\n      id: 'id',\n      type: 'text',\n      value: 'value',\n    },\n  ],\n  mode: 'async',\n});\n\nconsole.log(run.createdAt);",
       },
       go: {
         method: 'client.Techniques.Runs.New',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\trun, err := client.Techniques.Runs.New(context.TODO(), "tech_def_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", run.CreatedAt)\n}\n',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\trun, err := client.Techniques.Runs.New(\n\t\tcontext.TODO(),\n\t\t"tech_def_abc123",\n\t\tflora.TechniqueRunNewParams{\n\t\t\tInputs: []flora.TechniqueRunNewParamsInput{{\n\t\t\t\tID:    "id",\n\t\t\t\tType:  "text",\n\t\t\t\tValue: "value",\n\t\t\t}},\n\t\t\tMode: flora.TechniqueRunNewParamsModeAsync,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", run.CreatedAt)\n}\n',
       },
       cli: {
         method: 'runs create',
         example:
-          "flora techniques:runs create \\\n  --api-key 'My API Key' \\\n  --technique-id tech_def_abc123",
+          "flora techniques:runs create \\\n  --api-key 'My API Key' \\\n  --technique-id tech_def_abc123 \\\n  --input '{id: id, type: text, value: value}' \\\n  --mode async",
       },
       http: {
         example:
-          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID/runs \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID/runs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": [\n            {\n              "id": "id",\n              "type": "text",\n              "value": "value"\n            }\n          ],\n          "mode": "async"\n        }\'',
       },
     },
   },
@@ -202,29 +208,36 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'Creates an asset from an allowlisted source URL or reserves a signed upload URL. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.',
     stainlessPath: '(resource) assets > (method) create',
     qualified: 'client.assets.create',
-    params: ['body: object;'],
+    params: [
+      'source: string;',
+      'workspace_id: string;',
+      'content_type?: string;',
+      'file_name?: string;',
+      'folder?: string;',
+    ],
     response:
       "{ asset_id: string; status: 'pending_upload' | 'ready' | 'failed'; uploaded_via: 'url' | 'signed_url'; url: string; visibility: 'workspace'; workspace_id: string; expires_at?: string; upload?: { contentType: 'multipart/form-data'; fileField: 'file'; formFields: object; method: 'POST'; url: string; }; upload_url?: string; }",
     markdown:
-      "## create\n\n`client.assets.create(body: object): { asset_id: string; status: 'pending_upload' | 'ready' | 'failed'; uploaded_via: 'url' | 'signed_url'; url: string; visibility: 'workspace'; workspace_id: string; expires_at?: string; upload?: object; upload_url?: string; }`\n\n**post** `/assets`\n\nCreates an asset from an allowlisted source URL or reserves a signed upload URL. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `body: object`\n\n### Returns\n\n- `{ asset_id: string; status: 'pending_upload' | 'ready' | 'failed'; uploaded_via: 'url' | 'signed_url'; url: string; visibility: 'workspace'; workspace_id: string; expires_at?: string; upload?: { contentType: 'multipart/form-data'; fileField: 'file'; formFields: object; method: 'POST'; url: string; }; upload_url?: string; }`\n\n  - `asset_id: string`\n  - `status: 'pending_upload' | 'ready' | 'failed'`\n  - `uploaded_via: 'url' | 'signed_url'`\n  - `url: string`\n  - `visibility: 'workspace'`\n  - `workspace_id: string`\n  - `expires_at?: string`\n  - `upload?: { contentType: 'multipart/form-data'; fileField: 'file'; formFields: object; method: 'POST'; url: string; }`\n  - `upload_url?: string`\n\n### Example\n\n```typescript\nimport Flora from '@flora-ai/flora';\n\nconst client = new Flora();\n\nconst asset = await client.assets.create({ body: {} });\n\nconsole.log(asset);\n```",
+      "## create\n\n`client.assets.create(source: string, workspace_id: string, content_type?: string, file_name?: string, folder?: string): { asset_id: string; status: 'pending_upload' | 'ready' | 'failed'; uploaded_via: 'url' | 'signed_url'; url: string; visibility: 'workspace'; workspace_id: string; expires_at?: string; upload?: object; upload_url?: string; }`\n\n**post** `/assets`\n\nCreates an asset from an allowlisted source URL or reserves a signed upload URL. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `source: string`\n  Asset source URL or signed-url upload mode\n\n- `workspace_id: string`\n  Workspace identifier\n\n- `content_type?: string`\n  Asset content type\n\n- `file_name?: string`\n  Asset file name\n\n- `folder?: string`\n  Destination folder\n\n### Returns\n\n- `{ asset_id: string; status: 'pending_upload' | 'ready' | 'failed'; uploaded_via: 'url' | 'signed_url'; url: string; visibility: 'workspace'; workspace_id: string; expires_at?: string; upload?: { contentType: 'multipart/form-data'; fileField: 'file'; formFields: object; method: 'POST'; url: string; }; upload_url?: string; }`\n\n  - `asset_id: string`\n  - `status: 'pending_upload' | 'ready' | 'failed'`\n  - `uploaded_via: 'url' | 'signed_url'`\n  - `url: string`\n  - `visibility: 'workspace'`\n  - `workspace_id: string`\n  - `expires_at?: string`\n  - `upload?: { contentType: 'multipart/form-data'; fileField: 'file'; formFields: object; method: 'POST'; url: string; }`\n  - `upload_url?: string`\n\n### Example\n\n```typescript\nimport Flora from '@flora-ai/flora';\n\nconst client = new Flora();\n\nconst asset = await client.assets.create({ source: 'signed-url', workspace_id: 'ws_abc123' });\n\nconsole.log(asset);\n```",
     perLanguage: {
       typescript: {
         method: 'client.assets.create',
         example:
-          "import Flora from '@flora-ai/flora';\n\nconst client = new Flora({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst asset = await client.assets.create({ body: {} });\n\nconsole.log(asset.asset_id);",
+          "import Flora from '@flora-ai/flora';\n\nconst client = new Flora({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst asset = await client.assets.create({ source: 'signed-url', workspace_id: 'ws_abc123' });\n\nconsole.log(asset.asset_id);",
       },
       go: {
         method: 'client.Assets.New',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tasset, err := client.Assets.New(context.TODO(), flora.AssetNewParams{\n\t\tBody: map[string]any{},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", asset.AssetID)\n}\n',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tasset, err := client.Assets.New(context.TODO(), flora.AssetNewParams{\n\t\tSource:      "signed-url",\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", asset.AssetID)\n}\n',
       },
       cli: {
         method: 'assets create',
-        example: "flora assets create \\\n  --api-key 'My API Key' \\\n  --body '{}'",
+        example:
+          "flora assets create \\\n  --api-key 'My API Key' \\\n  --source signed-url \\\n  --workspace-id ws_abc123",
       },
       http: {
         example:
-          "curl https://app.flora.ai/api/v1/assets \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $FLORA_API_KEY\" \\\n    -d '{}'",
+          'curl https://app.flora.ai/api/v1/assets \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "source": "signed-url",\n          "workspace_id": "ws_abc123",\n          "content_type": "image/png",\n          "file_name": "hero.png",\n          "folder": "campaign-assets"\n        }\'',
       },
     },
   },
@@ -625,29 +638,37 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'Starts a model generation run in a project canvas using a prompt, workspace, project, optional model, and optional model parameters. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.',
     stainlessPath: '(resource) runs > (method) start_generation',
     qualified: 'client.runs.startGeneration',
-    params: ['body: object;'],
+    params: [
+      'project_id: string;',
+      'prompt: string;',
+      "type: 'image' | 'video' | 'audio' | 'text';",
+      'workspace_id: string;',
+      'model?: string;',
+      'params?: object;',
+    ],
     response:
       "{ charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique'; model?: { model_id: string; }; poll_url?: string; project_id?: string; technique?: { name: string; technique_id: string; }; }",
     markdown:
-      "## start_generation\n\n`client.runs.startGeneration(body: object): { charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique'; model?: object; poll_url?: string; project_id?: string; technique?: object; }`\n\n**post** `/runs/generation`\n\nStarts a model generation run in a project canvas using a prompt, workspace, project, optional model, and optional model parameters. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `body: object`\n\n### Returns\n\n- `{ charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique'; model?: { model_id: string; }; poll_url?: string; project_id?: string; technique?: { name: string; technique_id: string; }; }`\n\n  - `charged_cost: number`\n  - `estimated_seconds: number`\n  - `run_id: string`\n  - `type: 'generation' | 'technique'`\n  - `model?: { model_id: string; }`\n  - `poll_url?: string`\n  - `project_id?: string`\n  - `technique?: { name: string; technique_id: string; }`\n\n### Example\n\n```typescript\nimport Flora from '@flora-ai/flora';\n\nconst client = new Flora();\n\nconst response = await client.runs.startGeneration({ body: {} });\n\nconsole.log(response);\n```",
+      "## start_generation\n\n`client.runs.startGeneration(project_id: string, prompt: string, type: 'image' | 'video' | 'audio' | 'text', workspace_id: string, model?: string, params?: object): { charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique'; model?: object; poll_url?: string; project_id?: string; technique?: object; }`\n\n**post** `/runs/generation`\n\nStarts a model generation run in a project canvas using a prompt, workspace, project, optional model, and optional model parameters. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `project_id: string`\n  Project identifier\n\n- `prompt: string`\n  Generation prompt\n\n- `type: 'image' | 'video' | 'audio' | 'text'`\n  Generation type\n\n- `workspace_id: string`\n  Workspace identifier\n\n- `model?: string`\n  Model endpoint ID\n\n- `params?: object`\n  Model parameters\n\n### Returns\n\n- `{ charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique'; model?: { model_id: string; }; poll_url?: string; project_id?: string; technique?: { name: string; technique_id: string; }; }`\n\n  - `charged_cost: number`\n  - `estimated_seconds: number`\n  - `run_id: string`\n  - `type: 'generation' | 'technique'`\n  - `model?: { model_id: string; }`\n  - `poll_url?: string`\n  - `project_id?: string`\n  - `technique?: { name: string; technique_id: string; }`\n\n### Example\n\n```typescript\nimport Flora from '@flora-ai/flora';\n\nconst client = new Flora();\n\nconst response = await client.runs.startGeneration({\n  project_id: 'prj_abc123',\n  prompt: 'A cinematic product photo of a ceramic mug on a sunlit table',\n  type: 'image',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.runs.startGeneration',
         example:
-          "import Flora from '@flora-ai/flora';\n\nconst client = new Flora({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.runs.startGeneration({ body: {} });\n\nconsole.log(response.run_id);",
+          "import Flora from '@flora-ai/flora';\n\nconst client = new Flora({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.runs.startGeneration({\n  project_id: 'prj_abc123',\n  prompt: 'A cinematic product photo of a ceramic mug on a sunlit table',\n  type: 'image',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(response.run_id);",
       },
       go: {
         method: 'client.Runs.StartGeneration',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Runs.StartGeneration(context.TODO(), flora.RunStartGenerationParams{\n\t\tBody: map[string]any{},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RunID)\n}\n',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Runs.StartGeneration(context.TODO(), flora.RunStartGenerationParams{\n\t\tProjectID:   "prj_abc123",\n\t\tPrompt:      "A cinematic product photo of a ceramic mug on a sunlit table",\n\t\tType:        flora.RunStartGenerationParamsTypeImage,\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RunID)\n}\n',
       },
       cli: {
         method: 'runs start_generation',
-        example: "flora runs start-generation \\\n  --api-key 'My API Key' \\\n  --body '{}'",
+        example:
+          "flora runs start-generation \\\n  --api-key 'My API Key' \\\n  --project-id prj_abc123 \\\n  --prompt 'A cinematic product photo of a ceramic mug on a sunlit table' \\\n  --type image \\\n  --workspace-id ws_abc123",
       },
       http: {
         example:
-          "curl https://app.flora.ai/api/v1/runs/generation \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $FLORA_API_KEY\" \\\n    -d '{}'",
+          'curl https://app.flora.ai/api/v1/runs/generation \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "project_id": "prj_abc123",\n          "prompt": "A cinematic product photo of a ceramic mug on a sunlit table",\n          "type": "image",\n          "workspace_id": "ws_abc123",\n          "model": "t2i-flux-2-pro"\n        }\'',
       },
     },
   },
@@ -660,29 +681,30 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'Starts a technique run through the normalized top-level run resource. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.',
     stainlessPath: '(resource) runs > (method) start_technique',
     qualified: 'client.runs.startTechnique',
-    params: ['body: object;'],
+    params: ['inputs: object;', 'technique_id: string;', 'workspace_id: string;'],
     response:
       "{ charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique'; model?: { model_id: string; }; poll_url?: string; project_id?: string; technique?: { name: string; technique_id: string; }; }",
     markdown:
-      "## start_technique\n\n`client.runs.startTechnique(body: object): { charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique'; model?: object; poll_url?: string; project_id?: string; technique?: object; }`\n\n**post** `/runs/technique`\n\nStarts a technique run through the normalized top-level run resource. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `body: object`\n\n### Returns\n\n- `{ charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique'; model?: { model_id: string; }; poll_url?: string; project_id?: string; technique?: { name: string; technique_id: string; }; }`\n\n  - `charged_cost: number`\n  - `estimated_seconds: number`\n  - `run_id: string`\n  - `type: 'generation' | 'technique'`\n  - `model?: { model_id: string; }`\n  - `poll_url?: string`\n  - `project_id?: string`\n  - `technique?: { name: string; technique_id: string; }`\n\n### Example\n\n```typescript\nimport Flora from '@flora-ai/flora';\n\nconst client = new Flora();\n\nconst response = await client.runs.startTechnique({ body: {} });\n\nconsole.log(response);\n```",
+      "## start_technique\n\n`client.runs.startTechnique(inputs: object, technique_id: string, workspace_id: string): { charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique'; model?: object; poll_url?: string; project_id?: string; technique?: object; }`\n\n**post** `/runs/technique`\n\nStarts a technique run through the normalized top-level run resource. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `inputs: object`\n  Technique inputs\n\n- `technique_id: string`\n  Technique identifier\n\n- `workspace_id: string`\n  Workspace identifier\n\n### Returns\n\n- `{ charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique'; model?: { model_id: string; }; poll_url?: string; project_id?: string; technique?: { name: string; technique_id: string; }; }`\n\n  - `charged_cost: number`\n  - `estimated_seconds: number`\n  - `run_id: string`\n  - `type: 'generation' | 'technique'`\n  - `model?: { model_id: string; }`\n  - `poll_url?: string`\n  - `project_id?: string`\n  - `technique?: { name: string; technique_id: string; }`\n\n### Example\n\n```typescript\nimport Flora from '@flora-ai/flora';\n\nconst client = new Flora();\n\nconst response = await client.runs.startTechnique({\n  inputs: { foo: 'bar' },\n  technique_id: 'tech_abcd1234',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.runs.startTechnique',
         example:
-          "import Flora from '@flora-ai/flora';\n\nconst client = new Flora({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.runs.startTechnique({ body: {} });\n\nconsole.log(response.run_id);",
+          "import Flora from '@flora-ai/flora';\n\nconst client = new Flora({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.runs.startTechnique({\n  inputs: { foo: 'bar' },\n  technique_id: 'tech_abcd1234',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(response.run_id);",
       },
       go: {
         method: 'client.Runs.StartTechnique',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Runs.StartTechnique(context.TODO(), flora.RunStartTechniqueParams{\n\t\tBody: map[string]any{},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RunID)\n}\n',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Runs.StartTechnique(context.TODO(), flora.RunStartTechniqueParams{\n\t\tInputs: map[string]any{\n\t\t\t"foo": "bar",\n\t\t},\n\t\tTechniqueID: "tech_abcd1234",\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RunID)\n}\n',
       },
       cli: {
         method: 'runs start_technique',
-        example: "flora runs start-technique \\\n  --api-key 'My API Key' \\\n  --body '{}'",
+        example:
+          "flora runs start-technique \\\n  --api-key 'My API Key' \\\n  --inputs '{foo: bar}' \\\n  --technique-id tech_abcd1234 \\\n  --workspace-id ws_abc123",
       },
       http: {
         example:
-          "curl https://app.flora.ai/api/v1/runs/technique \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $FLORA_API_KEY\" \\\n    -d '{}'",
+          'curl https://app.flora.ai/api/v1/runs/technique \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": {\n            "foo": "bar"\n          },\n          "technique_id": "tech_abcd1234",\n          "workspace_id": "ws_abc123"\n        }\'',
       },
     },
   },
@@ -706,7 +728,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     ],
     response: '{ feedback_id: string; received_at: number; }',
     markdown:
-      "## record\n\n`client.feedback.record(detail: string, kind: 'feature_request' | 'bug' | 'technique_request' | 'missing_capability', summary: string, attempted_tools?: string[], project_id?: string, run_id?: string, workspace_id?: string): { feedback_id: string; received_at: number; }`\n\n**post** `/feedback`\n\nRecords product feedback from the authenticated user, optionally linked to a workspace, project, run, and attempted tools. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `detail: string`\n  Detailed description\n\n- `kind: 'feature_request' | 'bug' | 'technique_request' | 'missing_capability'`\n  Feedback kind\n\n- `summary: string`\n  Short summary\n\n- `attempted_tools?: string[]`\n\n- `project_id?: string`\n  Project identifier\n\n- `run_id?: string`\n  Run identifier\n\n- `workspace_id?: string`\n  Workspace identifier\n\n### Returns\n\n- `{ feedback_id: string; received_at: number; }`\n\n  - `feedback_id: string`\n  - `received_at: number`\n\n### Example\n\n```typescript\nimport Flora from '@flora-ai/flora';\n\nconst client = new Flora();\n\nconst response = await client.feedback.record({\n  detail: 'I want to export all generated campaign images at once.',\n  kind: 'feature_request',\n  summary: 'Need batch export support',\n});\n\nconsole.log(response);\n```",
+      "## record\n\n`client.feedback.record(detail: string, kind: 'feature_request' | 'bug' | 'technique_request' | 'missing_capability', summary: string, attempted_tools?: string[], project_id?: string, run_id?: string, workspace_id?: string): { feedback_id: string; received_at: number; }`\n\n**post** `/feedback`\n\nRecords product feedback from the authenticated user, optionally linked to a workspace, project, run, and attempted tools. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `detail: string`\n  Detailed description\n\n- `kind: 'feature_request' | 'bug' | 'technique_request' | 'missing_capability'`\n  Feedback kind\n\n- `summary: string`\n  Short summary\n\n- `attempted_tools?: string[]`\n  Tools or capabilities attempted before submitting feedback\n\n- `project_id?: string`\n  Project identifier\n\n- `run_id?: string`\n  Run identifier\n\n- `workspace_id?: string`\n  Workspace identifier\n\n### Returns\n\n- `{ feedback_id: string; received_at: number; }`\n\n  - `feedback_id: string`\n  - `received_at: number`\n\n### Example\n\n```typescript\nimport Flora from '@flora-ai/flora';\n\nconst client = new Flora();\n\nconst response = await client.feedback.record({\n  detail: 'I want to export all generated campaign images at once.',\n  kind: 'feature_request',\n  summary: 'Need batch export support',\n});\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.feedback.record',

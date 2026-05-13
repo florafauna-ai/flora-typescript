@@ -53,7 +53,7 @@ describe('resource projects', () => {
   test.skip('list: required and optional params', async () => {
     const response = await client.projects.list({
       workspace_id: 'ws_abc123',
-      cursor: 'cursor',
+      cursor: 'eyJvZmZzZXQiOjIwfQ',
       limit: 1,
       query: 'logo',
     });
@@ -77,7 +77,7 @@ describe('resource projects', () => {
     await expect(
       client.projects.listNodes(
         'prj_abc123',
-        { cursor: 'cursor', limit: 1 },
+        { cursor: 'eyJvZmZzZXQiOjIwfQ', limit: 1 },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Flora.NotFoundError);

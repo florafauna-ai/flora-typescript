@@ -51,6 +51,9 @@ export interface FeedbackRecordParams {
    */
   summary: string;
 
+  /**
+   * Tools or capabilities attempted before submitting feedback
+   */
   attempted_tools?: Array<string>;
 
   /**
