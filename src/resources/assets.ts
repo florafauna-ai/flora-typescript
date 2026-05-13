@@ -11,15 +11,27 @@ export class Assets extends APIResource {
    * Creates an asset from an allowlisted source URL or reserves a signed upload URL.
    * Mutating public API requests support an optional Idempotency-Key header for
    * client retries; duplicate keys within two hours return idempotency_duplicate.
+   *
+   * @example
+   * ```ts
+   * const asset = await client.assets.create({
+   *   source: 'signed-url',
+   *   workspace_id: 'ws_abc123',
+   * });
+   * ```
    */
-  create(params: AssetCreateParams, options?: RequestOptions): APIPromise<AssetCreateResponse> {
-    const { body } = params;
-    return this._client.post('/assets', { body: body, ...options });
+  create(body: AssetCreateParams, options?: RequestOptions): APIPromise<AssetCreateResponse> {
+    return this._client.post('/assets', { body, ...options });
   }
 
   /**
    * Returns metadata for one asset when it is accessible to the authenticated public
    * API key. Missing and inaccessible assets both return 404.
+   *
+   * @example
+   * ```ts
+   * const asset = await client.assets.retrieve('asset_abc123');
+   * ```
    */
   retrieve(assetID: string, options?: RequestOptions): APIPromise<AssetRetrieveResponse> {
     return this._client.get(path`/assets/${assetID}`, options);
@@ -29,6 +41,14 @@ export class Assets extends APIResource {
    * Returns assets visible to the authenticated public API key. Filter by workspace,
    * project canvas, search query, cursor, and limit without exposing raw file bytes
    * or internal graph data.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const assetListResponse of client.assets.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: AssetListParams | null | undefined = {},
@@ -41,6 +61,13 @@ export class Assets extends APIResource {
    * Marks a signed asset upload as complete after the file has been uploaded.
    * Mutating public API requests support an optional Idempotency-Key header for
    * client retries; duplicate keys within two hours return idempotency_duplicate.
+   *
+   * @example
+   * ```ts
+   * const response = await client.assets.complete(
+   *   'asset_abc123',
+   * );
+   * ```
    */
   complete(assetID: string, options?: RequestOptions): APIPromise<AssetCompleteResponse> {
     return this._client.post(path`/assets/${assetID}/complete`, options);
@@ -50,6 +77,11 @@ export class Assets extends APIResource {
    * Creates a fresh signed upload reservation for a failed or expired asset upload.
    * Mutating public API requests support an optional Idempotency-Key header for
    * client retries; duplicate keys within two hours return idempotency_duplicate.
+   *
+   * @example
+   * ```ts
+   * const response = await client.assets.retry('asset_abc123');
+   * ```
    */
   retry(assetID: string, options?: RequestOptions): APIPromise<AssetRetryResponse> {
     return this._client.post(path`/assets/${assetID}/retry`, options);
@@ -355,7 +387,30 @@ export namespace AssetRetryResponse {
 }
 
 export interface AssetCreateParams {
-  body: unknown;
+  /**
+   * Asset source URL or signed-url upload mode
+   */
+  source: string;
+
+  /**
+   * Workspace identifier
+   */
+  workspace_id: string;
+
+  /**
+   * Asset content type
+   */
+  content_type?: string;
+
+  /**
+   * Asset file name
+   */
+  file_name?: string;
+
+  /**
+   * Destination folder
+   */
+  folder?: string;
 }
 
 export interface AssetListParams extends AssetsCursorPageParams {
