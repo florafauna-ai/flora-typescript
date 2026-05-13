@@ -735,16 +735,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Flora from '@flora-ai/flora';\n\nconst client = new Flora({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.feedback.record({\n  detail: 'I want to export all generated campaign images at once.',\n  kind: 'feature_request',\n  summary: 'Need batch export support',\n});\n\nconsole.log(response.feedback_id);",
       },
-      go: {
-        method: 'client.Feedback.Record',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Feedback.Record(context.TODO(), flora.FeedbackRecordParams{\n\t\tDetail:  "I want to export all generated campaign images at once.",\n\t\tKind:    flora.FeedbackRecordParamsKindFeatureRequest,\n\t\tSummary: "Need batch export support",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.FeedbackID)\n}\n',
-      },
-      cli: {
-        method: 'feedback record',
-        example:
-          "flora feedback record \\\n  --api-key 'My API Key' \\\n  --detail 'I want to export all generated campaign images at once.' \\\n  --kind feature_request \\\n  --summary 'Need batch export support'",
-      },
       http: {
         example:
           'curl https://app.flora.ai/api/v1/feedback \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "detail": "I want to export all generated campaign images at once.",\n          "kind": "feature_request",\n          "summary": "Need batch export support",\n          "project_id": "prj_abc123",\n          "run_id": "run_abc123",\n          "workspace_id": "ws_abc123"\n        }\'',
