@@ -10,7 +10,7 @@ const client = new Flora({
 describe('resource assets', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.assets.create({ source: 'signed-url', workspace_id: 'ws_abc123' });
+    const responsePromise = client.assets.create({ body: {} });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,13 +22,7 @@ describe('resource assets', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.assets.create({
-      source: 'signed-url',
-      workspace_id: 'ws_abc123',
-      content_type: 'image/png',
-      file_name: 'hero.png',
-      folder: 'campaign-assets',
-    });
+    const response = await client.assets.create({ body: {} });
   });
 
   // Mock server tests are disabled

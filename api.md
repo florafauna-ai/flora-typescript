@@ -19,7 +19,7 @@ Types:
 
 Methods:
 
-- <code title="post /techniques/{techniqueId}/runs">client.techniques.runs.<a href="./src/resources/techniques/runs.ts">create</a>(techniqueID, { ...params }) -> RunCreateResponse</code>
+- <code title="post /techniques/{techniqueId}/runs">client.techniques.runs.<a href="./src/resources/techniques/runs.ts">create</a>(techniqueID) -> RunCreateResponse</code>
 - <code title="get /techniques/{techniqueId}/runs/{runId}">client.techniques.runs.<a href="./src/resources/techniques/runs.ts">retrieve</a>(runID, { ...params }) -> RunRetrieveResponse</code>
 
 # Assets

@@ -207,7 +207,7 @@ export interface ProjectListNodesResponse {
   label?: string | null;
 
   /**
-   * Canvas node media URL
+   * Canvas node output URL or text content
    */
   url?: string | null;
 
