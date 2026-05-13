@@ -97,13 +97,3 @@ Methods:
 
 - <code title="post /runs/generation">client.runs.<a href="./src/resources/runs.ts">startGeneration</a>({ ...params }) -> RunStartGenerationResponse</code>
 - <code title="post /runs/technique">client.runs.<a href="./src/resources/runs.ts">startTechnique</a>({ ...params }) -> RunStartTechniqueResponse</code>
-
-# Feedback
-
-Types:
-
-- <code><a href="./src/resources/feedback.ts">FeedbackRecordResponse</a></code>
-
-Methods:
-
-- <code title="post /feedback">client.feedback.<a href="./src/resources/feedback.ts">record</a>({ ...params }) -> FeedbackRecordResponse</code>
