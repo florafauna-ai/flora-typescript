@@ -61,7 +61,7 @@ describe('resource assets', () => {
     await expect(
       client.assets.list(
         {
-          cursor: 'cursor',
+          cursor: 'eyJvZmZzZXQiOjIwfQ',
           limit: 1,
           project_id: 'prj_abc123',
           query: 'logo',

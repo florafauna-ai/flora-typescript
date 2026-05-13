@@ -139,10 +139,19 @@ export namespace RunRetrieveResponse {
 }
 
 export interface RunCreateParams {
+  /**
+   * Technique inputs
+   */
   inputs: Array<RunCreateParams.Input>;
 
+  /**
+   * Technique run execution mode
+   */
   mode: 'async' | 'stream';
 
+  /**
+   * HTTPS callback URL for asynchronous run completion notifications
+   */
   callback_url?: string;
 
   /**
@@ -161,7 +170,7 @@ export namespace RunCreateParams {
     /**
      * Technique input type
      */
-    type: 'imageUrl' | 'videoUrl' | 'text';
+    type: 'text' | 'imageUrl' | 'videoUrl';
 
     /**
      * Technique input value

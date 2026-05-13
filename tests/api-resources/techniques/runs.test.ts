@@ -14,7 +14,7 @@ describe('resource runs', () => {
       inputs: [
         {
           id: 'id',
-          type: 'imageUrl',
+          type: 'text',
           value: 'value',
         },
       ],
@@ -35,7 +35,7 @@ describe('resource runs', () => {
       inputs: [
         {
           id: 'id',
-          type: 'imageUrl',
+          type: 'text',
           value: 'value',
         },
       ],

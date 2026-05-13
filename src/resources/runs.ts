@@ -66,11 +66,6 @@ export interface RunStartGenerationResponse {
    */
   type: 'generation' | 'technique';
 
-  /**
-   * Workflow run identifier
-   */
-  workflow_run_id: string;
-
   model?: RunStartGenerationResponse.Model | null;
 
   poll_url?: string | null;
@@ -118,11 +113,6 @@ export interface RunStartTechniqueResponse {
    * Run type
    */
   type: 'generation' | 'technique';
-
-  /**
-   * Workflow run identifier
-   */
-  workflow_run_id: string;
 
   model?: RunStartTechniqueResponse.Model | null;
 
