@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.0 (2026-05-13)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* Add OpenAPI update script ([6fa3e9d](https://github.com/florafauna-ai/flora-typescript/commit/6fa3e9de888767200e134845b91ca6e4f4b5522f))
+* **api:** api update ([2d27b73](https://github.com/florafauna-ai/flora-typescript/commit/2d27b73ed76d7cf4fb99bc6a150de7402405a91c))
+* **api:** api update ([1aa34f8](https://github.com/florafauna-ai/flora-typescript/commit/1aa34f83d3f685d9bcefd2d75ae8e8ff03c6fb29))
+* update oas ([138e0de](https://github.com/florafauna-ai/flora-typescript/commit/138e0de0b7d5bf9b5ca4702ca80621bbf7ef04de))
+
 ## 0.1.0 (2026-05-12)
 
 Full Changelog: [v0.0.2...v0.1.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.0.2...v0.1.0)
