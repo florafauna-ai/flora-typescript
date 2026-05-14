@@ -11,6 +11,7 @@ const config: JestConfigWithTsJest = {
     '^@flora-ai/flora/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
+    '<rootDir>/checks/',
     '<rootDir>/ecosystem-tests/',
     '<rootDir>/dist/',
     '<rootDir>/deno/',
