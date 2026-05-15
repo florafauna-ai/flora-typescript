@@ -10,7 +10,7 @@ const client = new Flora({
 describe('resource runs', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.techniques.runs.create('tech_def_abc123', {
+    const responsePromise = client.techniques.runs.create('art-directors-critique', {
       inputs: [
         {
           id: 'id',
@@ -31,7 +31,7 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.techniques.runs.create('tech_def_abc123', {
+    const response = await client.techniques.runs.create('art-directors-critique', {
       inputs: [
         {
           id: 'id',
@@ -47,7 +47,9 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.techniques.runs.retrieve('run_abc123', { techniqueId: 'tech_def_abc123' });
+    const responsePromise = client.techniques.runs.retrieve('run_abc123', {
+      techniqueId: 'art-directors-critique',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -59,6 +61,8 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
-    const response = await client.techniques.runs.retrieve('run_abc123', { techniqueId: 'tech_def_abc123' });
+    const response = await client.techniques.runs.retrieve('run_abc123', {
+      techniqueId: 'art-directors-critique',
+    });
   });
 });

@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Top-level run creation endpoints.
+ */
 export class Runs extends APIResource {
   /**
    * Starts a model generation run in a project canvas using a prompt, workspace,
@@ -64,7 +67,9 @@ export interface RunStartGenerationResponse {
   /**
    * Run type
    */
-  type: 'generation' | 'technique';
+  type: 'generation' | 'technique' | 'action';
+
+  action?: RunStartGenerationResponse.Action | null;
 
   model?: RunStartGenerationResponse.Model | null;
 
@@ -79,6 +84,50 @@ export interface RunStartGenerationResponse {
 }
 
 export namespace RunStartGenerationResponse {
+  export interface Action {
+    /**
+     * Action identifier
+     */
+    action_id:
+      | 'split-text'
+      | 'find-and-replace-text'
+      | 'concat-text'
+      | 'ken-burns-video'
+      | 'color-grade-image'
+      | 'change-image-ar'
+      | 'rotate-image'
+      | 'flip-image'
+      | 'color-filter-image'
+      | 'color-tint-image'
+      | 'filter-color-image'
+      | 'blur-image'
+      | 'duplicate-image'
+      | 'side-by-side-composite'
+      | 'add-shape-to-image'
+      | 'generate-shape-image'
+      | 'add-text-to-image'
+      | 'generate-text-image'
+      | 'qr-code-generator'
+      | 'stitch-videos'
+      | 'split-video'
+      | 'extract-video-frames'
+      | 'color-grade-video'
+      | 'video-to-frame-grid'
+      | 'boomerang-video'
+      | 'reverse-video'
+      | 'video-to-long-exposure'
+      | 'video-effect'
+      | 'color-filter-video'
+      | 'speed-up-video'
+      | 'slow-down-video'
+      | 'duplicate-video'
+      | 'greenscreen-video'
+      | 'resize-video'
+      | 'change-video-ar'
+      | 'split-audio-from-video'
+      | 'merge-audio-into-video';
+  }
+
   export interface Model {
     /**
      * Model identifier
@@ -112,7 +161,9 @@ export interface RunStartTechniqueResponse {
   /**
    * Run type
    */
-  type: 'generation' | 'technique';
+  type: 'generation' | 'technique' | 'action';
+
+  action?: RunStartTechniqueResponse.Action | null;
 
   model?: RunStartTechniqueResponse.Model | null;
 
@@ -127,6 +178,50 @@ export interface RunStartTechniqueResponse {
 }
 
 export namespace RunStartTechniqueResponse {
+  export interface Action {
+    /**
+     * Action identifier
+     */
+    action_id:
+      | 'split-text'
+      | 'find-and-replace-text'
+      | 'concat-text'
+      | 'ken-burns-video'
+      | 'color-grade-image'
+      | 'change-image-ar'
+      | 'rotate-image'
+      | 'flip-image'
+      | 'color-filter-image'
+      | 'color-tint-image'
+      | 'filter-color-image'
+      | 'blur-image'
+      | 'duplicate-image'
+      | 'side-by-side-composite'
+      | 'add-shape-to-image'
+      | 'generate-shape-image'
+      | 'add-text-to-image'
+      | 'generate-text-image'
+      | 'qr-code-generator'
+      | 'stitch-videos'
+      | 'split-video'
+      | 'extract-video-frames'
+      | 'color-grade-video'
+      | 'video-to-frame-grid'
+      | 'boomerang-video'
+      | 'reverse-video'
+      | 'video-to-long-exposure'
+      | 'video-effect'
+      | 'color-filter-video'
+      | 'speed-up-video'
+      | 'slow-down-video'
+      | 'duplicate-video'
+      | 'greenscreen-video'
+      | 'resize-video'
+      | 'change-video-ar'
+      | 'split-audio-from-video'
+      | 'merge-audio-into-video';
+  }
+
   export interface Model {
     /**
      * Model identifier

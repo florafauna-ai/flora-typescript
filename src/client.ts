@@ -811,12 +811,30 @@ export class Flora {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Technique catalog endpoints.
+   */
   techniques: API.Techniques = new API.Techniques(this);
+  /**
+   * Asset upload and retrieval endpoints.
+   */
   assets: API.Assets = new API.Assets(this);
+  /**
+   * Workspace discovery endpoints.
+   */
   workspaces: API.Workspaces = new API.Workspaces(this);
   projects: API.Projects = new API.Projects(this);
+  /**
+   * Model catalog endpoints.
+   */
   models: API.Models = new API.Models(this);
+  /**
+   * Top-level run creation endpoints.
+   */
   runs: API.Runs = new API.Runs(this);
+  /**
+   * Product feedback endpoints.
+   */
   feedback: API.Feedback = new API.Feedback(this);
 }
 

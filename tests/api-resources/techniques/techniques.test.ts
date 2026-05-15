@@ -10,7 +10,7 @@ const client = new Flora({
 describe('resource techniques', () => {
   // Mock server tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.techniques.retrieve('tech_def_abc123');
+    const responsePromise = client.techniques.retrieve('art-directors-critique');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
