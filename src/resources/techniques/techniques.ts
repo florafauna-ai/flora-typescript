@@ -8,6 +8,9 @@ import { PagePromise, TechniquesCursorPage, type TechniquesCursorPageParams } fr
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Technique catalog endpoints.
+ */
 export class Techniques extends APIResource {
   runs: RunsAPI.Runs = new RunsAPI.Runs(this._client);
 
@@ -84,12 +87,12 @@ export namespace TechniqueRetrieveResponse {
     /**
      * Required aspect ratio
      */
-    specifiedAspectRatio?: string;
+    specified_aspect_ratio?: string;
 
     /**
      * Required duration in seconds
      */
-    specifiedDuration?: number;
+    specified_duration?: number;
   }
 
   export interface Output {
@@ -116,12 +119,12 @@ export namespace TechniqueRetrieveResponse {
     /**
      * Required aspect ratio
      */
-    specifiedAspectRatio?: string;
+    specified_aspect_ratio?: string;
 
     /**
      * Required duration in seconds
      */
-    specifiedDuration?: number;
+    specified_duration?: number;
   }
 }
 
@@ -173,12 +176,12 @@ export namespace TechniqueListResponse {
     /**
      * Required aspect ratio
      */
-    specifiedAspectRatio?: string;
+    specified_aspect_ratio?: string;
 
     /**
      * Required duration in seconds
      */
-    specifiedDuration?: number;
+    specified_duration?: number;
   }
 
   export interface Output {
@@ -205,12 +208,12 @@ export namespace TechniqueListResponse {
     /**
      * Required aspect ratio
      */
-    specifiedAspectRatio?: string;
+    specified_aspect_ratio?: string;
 
     /**
      * Required duration in seconds
      */
-    specifiedDuration?: number;
+    specified_duration?: number;
   }
 }
 

@@ -5,6 +5,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Project canvas endpoints.
+ */
 export class Assets extends APIResource {
   /**
    * Attaches an existing ready asset to a project canvas as a static media node.

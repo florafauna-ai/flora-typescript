@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Product feedback endpoints.
+ */
 export class Feedback extends APIResource {
   /**
    * Records product feedback from the authenticated user, optionally linked to a

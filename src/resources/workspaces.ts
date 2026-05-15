@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Workspace discovery endpoints.
+ */
 export class Workspaces extends APIResource {
   /**
    * Returns the workspaces available to the authenticated public API key, including
