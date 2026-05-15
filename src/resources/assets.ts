@@ -6,6 +6,9 @@ import { AssetsCursorPage, type AssetsCursorPageParams, PagePromise } from '../c
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Asset upload and retrieval endpoints.
+ */
 export class Assets extends APIResource {
   /**
    * Creates an asset from an allowlisted source URL or reserves a signed upload URL.
@@ -130,14 +133,14 @@ export interface AssetCreateResponse {
 
 export namespace AssetCreateResponse {
   export interface Upload {
-    contentType: 'multipart/form-data';
+    content_type: 'multipart/form-data';
 
-    fileField: 'file';
+    file_field: 'file';
 
     /**
      * Upload form fields
      */
-    formFields: { [key: string]: string };
+    form_fields: { [key: string]: string };
 
     method: 'POST';
 
@@ -310,14 +313,14 @@ export interface AssetCompleteResponse {
 
 export namespace AssetCompleteResponse {
   export interface Upload {
-    contentType: 'multipart/form-data';
+    content_type: 'multipart/form-data';
 
-    fileField: 'file';
+    file_field: 'file';
 
     /**
      * Upload form fields
      */
-    formFields: { [key: string]: string };
+    form_fields: { [key: string]: string };
 
     method: 'POST';
 
@@ -368,14 +371,14 @@ export interface AssetRetryResponse {
 
 export namespace AssetRetryResponse {
   export interface Upload {
-    contentType: 'multipart/form-data';
+    content_type: 'multipart/form-data';
 
-    fileField: 'file';
+    file_field: 'file';
 
     /**
      * Upload form fields
      */
-    formFields: { [key: string]: string };
+    form_fields: { [key: string]: string };
 
     method: 'POST';
 

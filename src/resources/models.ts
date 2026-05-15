@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Model catalog endpoints.
+ */
 export class Models extends APIResource {
   /**
    * Returns the public model catalog visible to API clients. Use the optional type

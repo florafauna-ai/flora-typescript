@@ -5,6 +5,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Nested technique run endpoints.
+ */
 export class Runs extends APIResource {
   /**
    * Starts a run for a specific technique using the backward-compatible nested
@@ -35,36 +38,36 @@ export class Runs extends APIResource {
 }
 
 export interface RunCreateResponse {
-  createdAt: number;
+  created_at: number;
 
   progress: number;
 
   /**
    * Run identifier
    */
-  runId: string;
+  run_id: string;
 
   status: 'pending' | 'running' | 'completed' | 'failed';
 
-  chargedCost?: number;
+  charged_cost?: number;
 
-  completedAt?: number;
+  completed_at?: number;
 
   /**
    * Machine-readable run error code
    */
-  errorCode?: string;
+  error_code?: string;
 
   /**
    * Human-readable run error message
    */
-  errorMessage?: string;
+  error_message?: string;
 
   outputs?: Array<RunCreateResponse.Output>;
 
-  pollUrl?: string;
+  poll_url?: string;
 
-  startedAt?: number;
+  started_at?: number;
 }
 
 export namespace RunCreateResponse {
@@ -72,7 +75,7 @@ export namespace RunCreateResponse {
     /**
      * Run output identifier
      */
-    outputId: string;
+    output_id: string;
 
     /**
      * Run output media type
@@ -87,36 +90,36 @@ export namespace RunCreateResponse {
 }
 
 export interface RunRetrieveResponse {
-  createdAt: number;
+  created_at: number;
 
   progress: number;
 
   /**
    * Run identifier
    */
-  runId: string;
+  run_id: string;
 
   status: 'pending' | 'running' | 'completed' | 'failed';
 
-  chargedCost?: number;
+  charged_cost?: number;
 
-  completedAt?: number;
+  completed_at?: number;
 
   /**
    * Machine-readable run error code
    */
-  errorCode?: string;
+  error_code?: string;
 
   /**
    * Human-readable run error message
    */
-  errorMessage?: string;
+  error_message?: string;
 
   outputs?: Array<RunRetrieveResponse.Output>;
 
-  pollUrl?: string;
+  poll_url?: string;
 
-  startedAt?: number;
+  started_at?: number;
 }
 
 export namespace RunRetrieveResponse {
@@ -124,7 +127,7 @@ export namespace RunRetrieveResponse {
     /**
      * Run output identifier
      */
-    outputId: string;
+    output_id: string;
 
     /**
      * Run output media type
