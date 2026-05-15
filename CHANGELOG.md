@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 (2026-05-15)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* Add MCP OAuth resource metadata ([2c12390](https://github.com/florafauna-ai/flora-typescript/commit/2c12390e7f27e436acb48cf028532a04630c3829))
+* Hide feedback endpoint from non-MCP outputs ([09ef8f5](https://github.com/florafauna-ai/flora-typescript/commit/09ef8f513333e7b51afbf28935576174fc3214a9))
+* update api ver ([98698b0](https://github.com/florafauna-ai/flora-typescript/commit/98698b083acc8ff8b0efcc175bb0a16b03b72830))
+
 ## 0.2.0 (2026-05-13)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.1.0...v0.2.0)
