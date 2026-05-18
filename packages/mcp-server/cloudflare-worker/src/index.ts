@@ -19,26 +19,6 @@ type MCPProps = {
   clientConfig: McpOptions;
 };
 
-/**
- * The information displayed on the OAuth consent screen
- */
-const serverConfig: ServerConfig = {
-  orgName: 'Flora',
-  instructionsUrl: 'https://docs.flora.ai/more/api-getting-started',
-  logoUrl: 'https://app.flora.ai/flora_logomark.svg',
-  clientProperties: [
-    {
-      key: 'apiKey',
-      label: 'API Key',
-      description: 'Your Flora API key from the dashboard',
-      required: false,
-      default: null,
-      placeholder: 'sk_flora_...',
-      type: 'password',
-    },
-  ],
-};
-
 // `newMcpServer` fetches MCP server instructions from the Stainless API. In a
 // Durable Object, that fetch happens inside `blockConcurrencyWhile`; if it
 // hangs the DO is reset, and if it rejects the same thing happens. Race
@@ -111,36 +91,8 @@ export class MyMCP extends McpAgent<Env, unknown, MCPProps> {
 }
 
 export type ServerConfig = {
-  /**
-   * The name of the company/project
-   */
   orgName: string;
-
-  /**
-   * An optional company logo image
-   */
-  logoUrl?: string;
-
-  /**
-   * An optional URL with instructions for users to get an API key
-   */
-  instructionsUrl?: string;
-
-  /**
-   * Properties collected to initialize the client
-   */
-  clientProperties: ClientProperty[];
-};
-
-export type ClientProperty = {
-  key: string;
-  label: string;
-  description?: string;
-  required: boolean;
-  default?: unknown;
-  placeholder?: string;
-  type: 'string' | 'number' | 'password' | 'select';
-  options?: { label: string; value: string }[];
+  clientProperties: { key: string; label: string }[];
 };
 
 // Export the OAuth handler as the default
@@ -151,9 +103,7 @@ export default new OAuthProvider({
     // @ts-expect-error
     '/mcp': MyMCP.serve('/mcp'), // Streaming HTTP
   },
-  // Type assertion needed due to Headers type mismatch between Hono and @cloudflare/workers-types
-  // At runtime, Hono's fetch handler is fully compatible with ExportedHandler
-  defaultHandler: makeOAuthConsent(serverConfig) as unknown as ExportedHandler,
+  defaultHandler: makeOAuthConsent() as unknown as ExportedHandler,
   authorizeEndpoint: '/authorize',
   tokenEndpoint: '/token',
   clientRegistrationEndpoint: '/register',
