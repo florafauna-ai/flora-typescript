@@ -1,23 +1,23 @@
-# Flora Remote MCP Server
+# Flora MCP Server
 
-This MCP server is available at:
+Connect your AI tools to Flora's creative AI platform for generating images, video, audio, and text.
+
+**Server URL:**
 
 ```
 {{cloudflareWorkerUrl}}
 ```
 
+## Connect Your MCP Client
+
 ### Claude.ai
 
-To connect Claude Web to this MCP server:
-
 1. Open Claude Web
-2. Go to Settings -> Connectors
+2. Go to Settings → Connectors
 3. Click "+ Add Custom Connector"
 4. Add the MCP server URL: `{{cloudflareWorkerUrl}}`
 
 ### Claude Desktop
-
-Claude Desktop requires using the `mcp-remote` package to connect to remote MCP servers:
 
 1. Edit your Claude Desktop configuration file:
    - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
@@ -27,7 +27,7 @@ Claude Desktop requires using the `mcp-remote` package to connect to remote MCP 
 ```json
 {
   "mcpServers": {
-    "flora_ai_flora_api": {
+    "flora": {
       "command": "npx",
       "args": ["-y", "mcp-remote@latest", "{{cloudflareWorkerUrl}}"]
     }
@@ -35,17 +35,16 @@ Claude Desktop requires using the `mcp-remote` package to connect to remote MCP 
 }
 ```
 
-3. Restart Claude Desktop to see the MCP server connection (look for the hammer icon)
+3. Restart Claude Desktop (look for the hammer icon)
 
 ### Cursor
 
-1. Edit your Cursor MCP configuration file at `~/.cursor/mcp.json`
-2. Add the following configuration:
+Edit `~/.cursor/mcp.json`:
 
 ```json
 {
   "mcpServers": {
-    "flora_ai_flora_api": {
+    "flora": {
       "command": "npx",
       "args": ["-y", "mcp-remote@latest", "{{cloudflareWorkerUrl}}"]
     }
@@ -55,13 +54,12 @@ Claude Desktop requires using the `mcp-remote` package to connect to remote MCP 
 
 ### Windsurf
 
-1. Edit your Windsurf configuration file at `~/.codeium/windsurf/mcp_config.json`
-2. Add the following configuration:
+Edit `~/.codeium/windsurf/mcp_config.json`:
 
 ```json
 {
   "mcpServers": {
-    "flora_ai_flora_api": {
+    "flora": {
       "command": "npx",
       "args": ["-y", "mcp-remote@latest", "{{cloudflareWorkerUrl}}"]
     }
@@ -69,9 +67,13 @@ Claude Desktop requires using the `mcp-remote` package to connect to remote MCP 
 }
 ```
 
-## Troubleshooting
+## Authentication
 
-If you encounter issues connecting:
+When connecting for the first time, you'll be prompted to enter your Flora API key. You can generate one from the [Flora Dashboard](https://app.flora.ai).
+
+For detailed setup instructions, see the [API Getting Started guide](https://docs.flora.ai/more/api-getting-started).
+
+## Troubleshooting
 
 1. Ensure you have Node.js 18 or higher installed
 2. Try clearing MCP authentication cache: `rm -rf ~/.mcp-auth`
@@ -80,7 +82,6 @@ If you encounter issues connecting:
 
 ## Learn More
 
-For more information about MCP:
-
-- [MCP Introduction](https://modelcontextprotocol.io/introduction)
-- [mcp-remote package](https://www.npmjs.com/package/mcp-remote)
+- [Flora API Documentation](https://docs.flora.ai)
+- [Flora API Reference](https://developer.flora.ai)
+- [MCP Protocol](https://modelcontextprotocol.io/introduction)
