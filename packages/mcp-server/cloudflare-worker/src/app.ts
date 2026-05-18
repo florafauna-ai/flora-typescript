@@ -43,9 +43,7 @@ export function makeOAuthConsent() {
 
   app.get('/', async (c) => {
     const content = await homeContent(c.req.raw);
-    return c.html(
-      layout(content, 'Home', { orgName: 'Flora', clientProperties: [] }),
-    );
+    return c.html(layout(content, 'Home', { orgName: 'Flora', clientProperties: [] }));
   });
 
   // Redirect to Clerk's OAuth authorize endpoint
@@ -57,11 +55,9 @@ export function makeOAuthConsent() {
     const codeChallenge = await generateCodeChallenge(codeVerifier);
 
     // Store the original auth request and code verifier in KV (10 min TTL)
-    await c.env.OAUTH_KV.put(
-      `clerk_auth_state:${state}`,
-      JSON.stringify({ oauthReqInfo, codeVerifier }),
-      { expirationTtl: 600 },
-    );
+    await c.env.OAUTH_KV.put(`clerk_auth_state:${state}`, JSON.stringify({ oauthReqInfo, codeVerifier }), {
+      expirationTtl: 600,
+    });
 
     const baseUrl = getBaseUrl(c.req.raw);
     const params = new URLSearchParams({
@@ -84,10 +80,7 @@ export function makeOAuthConsent() {
     const error = c.req.query('error');
 
     if (error) {
-      return c.text(
-        `Authorization failed: ${c.req.query('error_description') || error}`,
-        400,
-      );
+      return c.text(`Authorization failed: ${c.req.query('error_description') || error}`, 400);
     }
 
     if (!code || !state) {
