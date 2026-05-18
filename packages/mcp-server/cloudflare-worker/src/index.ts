@@ -49,7 +49,7 @@ const INSTRUCTIONS_FETCH_TIMEOUT_MS = 5000;
 
 function fallbackMcpServer(): McpServer {
   return new McpServer(
-    { name: 'flora_ai_flora_api', version: '0.3.0' },
+    { name: 'flora_ai_flora_api', version: '0.4.0' },
     { capabilities: { tools: {}, logging: {} } },
   );
 }
