@@ -149,13 +149,15 @@ export function makeOAuthConsent() {
     }
 
     // Complete the OAuth authorization with the MCP client
+    // Pass the Clerk access token as the API key for the Flora SDK
     const { redirectTo } = await c.env.OAUTH_PROVIDER.completeAuthorization({
       request: oauthReqInfo,
       userId,
       metadata: userMetadata,
       scope: oauthReqInfo.scope,
       props: {
-        clerkAccessToken: tokenData.access_token,
+        clientProps: { apiKey: tokenData.access_token },
+        clientConfig: {},
       },
     });
 
