@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 (2026-05-18)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* enable Cloudflare Worker generation for MCP server ([5fdf163](https://github.com/florafauna-ai/flora-typescript/commit/5fdf163fe8b65fa616ccc0e26944766a63e2541f))
+
 ## 0.3.0 (2026-05-15)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.2.0...v0.3.0)
