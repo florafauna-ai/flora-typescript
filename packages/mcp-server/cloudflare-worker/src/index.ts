@@ -24,16 +24,16 @@ type MCPProps = {
  */
 const serverConfig: ServerConfig = {
   orgName: 'Flora',
-  instructionsUrl: undefined, // Set a url for where you show users how to get an API key
-  logoUrl: undefined, // Set a custom logo url to appear during the OAuth flow
+  instructionsUrl: 'https://docs.flora.ai/more/api-getting-started',
+  logoUrl: 'https://app.flora.ai/flora_logomark.svg',
   clientProperties: [
     {
       key: 'apiKey',
       label: 'API Key',
-      description: '',
+      description: 'Your Flora API key from the dashboard',
       required: false,
       default: null,
-      placeholder: 'My API Key',
+      placeholder: 'sk_flora_...',
       type: 'password',
     },
   ],
