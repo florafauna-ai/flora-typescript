@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0 (2026-05-18)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* use oauth_authorization_flow with Clerk for MCP server auth ([2d19792](https://github.com/florafauna-ai/flora-typescript/commit/2d19792ff87160460e66eb51ff987c3844836411))
+
 ## 0.4.0 (2026-05-18)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.3.0...v0.4.0)
