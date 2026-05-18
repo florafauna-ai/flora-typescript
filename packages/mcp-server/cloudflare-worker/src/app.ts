@@ -97,22 +97,19 @@ export function makeOAuthConsent() {
     const { oauthReqInfo, codeVerifier } = JSON.parse(stored);
     const baseUrl = getBaseUrl(c.req.raw);
 
-    // Exchange the code for tokens with Clerk using Basic Auth
+    // Exchange the code for tokens with Clerk
     const tokenParams = new URLSearchParams({
       grant_type: 'authorization_code',
       code,
       redirect_uri: `${baseUrl}/callback`,
+      client_id: c.env.OAUTH_CLIENT_ID,
+      client_secret: c.env.OAUTH_CLIENT_SECRET,
       code_verifier: codeVerifier,
     });
 
-    const basicAuth = btoa(`${c.env.OAUTH_CLIENT_ID}:${c.env.OAUTH_CLIENT_SECRET}`);
-
     const tokenResponse = await fetch(CLERK_TOKEN_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Basic ${basicAuth}`,
-      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: tokenParams.toString(),
     });
 
