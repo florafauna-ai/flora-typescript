@@ -158,9 +158,9 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Flora API.
+ * API Client for interfacing with the FLORA API.
  */
-export class Flora {
+export class FLORA {
   apiKey: string | null;
 
   baseURL: string;
@@ -176,7 +176,7 @@ export class Flora {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Flora API.
+   * API Client for interfacing with the FLORA API.
    *
    * @param {string | null | undefined} [opts.apiKey=process.env['FLORA_API_KEY'] ?? null]
    * @param {string} [opts.baseURL=process.env['FLORA_BASE_URL'] ?? https://app.flora.ai/api/v1] - Override the default base URL for the API.
@@ -199,7 +199,7 @@ export class Flora {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? Flora.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? FLORA.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
@@ -561,7 +561,7 @@ export class Flora {
     options: PromiseOrValue<FinalRequestOptions>,
   ): Pagination.PagePromise<PageClass, Item> {
     const request = this.makeRequest(options, null, undefined);
-    return new Pagination.PagePromise<PageClass, Item>(this as any as Flora, request, Page);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as FLORA, request, Page);
   }
 
   async fetchWithTimeout(
@@ -792,10 +792,10 @@ export class Flora {
     }
   }
 
-  static Flora = this;
+  static FLORA = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static FloraError = Errors.FloraError;
+  static FLORAError = Errors.FLORAError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -838,15 +838,15 @@ export class Flora {
   feedback: API.Feedback = new API.Feedback(this);
 }
 
-Flora.Techniques = Techniques;
-Flora.Assets = Assets;
-Flora.Workspaces = Workspaces;
-Flora.Projects = Projects;
-Flora.Models = Models;
-Flora.Runs = Runs;
-Flora.Feedback = Feedback;
+FLORA.Techniques = Techniques;
+FLORA.Assets = Assets;
+FLORA.Workspaces = Workspaces;
+FLORA.Projects = Projects;
+FLORA.Models = Models;
+FLORA.Runs = Runs;
+FLORA.Feedback = Feedback;
 
-export declare namespace Flora {
+export declare namespace FLORA {
   export type RequestOptions = Opts.RequestOptions;
 
   export import ProjectsCursorPage = Pagination.ProjectsCursorPage;

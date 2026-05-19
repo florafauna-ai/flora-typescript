@@ -8,7 +8,7 @@ import {
   SetLevelRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 import { ClientOptions } from '@flora-ai/flora';
-import Flora from '@flora-ai/flora';
+import FLORA from '@flora-ai/flora';
 import { codeTool } from './code-tool';
 import docsSearchTool from './docs-search-tool';
 import { setLocalSearch } from './docs-search-tool';
@@ -72,15 +72,15 @@ export async function initMcpServer(params: {
     setLocalSearch(localSearch);
   }
 
-  let _client: Flora | undefined;
+  let _client: FLORA | undefined;
   let _clientError: Error | undefined;
   let _logLevel: 'debug' | 'info' | 'warn' | 'error' | 'off' | undefined;
 
-  const getClient = (): Flora => {
+  const getClient = (): FLORA => {
     if (_clientError) throw _clientError;
     if (!_client) {
       try {
-        _client = new Flora({
+        _client = new FLORA({
           logger,
           ...params.clientOptions,
           defaultHeaders: {
@@ -115,7 +115,7 @@ export async function initMcpServer(params: {
       throw new Error(`Unknown tool: ${name}`);
     }
 
-    let client: Flora;
+    let client: FLORA;
     try {
       client = getClient();
     } catch (error) {

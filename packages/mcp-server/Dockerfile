@@ -1,4 +1,4 @@
-# Dockerfile for Flora MCP Server
+# Dockerfile for FLORA MCP Server
 #
 # This Dockerfile builds a Docker image for the MCP Server.
 #
