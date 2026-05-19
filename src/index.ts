@@ -1,13 +1,13 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Flora as default } from './client';
+export { FLORA as default } from './client';
 
 export { type Uploadable, toFile } from './core/uploads';
 export { APIPromise } from './core/api-promise';
-export { Flora, type ClientOptions } from './client';
+export { FLORA, type ClientOptions } from './client';
 export { PagePromise } from './core/pagination';
 export {
-  FloraError,
+  FLORAError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,

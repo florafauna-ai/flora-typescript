@@ -23,7 +23,7 @@ export class Techniques extends APIResource {
   }
 
   /**
-   * Returns reusable Flora techniques visible to the authenticated public API key.
+   * Returns reusable FLORA techniques visible to the authenticated public API key.
    * Use workspace_id, query, cursor, and limit to filter the catalog.
    */
   list(

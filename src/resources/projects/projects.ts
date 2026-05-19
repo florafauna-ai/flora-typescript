@@ -18,7 +18,7 @@ export class Projects extends APIResource {
   assets: AssetsAPI.Assets = new AssetsAPI.Assets(this._client);
 
   /**
-   * Creates a new Flora project in the requested workspace. Mutating public API
+   * Creates a new FLORA project in the requested workspace. Mutating public API
    * requests support an optional Idempotency-Key header for client retries;
    * duplicate keys within two hours return idempotency_duplicate.
    *
