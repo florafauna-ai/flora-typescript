@@ -7,10 +7,15 @@ const client = new FLORA({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource assets', () => {
+describe('resource generations', () => {
   // Mock server tests are disabled
-  test.skip('attachAsset: only required params', async () => {
-    const responsePromise = client.projects.assets.attachAsset('asset_abc123', { projectId: 'prj_abc123' });
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.generations.create({
+      project_id: 'prj_abc123',
+      prompt: 'A cinematic product photo of a ceramic mug on a sunlit table',
+      type: 'image',
+      workspace_id: 'ws_abc123',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,7 +26,14 @@ describe('resource assets', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('attachAsset: required and optional params', async () => {
-    const response = await client.projects.assets.attachAsset('asset_abc123', { projectId: 'prj_abc123' });
+  test.skip('create: required and optional params', async () => {
+    const response = await client.generations.create({
+      project_id: 'prj_abc123',
+      prompt: 'A cinematic product photo of a ceramic mug on a sunlit table',
+      type: 'image',
+      workspace_id: 'ws_abc123',
+      model: 't2i-flux-2-pro',
+      params: { foo: 'bar' },
+    });
   });
 });
