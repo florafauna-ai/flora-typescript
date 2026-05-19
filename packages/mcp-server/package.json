@@ -1,8 +1,8 @@
 {
   "name": "flora-mcp",
   "version": "0.5.0",
-  "description": "The official MCP Server for the Flora API",
-  "author": "Flora <>",
+  "description": "The official MCP Server for the FLORA API",
+  "author": "FLORA <>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",

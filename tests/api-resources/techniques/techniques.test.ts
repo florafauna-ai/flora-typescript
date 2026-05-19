@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Flora from '@flora-ai/flora';
+import FLORA from '@flora-ai/flora';
 
-const client = new Flora({
+const client = new FLORA({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
@@ -45,6 +45,6 @@ describe('resource techniques', () => {
         },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(Flora.NotFoundError);
+    ).rejects.toThrow(FLORA.NotFoundError);
   });
 });
