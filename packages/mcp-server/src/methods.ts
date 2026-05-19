@@ -101,6 +101,30 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/projects/{projectId}/assets/{assetId}/attach',
   },
   {
+    clientCallName: 'client.projects.canvas.retrieve',
+    fullyQualifiedName: 'projects.canvas.retrieve',
+    httpMethod: 'get',
+    httpPath: '/projects/{projectId}/canvas',
+  },
+  {
+    clientCallName: 'client.projects.canvas.update',
+    fullyQualifiedName: 'projects.canvas.update',
+    httpMethod: 'patch',
+    httpPath: '/projects/{projectId}/canvas',
+  },
+  {
+    clientCallName: 'client.projects.actions.create',
+    fullyQualifiedName: 'projects.actions.create',
+    httpMethod: 'post',
+    httpPath: '/projects/{projectId}/actions',
+  },
+  {
+    clientCallName: 'client.projects.actions.run',
+    fullyQualifiedName: 'projects.actions.run',
+    httpMethod: 'post',
+    httpPath: '/projects/{projectId}/actions/{nodeId}/run',
+  },
+  {
     clientCallName: 'client.models.list',
     fullyQualifiedName: 'models.list',
     httpMethod: 'get',
@@ -117,6 +141,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'runs.startTechnique',
     httpMethod: 'post',
     httpPath: '/runs/technique',
+  },
+  {
+    clientCallName: 'client.generations.create',
+    fullyQualifiedName: 'generations.create',
+    httpMethod: 'post',
+    httpPath: '/generate',
   },
   {
     clientCallName: 'client.feedback.record',

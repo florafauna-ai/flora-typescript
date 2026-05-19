@@ -14,16 +14,7 @@ export class Runs extends APIResource {
    * requests support an optional Idempotency-Key header for client retries;
    * duplicate keys within two hours return idempotency_duplicate.
    *
-   * @example
-   * ```ts
-   * const response = await client.runs.startGeneration({
-   *   project_id: 'prj_abc123',
-   *   prompt:
-   *     'A cinematic product photo of a ceramic mug on a sunlit table',
-   *   type: 'image',
-   *   workspace_id: 'ws_abc123',
-   * });
-   * ```
+   * @deprecated
    */
   startGeneration(
     body: RunStartGenerationParams,
@@ -55,6 +46,9 @@ export class Runs extends APIResource {
 }
 
 export interface RunStartGenerationResponse {
+  /**
+   * Cost charged in USD
+   */
   charged_cost: number;
 
   estimated_seconds: number | null;
@@ -149,6 +143,9 @@ export namespace RunStartGenerationResponse {
 }
 
 export interface RunStartTechniqueResponse {
+  /**
+   * Cost charged in USD
+   */
   charged_cost: number;
 
   estimated_seconds: number | null;

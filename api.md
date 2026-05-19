@@ -76,6 +76,30 @@ Methods:
 
 - <code title="post /projects/{projectId}/assets/{assetId}/attach">client.projects.assets.<a href="./src/resources/projects/assets.ts">attachAsset</a>(assetID, { ...params }) -> AssetAttachAssetResponse</code>
 
+## Canvas
+
+Types:
+
+- <code><a href="./src/resources/projects/canvas.ts">CanvasRetrieveResponse</a></code>
+- <code><a href="./src/resources/projects/canvas.ts">CanvasUpdateResponse</a></code>
+
+Methods:
+
+- <code title="get /projects/{projectId}/canvas">client.projects.canvas.<a href="./src/resources/projects/canvas.ts">retrieve</a>(projectID) -> CanvasRetrieveResponse</code>
+- <code title="patch /projects/{projectId}/canvas">client.projects.canvas.<a href="./src/resources/projects/canvas.ts">update</a>(projectID, { ...params }) -> CanvasUpdateResponse</code>
+
+## Actions
+
+Types:
+
+- <code><a href="./src/resources/projects/actions.ts">ActionCreateResponse</a></code>
+- <code><a href="./src/resources/projects/actions.ts">ActionRunResponse</a></code>
+
+Methods:
+
+- <code title="post /projects/{projectId}/actions">client.projects.actions.<a href="./src/resources/projects/actions.ts">create</a>(projectID, { ...params }) -> ActionCreateResponse</code>
+- <code title="post /projects/{projectId}/actions/{nodeId}/run">client.projects.actions.<a href="./src/resources/projects/actions.ts">run</a>(nodeID, { ...params }) -> ActionRunResponse</code>
+
 # Models
 
 Types:
@@ -97,3 +121,13 @@ Methods:
 
 - <code title="post /runs/generation">client.runs.<a href="./src/resources/runs.ts">startGeneration</a>({ ...params }) -> RunStartGenerationResponse</code>
 - <code title="post /runs/technique">client.runs.<a href="./src/resources/runs.ts">startTechnique</a>({ ...params }) -> RunStartTechniqueResponse</code>
+
+# Generations
+
+Types:
+
+- <code><a href="./src/resources/generations.ts">GenerationCreateResponse</a></code>
+
+Methods:
+
+- <code title="post /generate">client.generations.<a href="./src/resources/generations.ts">create</a>({ ...params }) -> GenerationCreateResponse</code>

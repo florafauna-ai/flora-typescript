@@ -596,6 +596,146 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'retrieve',
+    endpoint: '/projects/{projectId}/canvas',
+    httpMethod: 'get',
+    summary: 'Get project canvas',
+    description:
+      'Returns the current project canvas topology as a Mermaid flowchart using the same serializer as the Fauna agent.',
+    stainlessPath: '(resource) projects.canvas > (method) retrieve',
+    qualified: 'client.projects.canvas.retrieve',
+    params: ['projectId: string;'],
+    response:
+      '{ canvas_url: string; diagram: string; project_id: string; summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }; }',
+    markdown:
+      "## retrieve\n\n`client.projects.canvas.retrieve(projectId: string): { canvas_url: string; diagram: string; project_id: string; summary: object; }`\n\n**get** `/projects/{projectId}/canvas`\n\nReturns the current project canvas topology as a Mermaid flowchart using the same serializer as the Fauna agent.\n\n### Parameters\n\n- `projectId: string`\n  Project identifier\n\n### Returns\n\n- `{ canvas_url: string; diagram: string; project_id: string; summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }; }`\n\n  - `canvas_url: string`\n  - `diagram: string`\n  - `project_id: string`\n  - `summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst canvas = await client.projects.canvas.retrieve('prj_abc123');\n\nconsole.log(canvas);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.projects.canvas.retrieve',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst canvas = await client.projects.canvas.retrieve('prj_abc123');\n\nconsole.log(canvas.project_id);",
+      },
+      go: {
+        method: 'client.Projects.Canvas.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcanvas, err := client.Projects.Canvas.Get(context.TODO(), "prj_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", canvas.ProjectID)\n}\n',
+      },
+      cli: {
+        method: 'canvas retrieve',
+        example: "flora projects:canvas retrieve \\\n  --api-key 'My API Key' \\\n  --project-id prj_abc123",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/canvas \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'update',
+    endpoint: '/projects/{projectId}/canvas',
+    httpMethod: 'patch',
+    summary: 'Patch project canvas',
+    description:
+      'Applies a Mermaid flowchart patch to the project canvas using the same create_workflow path as the Fauna agent. The diagram may add nodes, connect nodes, and reference existing canvas nodes by their Mermaid short IDs.',
+    stainlessPath: '(resource) projects.canvas > (method) update',
+    qualified: 'client.projects.canvas.update',
+    params: ['projectId: string;', 'diagram: string;', 'node_params?: object;'],
+    response:
+      '{ canvas_url: string; created_edge_count: number; created_node_count: number; diagram: string; project_id: string; warnings?: string[]; }',
+    markdown:
+      "## update\n\n`client.projects.canvas.update(projectId: string, diagram: string, node_params?: object): { canvas_url: string; created_edge_count: number; created_node_count: number; diagram: string; project_id: string; warnings?: string[]; }`\n\n**patch** `/projects/{projectId}/canvas`\n\nApplies a Mermaid flowchart patch to the project canvas using the same create_workflow path as the Fauna agent. The diagram may add nodes, connect nodes, and reference existing canvas nodes by their Mermaid short IDs.\n\n### Parameters\n\n- `projectId: string`\n  Project identifier\n\n- `diagram: string`\n  Mermaid flowchart diagram to apply\n\n- `node_params?: object`\n  Optional per-node parameters keyed by Mermaid node ID.\n\n### Returns\n\n- `{ canvas_url: string; created_edge_count: number; created_node_count: number; diagram: string; project_id: string; warnings?: string[]; }`\n\n  - `canvas_url: string`\n  - `created_edge_count: number`\n  - `created_node_count: number`\n  - `diagram: string`\n  - `project_id: string`\n  - `warnings?: string[]`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst canvas = await client.projects.canvas.update('prj_abc123', { diagram: 'graph LR\\n  source[\"Product photo (Image)\"]\\n  output[\"Editorial campaign image (Image)\"]\\n  source --> output' });\n\nconsole.log(canvas);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.projects.canvas.update',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst canvas = await client.projects.canvas.update('prj_abc123', {\n  diagram:\n    'graph LR\\n  source[\"Product photo (Image)\"]\\n  output[\"Editorial campaign image (Image)\"]\\n  source --> output',\n});\n\nconsole.log(canvas.project_id);",
+      },
+      go: {
+        method: 'client.Projects.Canvas.Update',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcanvas, err := client.Projects.Canvas.Update(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.ProjectCanvasUpdateParams{\n\t\t\tDiagram: "graph LR\\n  source[\\"Product photo (Image)\\"]\\n  output[\\"Editorial campaign image (Image)\\"]\\n  source --> output",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", canvas.ProjectID)\n}\n',
+      },
+      cli: {
+        method: 'canvas update',
+        example:
+          'flora projects:canvas update \\\n  --api-key \'My API Key\' \\\n  --project-id prj_abc123 \\\n  --diagram \'graph LR\n  source["Product photo (Image)"]\n  output["Editorial campaign image (Image)"]\n  source --> output\'',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/canvas \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "diagram": "graph LR\\\\n  source[\\\\"Product photo (Image)\\\\"]\\\\n  output[\\\\"Editorial campaign image (Image)\\\\"]\\\\n  source --> output"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/projects/{projectId}/actions',
+    httpMethod: 'post',
+    summary: 'Create a canvas action',
+    description: 'Creates a prebuilt action node on a project canvas using a raw action slug.',
+    stainlessPath: '(resource) projects.actions > (method) create',
+    qualified: 'client.projects.actions.create',
+    params: ['projectId: string;', 'action_id: string;', 'params?: object;'],
+    response: '{ action_id: string; canvas_url: string; node_id: string; project_id: string; }',
+    markdown:
+      "## create\n\n`client.projects.actions.create(projectId: string, action_id: string, params?: object): { action_id: string; canvas_url: string; node_id: string; project_id: string; }`\n\n**post** `/projects/{projectId}/actions`\n\nCreates a prebuilt action node on a project canvas using a raw action slug.\n\n### Parameters\n\n- `projectId: string`\n  Project identifier\n\n- `action_id: string`\n  Action identifier\n\n- `params?: object`\n  Action parameters\n\n### Returns\n\n- `{ action_id: string; canvas_url: string; node_id: string; project_id: string; }`\n\n  - `action_id: string`\n  - `canvas_url: string`\n  - `node_id: string`\n  - `project_id: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst action = await client.projects.actions.create('prj_abc123', { action_id: 'split-text' });\n\nconsole.log(action);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.projects.actions.create',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst action = await client.projects.actions.create('prj_abc123', { action_id: 'split-text' });\n\nconsole.log(action.action_id);",
+      },
+      go: {
+        method: 'client.Projects.Actions.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\taction, err := client.Projects.Actions.New(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.ProjectActionNewParams{\n\t\t\tActionID: flora.ProjectActionNewParamsActionIDSplitText,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", action.ActionID)\n}\n',
+      },
+      cli: {
+        method: 'actions create',
+        example:
+          "flora projects:actions create \\\n  --api-key 'My API Key' \\\n  --project-id prj_abc123 \\\n  --action-id split-text",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/actions \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "action_id": "split-text"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'run',
+    endpoint: '/projects/{projectId}/actions/{nodeId}/run',
+    httpMethod: 'post',
+    summary: 'Run a canvas action',
+    description: 'Runs an existing canvas action node through the action execution workflow.',
+    stainlessPath: '(resource) projects.actions > (method) run',
+    qualified: 'client.projects.actions.run',
+    params: ['projectId: string;', 'nodeId: string;'],
+    response:
+      "{ charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique' | 'action'; action?: { action_id: string; }; model?: { model_id: string; }; poll_url?: string; project_id?: string; technique?: { name: string; technique_id: string; }; }",
+    markdown:
+      "## run\n\n`client.projects.actions.run(projectId: string, nodeId: string): { charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique' | 'action'; action?: object; model?: object; poll_url?: string; project_id?: string; technique?: object; }`\n\n**post** `/projects/{projectId}/actions/{nodeId}/run`\n\nRuns an existing canvas action node through the action execution workflow.\n\n### Parameters\n\n- `projectId: string`\n  Project identifier\n\n- `nodeId: string`\n  Canvas action node identifier\n\n### Returns\n\n- `{ charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique' | 'action'; action?: { action_id: string; }; model?: { model_id: string; }; poll_url?: string; project_id?: string; technique?: { name: string; technique_id: string; }; }`\n\n  - `charged_cost: number`\n  - `estimated_seconds: number`\n  - `run_id: string`\n  - `type: 'generation' | 'technique' | 'action'`\n  - `action?: { action_id: string; }`\n  - `model?: { model_id: string; }`\n  - `poll_url?: string`\n  - `project_id?: string`\n  - `technique?: { name: string; technique_id: string; }`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.projects.actions.run('nodeId', { projectId: 'prj_abc123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.projects.actions.run',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.projects.actions.run('nodeId', { projectId: 'prj_abc123' });\n\nconsole.log(response.run_id);",
+      },
+      go: {
+        method: 'client.Projects.Actions.Run',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Projects.Actions.Run(\n\t\tcontext.TODO(),\n\t\t"nodeId",\n\t\tflora.ProjectActionRunParams{\n\t\t\tProjectID: "prj_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RunID)\n}\n',
+      },
+      cli: {
+        method: 'actions run',
+        example:
+          "flora projects:actions run \\\n  --api-key 'My API Key' \\\n  --project-id prj_abc123 \\\n  --node-id nodeId",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/actions/$NODE_ID/run \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+    },
+  },
+  {
     name: 'list',
     endpoint: '/models',
     httpMethod: 'get',
@@ -705,6 +845,49 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://app.flora.ai/api/v1/runs/technique \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": {\n            "foo": "bar"\n          },\n          "technique_id": "tech_abcd1234",\n          "workspace_id": "ws_abc123"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/generate',
+    httpMethod: 'post',
+    summary: 'Start a generation',
+    description:
+      'Starts a model generation using a prompt, workspace, project, optional model, and optional model parameters. Poll the returned run_id via GET /runs/{runId} for progress and outputs. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.',
+    stainlessPath: '(resource) generations > (method) create',
+    qualified: 'client.generations.create',
+    params: [
+      'project_id: string;',
+      'prompt: string;',
+      "type: 'image' | 'video' | 'audio' | 'text';",
+      'workspace_id: string;',
+      'model?: string;',
+      'params?: object;',
+    ],
+    response:
+      "{ charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique' | 'action'; action?: { action_id: string; }; model?: { model_id: string; }; poll_url?: string; project_id?: string; technique?: { name: string; technique_id: string; }; }",
+    markdown:
+      "## create\n\n`client.generations.create(project_id: string, prompt: string, type: 'image' | 'video' | 'audio' | 'text', workspace_id: string, model?: string, params?: object): { charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique' | 'action'; action?: object; model?: object; poll_url?: string; project_id?: string; technique?: object; }`\n\n**post** `/generate`\n\nStarts a model generation using a prompt, workspace, project, optional model, and optional model parameters. Poll the returned run_id via GET /runs/{runId} for progress and outputs. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `project_id: string`\n  Project identifier\n\n- `prompt: string`\n  Generation prompt\n\n- `type: 'image' | 'video' | 'audio' | 'text'`\n  Generation type\n\n- `workspace_id: string`\n  Workspace identifier\n\n- `model?: string`\n  Model endpoint ID\n\n- `params?: object`\n  Model parameters\n\n### Returns\n\n- `{ charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique' | 'action'; action?: { action_id: string; }; model?: { model_id: string; }; poll_url?: string; project_id?: string; technique?: { name: string; technique_id: string; }; }`\n\n  - `charged_cost: number`\n  - `estimated_seconds: number`\n  - `run_id: string`\n  - `type: 'generation' | 'technique' | 'action'`\n  - `action?: { action_id: string; }`\n  - `model?: { model_id: string; }`\n  - `poll_url?: string`\n  - `project_id?: string`\n  - `technique?: { name: string; technique_id: string; }`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst generation = await client.generations.create({\n  project_id: 'prj_abc123',\n  prompt: 'A cinematic product photo of a ceramic mug on a sunlit table',\n  type: 'image',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(generation);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.generations.create',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst generation = await client.generations.create({\n  project_id: 'prj_abc123',\n  prompt: 'A cinematic product photo of a ceramic mug on a sunlit table',\n  type: 'image',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(generation.run_id);",
+      },
+      go: {
+        method: 'client.Generations.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tgeneration, err := client.Generations.New(context.TODO(), flora.GenerationNewParams{\n\t\tProjectID:   "prj_abc123",\n\t\tPrompt:      "A cinematic product photo of a ceramic mug on a sunlit table",\n\t\tType:        flora.GenerationNewParamsTypeImage,\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", generation.RunID)\n}\n',
+      },
+      cli: {
+        method: 'generations create',
+        example:
+          "flora generations create \\\n  --api-key 'My API Key' \\\n  --project-id prj_abc123 \\\n  --prompt 'A cinematic product photo of a ceramic mug on a sunlit table' \\\n  --type image \\\n  --workspace-id ws_abc123",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/generate \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "project_id": "prj_abc123",\n          "prompt": "A cinematic product photo of a ceramic mug on a sunlit table",\n          "type": "image",\n          "workspace_id": "ws_abc123",\n          "model": "t2i-flux-2-pro"\n        }\'',
       },
     },
   },
