@@ -1,5 +1,38 @@
 # Changelog
 
+## 0.6.0 (2026-05-19)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* add custom_casings to make client class name FLORA (all caps) ([8b663b4](https://github.com/florafauna-ai/flora-typescript/commit/8b663b4565524c031fcce9b7af50b1530219686b))
+* redirect MCP OAuth to Clerk instead of API key form ([27ff4e8](https://github.com/florafauna-ai/flora-typescript/commit/27ff4e8a0b502a284587e133748079cefa5a5866))
+
+
+### Bug Fixes
+
+* pass Clerk access token as apiKey in MCPProps for Flora SDK ([d10aaf4](https://github.com/florafauna-ai/flora-typescript/commit/d10aaf40095bdc88bd207d3a37dd6f0e428356fb))
+* revert to client_secret_post for Clerk token exchange ([706638f](https://github.com/florafauna-ai/flora-typescript/commit/706638fcdc4a20b4cff4add8cdb05b4b699cfd2c))
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([8ed4f6d](https://github.com/florafauna-ai/flora-typescript/commit/8ed4f6d390d8cbb83dd6bf7ca7cc10f07ae30441))
+* use client_secret_basic auth for Clerk token exchange ([fddb53e](https://github.com/florafauna-ai/flora-typescript/commit/fddb53e33b8214c5881818ff46a3878b8f24a319))
+
+
+### Chores
+
+* disable generate_cloudflare_worker — CF Worker hoisted to own repo ([e72c85a](https://github.com/florafauna-ai/flora-typescript/commit/e72c85ab3e6ecd77b48b2180f85d6493c8f06109))
+* remove cloudflare-worker directory — hoisted to florafauna-ai/flora-mcp-worker ([77a09cd](https://github.com/florafauna-ai/flora-typescript/commit/77a09cd22e4034468d5209842236941201c05608))
+* sync openapi spec from flora-frontend main ([7e89d53](https://github.com/florafauna-ai/flora-typescript/commit/7e89d53726eaf1c43dfdd1c76e342f5f10fa7d8a))
+* **tests:** remove redundant File import ([701af7f](https://github.com/florafauna-ai/flora-typescript/commit/701af7f247846ec78f2dec2701c84d15ca67a384))
+* update SDK settings ([8577bc0](https://github.com/florafauna-ai/flora-typescript/commit/8577bc0dbed47b6eb2da9cdbf129e513d8ed797f))
+* update SDK settings ([18ee210](https://github.com/florafauna-ai/flora-typescript/commit/18ee21019865950d7ef1fc85e8ba8e7df5914be8))
+* update SDK settings ([69436a3](https://github.com/florafauna-ai/flora-typescript/commit/69436a38603011d2056890443266aa08a81254ac))
+
+
+### Styles
+
+* fix prettier formatting in app.ts ([2e0afa9](https://github.com/florafauna-ai/flora-typescript/commit/2e0afa9e4540f825497a096e09041510346a20ae))
+
 ## 0.5.0 (2026-05-18)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.4.0...v0.5.0)
