@@ -7,19 +7,10 @@ const client = new FLORA({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource runs', () => {
+describe('resource actions', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.techniques.runs.create('art-directors-critique', {
-      inputs: [
-        {
-          id: 'id',
-          type: 'text',
-          value: 'value',
-        },
-      ],
-      mode: 'async',
-    });
+    const responsePromise = client.projects.actions.create('prj_abc123', { action_id: 'split-text' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -31,25 +22,15 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.techniques.runs.create('art-directors-critique', {
-      inputs: [
-        {
-          id: 'id',
-          type: 'text',
-          value: 'value',
-        },
-      ],
-      mode: 'async',
-      callback_url: 'https://example.com',
-      idempotency_key: 'idempotency_key',
+    const response = await client.projects.actions.create('prj_abc123', {
+      action_id: 'split-text',
+      params: { foo: 'bar' },
     });
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.techniques.runs.retrieve('run_abc123', {
-      techniqueId: 'art-directors-critique',
-    });
+  test.skip('run: only required params', async () => {
+    const responsePromise = client.projects.actions.run('nodeId', { projectId: 'prj_abc123' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -60,9 +41,7 @@ describe('resource runs', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.techniques.runs.retrieve('run_abc123', {
-      techniqueId: 'art-directors-critique',
-    });
+  test.skip('run: required and optional params', async () => {
+    const response = await client.projects.actions.run('nodeId', { projectId: 'prj_abc123' });
   });
 });

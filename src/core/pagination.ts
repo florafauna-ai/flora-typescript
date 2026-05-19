@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { FloraError } from './error';
+import { FLORAError } from './error';
 import { FinalRequestOptions } from '../internal/request-options';
 import { defaultParseResponse } from '../internal/parse';
-import { type Flora } from '../client';
+import { type FLORA } from '../client';
 import { APIPromise } from './api-promise';
 import { type APIResponseProps } from '../internal/parse';
 import { maybeObj } from '../internal/utils/values';
@@ -11,13 +11,13 @@ import { maybeObj } from '../internal/utils/values';
 export type PageRequestOptions = Pick<FinalRequestOptions, 'query' | 'headers' | 'body' | 'path' | 'method'>;
 
 export abstract class AbstractPage<Item> implements AsyncIterable<Item> {
-  #client: Flora;
+  #client: FLORA;
   protected options: FinalRequestOptions;
 
   protected response: Response;
   protected body: unknown;
 
-  constructor(client: Flora, response: Response, body: unknown, options: FinalRequestOptions) {
+  constructor(client: FLORA, response: Response, body: unknown, options: FinalRequestOptions) {
     this.#client = client;
     this.options = options;
     this.response = response;
@@ -37,7 +37,7 @@ export abstract class AbstractPage<Item> implements AsyncIterable<Item> {
   async getNextPage(): Promise<this> {
     const nextOptions = this.nextPageRequestOptions();
     if (!nextOptions) {
-      throw new FloraError(
+      throw new FLORAError(
         'No next page expected; please check `.hasNextPage()` before calling `.getNextPage()`.',
       );
     }
@@ -80,7 +80,7 @@ export class PagePromise<
   implements AsyncIterable<Item>
 {
   constructor(
-    client: Flora,
+    client: FLORA,
     request: Promise<APIResponseProps>,
     Page: new (...args: ConstructorParameters<typeof AbstractPage>) => PageClass,
   ) {
@@ -131,7 +131,7 @@ export class ProjectsCursorPage<Item> extends AbstractPage<Item> implements Proj
   meta: ProjectsCursorPageResponse.Meta;
 
   constructor(
-    client: Flora,
+    client: FLORA,
     response: Response,
     body: ProjectsCursorPageResponse<Item>,
     options: FinalRequestOptions,
@@ -189,7 +189,7 @@ export class TechniquesCursorPage<Item>
   meta: TechniquesCursorPageResponse.Meta;
 
   constructor(
-    client: Flora,
+    client: FLORA,
     response: Response,
     body: TechniquesCursorPageResponse<Item>,
     options: FinalRequestOptions,
@@ -244,7 +244,7 @@ export class AssetsCursorPage<Item> extends AbstractPage<Item> implements Assets
   meta: AssetsCursorPageResponse.Meta;
 
   constructor(
-    client: Flora,
+    client: FLORA,
     response: Response,
     body: AssetsCursorPageResponse<Item>,
     options: FinalRequestOptions,
@@ -302,7 +302,7 @@ export class CanvasNodesCursorPage<Item>
   meta: CanvasNodesCursorPageResponse.Meta;
 
   constructor(
-    client: Flora,
+    client: FLORA,
     response: Response,
     body: CanvasNodesCursorPageResponse<Item>,
     options: FinalRequestOptions,

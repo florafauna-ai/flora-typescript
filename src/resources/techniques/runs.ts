@@ -49,6 +49,9 @@ export interface RunCreateResponse {
 
   status: 'pending' | 'running' | 'completed' | 'failed';
 
+  /**
+   * Cost charged in USD
+   */
   charged_cost?: number;
 
   completed_at?: number;
@@ -101,6 +104,9 @@ export interface RunRetrieveResponse {
 
   status: 'pending' | 'running' | 'completed' | 'failed';
 
+  /**
+   * Cost charged in USD
+   */
   charged_cost?: number;
 
   completed_at?: number;

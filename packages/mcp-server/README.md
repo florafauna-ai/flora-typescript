@@ -1,4 +1,4 @@
-# Flora TypeScript MCP Server
+# FLORA TypeScript MCP Server
 
 It is generated with [Stainless](https://www.stainless.com/).
 
