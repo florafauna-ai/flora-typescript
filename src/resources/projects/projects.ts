@@ -1,8 +1,18 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as ActionsAPI from './actions';
+import {
+  ActionCreateParams,
+  ActionCreateResponse,
+  ActionRunParams,
+  ActionRunResponse,
+  Actions,
+} from './actions';
 import * as AssetsAPI from './assets';
 import { AssetAttachAssetParams, AssetAttachAssetResponse, Assets } from './assets';
+import * as CanvasAPI from './canvas';
+import { Canvas, CanvasRetrieveResponse, CanvasUpdateParams, CanvasUpdateResponse } from './canvas';
 import { APIPromise } from '../../core/api-promise';
 import {
   CanvasNodesCursorPage,
@@ -16,6 +26,8 @@ import { path } from '../../internal/utils/path';
 
 export class Projects extends APIResource {
   assets: AssetsAPI.Assets = new AssetsAPI.Assets(this._client);
+  canvas: CanvasAPI.Canvas = new CanvasAPI.Canvas(this._client);
+  actions: ActionsAPI.Actions = new ActionsAPI.Actions(this._client);
 
   /**
    * Creates a new FLORA project in the requested workspace. Mutating public API
@@ -241,6 +253,8 @@ export interface ProjectListParams extends ProjectsCursorPageParams {
 export interface ProjectListNodesParams extends CanvasNodesCursorPageParams {}
 
 Projects.Assets = Assets;
+Projects.Canvas = Canvas;
+Projects.Actions = Actions;
 
 export declare namespace Projects {
   export {
@@ -259,5 +273,20 @@ export declare namespace Projects {
     Assets as Assets,
     type AssetAttachAssetResponse as AssetAttachAssetResponse,
     type AssetAttachAssetParams as AssetAttachAssetParams,
+  };
+
+  export {
+    Canvas as Canvas,
+    type CanvasRetrieveResponse as CanvasRetrieveResponse,
+    type CanvasUpdateResponse as CanvasUpdateResponse,
+    type CanvasUpdateParams as CanvasUpdateParams,
+  };
+
+  export {
+    Actions as Actions,
+    type ActionCreateResponse as ActionCreateResponse,
+    type ActionRunResponse as ActionRunResponse,
+    type ActionCreateParams as ActionCreateParams,
+    type ActionRunParams as ActionRunParams,
   };
 }

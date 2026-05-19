@@ -1,7 +1,6 @@
 import fs from 'fs';
 import type { ResponseLike } from '@flora-ai/flora/internal/to-file';
 import { toFile } from '@flora-ai/flora/core/uploads';
-import { File } from 'node:buffer';
 
 class MyClass {
   name: string = 'foo';

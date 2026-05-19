@@ -41,6 +41,7 @@ import {
   Assets,
 } from './resources/assets';
 import { Feedback, FeedbackRecordParams, FeedbackRecordResponse } from './resources/feedback';
+import { GenerationCreateParams, GenerationCreateResponse, Generations } from './resources/generations';
 import { ModelListParams, ModelListResponse, Models } from './resources/models';
 import {
   RunStartGenerationParams,
@@ -833,6 +834,10 @@ export class FLORA {
    */
   runs: API.Runs = new API.Runs(this);
   /**
+   * Generation endpoints.
+   */
+  generations: API.Generations = new API.Generations(this);
+  /**
    * Product feedback endpoints.
    */
   feedback: API.Feedback = new API.Feedback(this);
@@ -844,6 +849,7 @@ FLORA.Workspaces = Workspaces;
 FLORA.Projects = Projects;
 FLORA.Models = Models;
 FLORA.Runs = Runs;
+FLORA.Generations = Generations;
 FLORA.Feedback = Feedback;
 
 export declare namespace FLORA {
@@ -920,6 +926,12 @@ export declare namespace FLORA {
     type RunStartTechniqueResponse as RunStartTechniqueResponse,
     type RunStartGenerationParams as RunStartGenerationParams,
     type RunStartTechniqueParams as RunStartTechniqueParams,
+  };
+
+  export {
+    Generations as Generations,
+    type GenerationCreateResponse as GenerationCreateResponse,
+    type GenerationCreateParams as GenerationCreateParams,
   };
 
   export {

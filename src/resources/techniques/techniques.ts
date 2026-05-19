@@ -49,6 +49,9 @@ export interface TechniqueRetrieveResponse {
 
   outputs: Array<TechniqueRetrieveResponse.Output>;
 
+  /**
+   * Cost per run in USD
+   */
   run_cost: number;
 
   /**
@@ -138,6 +141,9 @@ export interface TechniqueListResponse {
 
   outputs: Array<TechniqueListResponse.Output>;
 
+  /**
+   * Cost per run in USD
+   */
   run_cost: number;
 
   /**
