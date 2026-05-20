@@ -110,18 +110,6 @@ Methods:
 
 - <code title="get /models">client.models.<a href="./src/resources/models.ts">list</a>({ ...params }) -> ModelListResponse</code>
 
-# Runs
-
-Types:
-
-- <code><a href="./src/resources/runs.ts">RunStartGenerationResponse</a></code>
-- <code><a href="./src/resources/runs.ts">RunStartTechniqueResponse</a></code>
-
-Methods:
-
-- <code title="post /runs/generation">client.runs.<a href="./src/resources/runs.ts">startGeneration</a>({ ...params }) -> RunStartGenerationResponse</code>
-- <code title="post /runs/technique">client.runs.<a href="./src/resources/runs.ts">startTechnique</a>({ ...params }) -> RunStartTechniqueResponse</code>
-
 # Generations
 
 Types:
