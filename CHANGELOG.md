@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.7.0 (2026-05-20)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** api update ([7ba85df](https://github.com/florafauna-ai/flora-typescript/commit/7ba85dffef71e26fe06632cfc883d9b7dd676d8f))
+
+
+### Chores
+
+* **config:** hide deprecated /runs/* from docs, keep generating in SDKs ([839a6ef](https://github.com/florafauna-ai/flora-typescript/commit/839a6effbd8a1eb87c7146d1b254e532d8de433d))
+
+
+### Documentation
+
+* redirect README to developer.flora.ai, remove stale MCP install block ([3125ac1](https://github.com/florafauna-ai/flora-typescript/commit/3125ac15ae3e5b7a2d3d6db4d4b8bad29cbc39a0))
+
 ## 0.6.0 (2026-05-19)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.5.0...v0.6.0)
