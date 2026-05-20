@@ -86,7 +86,7 @@ export namespace RunCreateResponse {
     type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
 
     /**
-     * Run output URL
+     * Run output URL or text content
      */
     url: string;
   }
@@ -141,7 +141,7 @@ export namespace RunRetrieveResponse {
     type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
 
     /**
-     * Run output URL
+     * Run output URL or text content
      */
     url: string;
   }
