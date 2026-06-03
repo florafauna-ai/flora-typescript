@@ -12,7 +12,14 @@ export {
   type AssetListResponsesAssetsCursorPage,
 } from './assets';
 export { Feedback, type FeedbackRecordResponse, type FeedbackRecordParams } from './feedback';
-export { Generations, type GenerationCreateResponse, type GenerationCreateParams } from './generations';
+export {
+  Generations,
+  type GenerationCreateResponse,
+  type GenerationListResponse,
+  type GenerationCreateParams,
+  type GenerationListParams,
+  type GenerationListResponsesGenerationsCursorPage,
+} from './generations';
 export { Models, type ModelListResponse, type ModelListParams } from './models';
 export {
   Projects,

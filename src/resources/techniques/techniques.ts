@@ -2,7 +2,16 @@
 
 import { APIResource } from '../../core/resource';
 import * as RunsAPI from './runs';
-import { RunCreateParams, RunCreateResponse, RunRetrieveParams, RunRetrieveResponse, Runs } from './runs';
+import {
+  RunCreateParams,
+  RunCreateResponse,
+  RunListParams,
+  RunListResponse,
+  RunListResponsesTechniqueRunsCursorPage,
+  RunRetrieveParams,
+  RunRetrieveResponse,
+  Runs,
+} from './runs';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, TechniquesCursorPage, type TechniquesCursorPageParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -249,7 +258,10 @@ export declare namespace Techniques {
     Runs as Runs,
     type RunCreateResponse as RunCreateResponse,
     type RunRetrieveResponse as RunRetrieveResponse,
+    type RunListResponse as RunListResponse,
+    type RunListResponsesTechniqueRunsCursorPage as RunListResponsesTechniqueRunsCursorPage,
     type RunCreateParams as RunCreateParams,
     type RunRetrieveParams as RunRetrieveParams,
+    type RunListParams as RunListParams,
   };
 }
