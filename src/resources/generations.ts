@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { GenerationsCursorPage, type GenerationsCursorPageParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 
 /**
@@ -9,11 +10,13 @@ import { RequestOptions } from '../internal/request-options';
  */
 export class Generations extends APIResource {
   /**
-   * Starts a model generation using a prompt, workspace, project, optional model,
-   * and optional model parameters. Poll the returned run_id via GET /runs/{runId}
-   * for progress and outputs. Mutating public API requests support an optional
-   * Idempotency-Key header for client retries; duplicate keys within two hours
-   * return idempotency_duplicate.
+   * Starts a model generation using type, prompt, workspace_id, project_id, optional
+   * model endpoint ID, and optional model parameters. Use
+   * type=image|video|audio|text and model IDs returned by GET /models or
+   * list_models. Poll the returned run_id via GET /runs/{runId} for progress and
+   * outputs. Mutating public API requests support an optional Idempotency-Key header
+   * for client retries; duplicate keys within two hours return
+   * idempotency_duplicate.
    *
    * @example
    * ```ts
@@ -29,7 +32,34 @@ export class Generations extends APIResource {
   create(body: GenerationCreateParams, options?: RequestOptions): APIPromise<GenerationCreateResponse> {
     return this._client.post('/generate', { body, ...options });
   }
+
+  /**
+   * Lists generation history for the authenticated caller, including pending,
+   * running, completed, and failed generations. Results are newest first and can be
+   * filtered by workspace_id, project_id, and status. Each item includes poll_url;
+   * use it to poll pending/running generations and to fetch completed or failed run
+   * details and outputs.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const generationListResponse of client.generations.list()) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(
+    query: GenerationListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<GenerationListResponsesGenerationsCursorPage, GenerationListResponse> {
+    return this._client.getAPIList('/generations', GenerationsCursorPage<GenerationListResponse>, {
+      query,
+      ...options,
+    });
+  }
 }
+
+export type GenerationListResponsesGenerationsCursorPage = GenerationsCursorPage<GenerationListResponse>;
 
 export interface GenerationCreateResponse {
   /**
@@ -53,6 +83,9 @@ export interface GenerationCreateResponse {
 
   model?: GenerationCreateResponse.Model | null;
 
+  /**
+   * URL to poll pending/running runs or fetch completed/failed run details.
+   */
   poll_url?: string | null;
 
   /**
@@ -128,9 +161,92 @@ export namespace GenerationCreateResponse {
   }
 }
 
-export interface GenerationCreateParams {
+export interface GenerationListResponse {
+  created_at: number;
+
+  /**
+   * Run identifier
+   */
+  generation_id: string;
+
+  progress: number;
+
   /**
    * Project identifier
+   */
+  project_id: string;
+
+  /**
+   * Run identifier
+   */
+  run_id: string;
+
+  status: 'pending' | 'running' | 'completed' | 'failed';
+
+  /**
+   * Workspace identifier
+   */
+  workspace_id: string;
+
+  /**
+   * Cost charged in USD
+   */
+  charged_cost?: number;
+
+  completed_at?: number;
+
+  /**
+   * Machine-readable run error code
+   */
+  error_code?: string;
+
+  /**
+   * Human-readable run error message
+   */
+  error_message?: string;
+
+  model?: GenerationListResponse.Model;
+
+  outputs?: Array<GenerationListResponse.Output>;
+
+  /**
+   * URL to poll pending/running runs or fetch completed/failed run details.
+   */
+  poll_url?: string;
+
+  started_at?: number;
+}
+
+export namespace GenerationListResponse {
+  export interface Model {
+    /**
+     * Model identifier
+     */
+    model_id: string | null;
+  }
+
+  export interface Output {
+    /**
+     * Run output identifier
+     */
+    output_id: string;
+
+    /**
+     * Run output media type
+     */
+    type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
+
+    /**
+     * Run output URL or text content
+     */
+    url: string;
+  }
+}
+
+export interface GenerationCreateParams {
+  /**
+   * Project identifier. Use the public API ID returned by list projects; it must
+   * start with prj\_.
    */
   project_id: string;
 
@@ -140,17 +256,20 @@ export interface GenerationCreateParams {
   prompt: string;
 
   /**
-   * Generation type
+   * Generation type. Use "image", "video", "audio", or "text"; do not pass model
+   * families such as "t2i" or "i2v".
    */
   type: 'image' | 'video' | 'audio' | 'text';
 
   /**
-   * Workspace identifier
+   * Workspace identifier. Use the public API ID returned by list workspaces; it must
+   * start with ws\_.
    */
   workspace_id: string;
 
   /**
-   * Model endpoint ID
+   * Model endpoint ID, not a display name. Use list_models (or GET /models) to find
+   * accessible endpoint IDs for the requested type.
    */
   model?: string;
 
@@ -160,9 +279,29 @@ export interface GenerationCreateParams {
   params?: { [key: string]: unknown };
 }
 
+export interface GenerationListParams extends GenerationsCursorPageParams {
+  /**
+   * Project identifier
+   */
+  project_id?: string;
+
+  /**
+   * Run status filter
+   */
+  status?: 'pending' | 'running' | 'completed' | 'failed';
+
+  /**
+   * Workspace identifier
+   */
+  workspace_id?: string;
+}
+
 export declare namespace Generations {
   export {
     type GenerationCreateResponse as GenerationCreateResponse,
+    type GenerationListResponse as GenerationListResponse,
+    type GenerationListResponsesGenerationsCursorPage as GenerationListResponsesGenerationsCursorPage,
     type GenerationCreateParams as GenerationCreateParams,
+    type GenerationListParams as GenerationListParams,
   };
 }

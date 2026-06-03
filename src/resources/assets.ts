@@ -11,7 +11,8 @@ import { path } from '../internal/utils/path';
  */
 export class Assets extends APIResource {
   /**
-   * Creates an asset from an allowlisted source URL or reserves a signed upload URL.
+   * Creates an asset from a source string. Pass source="signed-url" to reserve a
+   * direct upload URL, or pass an allowlisted HTTPS URL for server-side fetch.
    * Mutating public API requests support an optional Idempotency-Key header for
    * client retries; duplicate keys within two hours return idempotency_duplicate.
    *
@@ -391,12 +392,14 @@ export namespace AssetRetryResponse {
 
 export interface AssetCreateParams {
   /**
-   * Asset source URL or signed-url upload mode
+   * Asset source as a string: either "signed-url" to reserve a direct upload URL, or
+   * an allowlisted HTTPS URL for server-side fetch.
    */
   source: string;
 
   /**
-   * Workspace identifier
+   * Workspace identifier. Use the public API ID returned by list workspaces; it must
+   * start with ws\_.
    */
   workspace_id: string;
 

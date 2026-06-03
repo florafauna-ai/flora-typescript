@@ -16,11 +16,13 @@ Types:
 
 - <code><a href="./src/resources/techniques/runs.ts">RunCreateResponse</a></code>
 - <code><a href="./src/resources/techniques/runs.ts">RunRetrieveResponse</a></code>
+- <code><a href="./src/resources/techniques/runs.ts">RunListResponse</a></code>
 
 Methods:
 
 - <code title="post /techniques/{techniqueId}/runs">client.techniques.runs.<a href="./src/resources/techniques/runs.ts">create</a>(techniqueID, { ...params }) -> RunCreateResponse</code>
 - <code title="get /techniques/{techniqueId}/runs/{runId}">client.techniques.runs.<a href="./src/resources/techniques/runs.ts">retrieve</a>(runID, { ...params }) -> RunRetrieveResponse</code>
+- <code title="get /technique-runs">client.techniques.runs.<a href="./src/resources/techniques/runs.ts">list</a>({ ...params }) -> RunListResponsesTechniqueRunsCursorPage</code>
 
 # Assets
 
@@ -110,24 +112,14 @@ Methods:
 
 - <code title="get /models">client.models.<a href="./src/resources/models.ts">list</a>({ ...params }) -> ModelListResponse</code>
 
-# Runs
-
-Types:
-
-- <code><a href="./src/resources/runs.ts">RunStartGenerationResponse</a></code>
-- <code><a href="./src/resources/runs.ts">RunStartTechniqueResponse</a></code>
-
-Methods:
-
-- <code title="post /runs/generation">client.runs.<a href="./src/resources/runs.ts">startGeneration</a>({ ...params }) -> RunStartGenerationResponse</code>
-- <code title="post /runs/technique">client.runs.<a href="./src/resources/runs.ts">startTechnique</a>({ ...params }) -> RunStartTechniqueResponse</code>
-
 # Generations
 
 Types:
 
 - <code><a href="./src/resources/generations.ts">GenerationCreateResponse</a></code>
+- <code><a href="./src/resources/generations.ts">GenerationListResponse</a></code>
 
 Methods:
 
 - <code title="post /generate">client.generations.<a href="./src/resources/generations.ts">create</a>({ ...params }) -> GenerationCreateResponse</code>
+- <code title="get /generations">client.generations.<a href="./src/resources/generations.ts">list</a>({ ...params }) -> GenerationListResponsesGenerationsCursorPage</code>

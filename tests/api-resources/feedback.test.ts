@@ -11,9 +11,9 @@ describe('resource feedback', () => {
   // Mock server tests are disabled
   test.skip('record: only required params', async () => {
     const responsePromise = client.feedback.record({
-      detail: 'I want to export all generated campaign images at once.',
-      kind: 'feature_request',
-      summary: 'Need batch export support',
+      detail: 'upload-asset rejected an image hosted on scontent-lga3-1.cdninstagram.com.',
+      kind: 'missing_capability',
+      summary: 'Need support for Instagram CDN asset URLs',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -27,10 +27,10 @@ describe('resource feedback', () => {
   // Mock server tests are disabled
   test.skip('record: required and optional params', async () => {
     const response = await client.feedback.record({
-      detail: 'I want to export all generated campaign images at once.',
-      kind: 'feature_request',
-      summary: 'Need batch export support',
-      attempted_tools: ['generate_image'],
+      detail: 'upload-asset rejected an image hosted on scontent-lga3-1.cdninstagram.com.',
+      kind: 'missing_capability',
+      summary: 'Need support for Instagram CDN asset URLs',
+      attempted_tools: ['upload-asset'],
       project_id: 'prj_abc123',
       run_id: 'run_abc123',
       workspace_id: 'ws_abc123',

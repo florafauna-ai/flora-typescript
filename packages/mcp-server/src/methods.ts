@@ -35,6 +35,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/techniques/{techniqueId}/runs/{runId}',
   },
   {
+    clientCallName: 'client.techniques.runs.list',
+    fullyQualifiedName: 'techniques.runs.list',
+    httpMethod: 'get',
+    httpPath: '/technique-runs',
+  },
+  {
     clientCallName: 'client.assets.create',
     fullyQualifiedName: 'assets.create',
     httpMethod: 'post',
@@ -147,6 +153,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'generations.create',
     httpMethod: 'post',
     httpPath: '/generate',
+  },
+  {
+    clientCallName: 'client.generations.list',
+    fullyQualifiedName: 'generations.list',
+    httpMethod: 'get',
+    httpPath: '/generations',
   },
   {
     clientCallName: 'client.feedback.record',

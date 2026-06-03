@@ -126,6 +126,9 @@ export interface ActionRunResponse {
 
   model?: ActionRunResponse.Model | null;
 
+  /**
+   * URL to poll pending/running runs or fetch completed/failed run details.
+   */
   poll_url?: string | null;
 
   /**
