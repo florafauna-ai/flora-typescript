@@ -9,18 +9,20 @@ import { RequestOptions } from '../internal/request-options';
  */
 export class Feedback extends APIResource {
   /**
-   * Records product feedback from the authenticated user, optionally linked to a
-   * workspace, project, run, and attempted tools. Mutating public API requests
-   * support an optional Idempotency-Key header for client retries; duplicate keys
-   * within two hours return idempotency_duplicate.
+   * Records product feedback from the authenticated user. Use
+   * kind=missing_capability for blocked public API workflows such as unsupported
+   * upload-asset source hosts, and include attempted_tools when relevant. Feedback
+   * can be optionally linked to a workspace, project, or run. Mutating public API
+   * requests support an optional Idempotency-Key header for client retries;
+   * duplicate keys within two hours return idempotency_duplicate.
    *
    * @example
    * ```ts
    * const response = await client.feedback.record({
    *   detail:
-   *     'I want to export all generated campaign images at once.',
-   *   kind: 'feature_request',
-   *   summary: 'Need batch export support',
+   *     'upload-asset rejected an image hosted on scontent-lga3-1.cdninstagram.com.',
+   *   kind: 'missing_capability',
+   *   summary: 'Need support for Instagram CDN asset URLs',
    * });
    * ```
    */
@@ -45,7 +47,8 @@ export interface FeedbackRecordParams {
   detail: string;
 
   /**
-   * Feedback kind
+   * Feedback kind. Use missing_capability for blocked API workflows such as
+   * unsupported asset source hosts.
    */
   kind: 'feature_request' | 'bug' | 'technique_request' | 'missing_capability';
 
@@ -60,17 +63,19 @@ export interface FeedbackRecordParams {
   attempted_tools?: Array<string>;
 
   /**
-   * Project identifier
+   * Project identifier. Use the public API ID returned by list projects; it must
+   * start with prj\_.
    */
   project_id?: string;
 
   /**
-   * Run identifier
+   * Run identifier. It must start with run\_.
    */
   run_id?: string;
 
   /**
-   * Workspace identifier
+   * Workspace identifier. Use the public API ID returned by list workspaces; it must
+   * start with ws\_.
    */
   workspace_id?: string;
 }

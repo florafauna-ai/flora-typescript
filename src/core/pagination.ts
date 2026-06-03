@@ -220,6 +220,122 @@ export class TechniquesCursorPage<Item>
   }
 }
 
+export interface GenerationsCursorPageResponse<Item> {
+  generations: Array<Item>;
+
+  meta: GenerationsCursorPageResponse.Meta;
+}
+
+export namespace GenerationsCursorPageResponse {
+  export interface Meta {
+    next_cursor?: string | null;
+  }
+}
+
+export interface GenerationsCursorPageParams {
+  cursor?: string;
+
+  limit?: number;
+}
+
+export class GenerationsCursorPage<Item>
+  extends AbstractPage<Item>
+  implements GenerationsCursorPageResponse<Item>
+{
+  generations: Array<Item>;
+
+  meta: GenerationsCursorPageResponse.Meta;
+
+  constructor(
+    client: FLORA,
+    response: Response,
+    body: GenerationsCursorPageResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
+    super(client, response, body, options);
+
+    this.generations = body.generations || [];
+    this.meta = body.meta || {};
+  }
+
+  getPaginatedItems(): Item[] {
+    return this.generations ?? [];
+  }
+
+  nextPageRequestOptions(): PageRequestOptions | null {
+    const cursor = this.meta?.next_cursor;
+    if (!cursor) {
+      return null;
+    }
+
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        cursor,
+      },
+    };
+  }
+}
+
+export interface TechniqueRunsCursorPageResponse<Item> {
+  technique_runs: Array<Item>;
+
+  meta: TechniqueRunsCursorPageResponse.Meta;
+}
+
+export namespace TechniqueRunsCursorPageResponse {
+  export interface Meta {
+    next_cursor?: string | null;
+  }
+}
+
+export interface TechniqueRunsCursorPageParams {
+  cursor?: string;
+
+  limit?: number;
+}
+
+export class TechniqueRunsCursorPage<Item>
+  extends AbstractPage<Item>
+  implements TechniqueRunsCursorPageResponse<Item>
+{
+  technique_runs: Array<Item>;
+
+  meta: TechniqueRunsCursorPageResponse.Meta;
+
+  constructor(
+    client: FLORA,
+    response: Response,
+    body: TechniqueRunsCursorPageResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
+    super(client, response, body, options);
+
+    this.technique_runs = body.technique_runs || [];
+    this.meta = body.meta || {};
+  }
+
+  getPaginatedItems(): Item[] {
+    return this.technique_runs ?? [];
+  }
+
+  nextPageRequestOptions(): PageRequestOptions | null {
+    const cursor = this.meta?.next_cursor;
+    if (!cursor) {
+      return null;
+    }
+
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        cursor,
+      },
+    };
+  }
+}
+
 export interface AssetsCursorPageResponse<Item> {
   assets: Array<Item>;
 

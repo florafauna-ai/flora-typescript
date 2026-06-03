@@ -9,10 +9,12 @@ import { RequestOptions } from '../internal/request-options';
  */
 export class Runs extends APIResource {
   /**
-   * Starts a model generation run in a project canvas using a prompt, workspace,
-   * project, optional model, and optional model parameters. Mutating public API
-   * requests support an optional Idempotency-Key header for client retries;
-   * duplicate keys within two hours return idempotency_duplicate.
+   * Starts a model generation run in a project canvas using type, prompt,
+   * workspace_id, project_id, optional model endpoint ID, and optional model
+   * parameters. Use type=image|video|audio|text and model IDs returned by GET
+   * /models or list_models. Mutating public API requests support an optional
+   * Idempotency-Key header for client retries; duplicate keys within two hours
+   * return idempotency_duplicate.
    *
    * @deprecated
    */
@@ -24,9 +26,11 @@ export class Runs extends APIResource {
   }
 
   /**
-   * Starts a technique run through the normalized top-level run resource. Mutating
-   * public API requests support an optional Idempotency-Key header for client
-   * retries; duplicate keys within two hours return idempotency_duplicate.
+   * Starts a technique run through the normalized top-level run resource using
+   * technique*id, workspace_id, and inputs. technique_id must use the tech* public
+   * API ID returned by list techniques. Mutating public API requests support an
+   * optional Idempotency-Key header for client retries; duplicate keys within two
+   * hours return idempotency_duplicate.
    *
    * @example
    * ```ts
@@ -67,6 +71,9 @@ export interface RunStartGenerationResponse {
 
   model?: RunStartGenerationResponse.Model | null;
 
+  /**
+   * URL to poll pending/running runs or fetch completed/failed run details.
+   */
   poll_url?: string | null;
 
   /**
@@ -164,6 +171,9 @@ export interface RunStartTechniqueResponse {
 
   model?: RunStartTechniqueResponse.Model | null;
 
+  /**
+   * URL to poll pending/running runs or fetch completed/failed run details.
+   */
   poll_url?: string | null;
 
   /**
@@ -241,7 +251,8 @@ export namespace RunStartTechniqueResponse {
 
 export interface RunStartGenerationParams {
   /**
-   * Project identifier
+   * Project identifier. Use the public API ID returned by list projects; it must
+   * start with prj\_.
    */
   project_id: string;
 
@@ -251,17 +262,20 @@ export interface RunStartGenerationParams {
   prompt: string;
 
   /**
-   * Generation type
+   * Generation type. Use "image", "video", "audio", or "text"; do not pass model
+   * families such as "t2i" or "i2v".
    */
   type: 'image' | 'video' | 'audio' | 'text';
 
   /**
-   * Workspace identifier
+   * Workspace identifier. Use the public API ID returned by list workspaces; it must
+   * start with ws\_.
    */
   workspace_id: string;
 
   /**
-   * Model endpoint ID
+   * Model endpoint ID, not a display name. Use list_models (or GET /models) to find
+   * accessible endpoint IDs for the requested type.
    */
   model?: string;
 
@@ -278,12 +292,14 @@ export interface RunStartTechniqueParams {
   inputs: { [key: string]: unknown };
 
   /**
-   * Technique identifier
+   * Technique identifier. Use the public API ID returned by list techniques; it must
+   * start with tech\_.
    */
   technique_id: string;
 
   /**
-   * Workspace identifier
+   * Workspace identifier. Use the public API ID returned by list workspaces; it must
+   * start with ws\_.
    */
   workspace_id: string;
 }

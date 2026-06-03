@@ -21,8 +21,12 @@ import {
   AssetsCursorPageResponse,
   type CanvasNodesCursorPageParams,
   CanvasNodesCursorPageResponse,
+  type GenerationsCursorPageParams,
+  GenerationsCursorPageResponse,
   type ProjectsCursorPageParams,
   ProjectsCursorPageResponse,
+  type TechniqueRunsCursorPageParams,
+  TechniqueRunsCursorPageResponse,
   type TechniquesCursorPageParams,
   TechniquesCursorPageResponse,
 } from './core/pagination';
@@ -41,7 +45,14 @@ import {
   Assets,
 } from './resources/assets';
 import { Feedback, FeedbackRecordParams, FeedbackRecordResponse } from './resources/feedback';
-import { GenerationCreateParams, GenerationCreateResponse, Generations } from './resources/generations';
+import {
+  GenerationCreateParams,
+  GenerationCreateResponse,
+  GenerationListParams,
+  GenerationListResponse,
+  GenerationListResponsesGenerationsCursorPage,
+  Generations,
+} from './resources/generations';
 import { ModelListParams, ModelListResponse, Models } from './resources/models';
 import {
   RunStartGenerationParams,
@@ -867,6 +878,18 @@ export declare namespace FLORA {
     type TechniquesCursorPageResponse as TechniquesCursorPageResponse,
   };
 
+  export import GenerationsCursorPage = Pagination.GenerationsCursorPage;
+  export {
+    type GenerationsCursorPageParams as GenerationsCursorPageParams,
+    type GenerationsCursorPageResponse as GenerationsCursorPageResponse,
+  };
+
+  export import TechniqueRunsCursorPage = Pagination.TechniqueRunsCursorPage;
+  export {
+    type TechniqueRunsCursorPageParams as TechniqueRunsCursorPageParams,
+    type TechniqueRunsCursorPageResponse as TechniqueRunsCursorPageResponse,
+  };
+
   export import AssetsCursorPage = Pagination.AssetsCursorPage;
   export {
     type AssetsCursorPageParams as AssetsCursorPageParams,
@@ -931,7 +954,10 @@ export declare namespace FLORA {
   export {
     Generations as Generations,
     type GenerationCreateResponse as GenerationCreateResponse,
+    type GenerationListResponse as GenerationListResponse,
+    type GenerationListResponsesGenerationsCursorPage as GenerationListResponsesGenerationsCursorPage,
     type GenerationCreateParams as GenerationCreateParams,
+    type GenerationListParams as GenerationListParams,
   };
 
   export {
