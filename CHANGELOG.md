@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.1 (2026-06-03)
+
+Full Changelog: [v0.7.0...v0.7.1](https://github.com/florafauna-ai/flora-typescript/compare/v0.7.0...v0.7.1)
+
+### Chores
+
+* update SDK settings ([b96cd34](https://github.com/florafauna-ai/flora-typescript/commit/b96cd3419478efefd17a76c323ff9e0b91840178))
+
 ## 0.7.0 (2026-06-03)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.6.0...v0.7.0)
