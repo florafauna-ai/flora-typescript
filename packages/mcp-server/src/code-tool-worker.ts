@@ -133,6 +133,7 @@ const fuse = new Fuse(
     'client.runs.startTechnique',
     'client.generations.create',
     'client.generations.list',
+    'client.generations.retrieve',
     'client.feedback.record',
   ],
   { threshold: 1, shouldSort: true },

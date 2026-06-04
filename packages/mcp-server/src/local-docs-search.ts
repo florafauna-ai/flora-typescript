@@ -934,6 +934,41 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'retrieve',
+    endpoint: '/runs/{runId}',
+    httpMethod: 'get',
+    summary: 'Get a run',
+    description:
+      'Returns status and completed output URLs for a public API run, including action runs started through POST /runs/action.',
+    stainlessPath: '(resource) generations > (method) retrieve',
+    qualified: 'client.generations.retrieve',
+    params: ['runId: string;'],
+    response:
+      "{ created_at: number; progress: number; run_id: string; status: 'pending' | 'running' | 'completed' | 'failed'; charged_cost?: number; completed_at?: number; error_code?: string; error_message?: string; outputs?: { output_id: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; url: string; }[]; poll_url?: string; started_at?: number; }",
+    markdown:
+      "## retrieve\n\n`client.generations.retrieve(runId: string): { created_at: number; progress: number; run_id: string; status: 'pending' | 'running' | 'completed' | 'failed'; charged_cost?: number; completed_at?: number; error_code?: string; error_message?: string; outputs?: object[]; poll_url?: string; started_at?: number; }`\n\n**get** `/runs/{runId}`\n\nReturns status and completed output URLs for a public API run, including action runs started through POST /runs/action.\n\n### Parameters\n\n- `runId: string`\n  Run identifier\n\n### Returns\n\n- `{ created_at: number; progress: number; run_id: string; status: 'pending' | 'running' | 'completed' | 'failed'; charged_cost?: number; completed_at?: number; error_code?: string; error_message?: string; outputs?: { output_id: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; url: string; }[]; poll_url?: string; started_at?: number; }`\n\n  - `created_at: number`\n  - `progress: number`\n  - `run_id: string`\n  - `status: 'pending' | 'running' | 'completed' | 'failed'`\n  - `charged_cost?: number`\n  - `completed_at?: number`\n  - `error_code?: string`\n  - `error_message?: string`\n  - `outputs?: { output_id: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; url: string; }[]`\n  - `poll_url?: string`\n  - `started_at?: number`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst generation = await client.generations.retrieve('run_abc123');\n\nconsole.log(generation);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.generations.retrieve',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst generation = await client.generations.retrieve('run_abc123');\n\nconsole.log(generation.run_id);",
+      },
+      go: {
+        method: 'client.Generations.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tgeneration, err := client.Generations.Get(context.TODO(), "run_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", generation.RunID)\n}\n',
+      },
+      cli: {
+        method: 'generations retrieve',
+        example: "flora generations retrieve \\\n  --api-key 'My API Key' \\\n  --run-id run_abc123",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/runs/$RUN_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+    },
+  },
+  {
     name: 'list',
     endpoint: '/generations',
     httpMethod: 'get',

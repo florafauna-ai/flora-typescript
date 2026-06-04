@@ -117,9 +117,11 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/generations.ts">GenerationCreateResponse</a></code>
+- <code><a href="./src/resources/generations.ts">GenerationRetrieveResponse</a></code>
 - <code><a href="./src/resources/generations.ts">GenerationListResponse</a></code>
 
 Methods:
 
 - <code title="post /generate">client.generations.<a href="./src/resources/generations.ts">create</a>({ ...params }) -> GenerationCreateResponse</code>
+- <code title="get /runs/{runId}">client.generations.<a href="./src/resources/generations.ts">retrieve</a>(runID) -> GenerationRetrieveResponse</code>
 - <code title="get /generations">client.generations.<a href="./src/resources/generations.ts">list</a>({ ...params }) -> GenerationListResponsesGenerationsCursorPage</code>
