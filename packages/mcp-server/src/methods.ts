@@ -155,6 +155,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/generate',
   },
   {
+    clientCallName: 'client.generations.retrieve',
+    fullyQualifiedName: 'generations.retrieve',
+    httpMethod: 'get',
+    httpPath: '/runs/{runId}',
+  },
+  {
     clientCallName: 'client.generations.list',
     fullyQualifiedName: 'generations.list',
     httpMethod: 'get',

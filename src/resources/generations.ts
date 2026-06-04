@@ -4,10 +4,8 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { GenerationsCursorPage, type GenerationsCursorPageParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
-/**
- * Generation endpoints.
- */
 export class Generations extends APIResource {
   /**
    * Starts a model generation using type, prompt, workspace_id, project_id, optional
@@ -31,6 +29,21 @@ export class Generations extends APIResource {
    */
   create(body: GenerationCreateParams, options?: RequestOptions): APIPromise<GenerationCreateResponse> {
     return this._client.post('/generate', { body, ...options });
+  }
+
+  /**
+   * Returns status and completed output URLs for a public API run, including action
+   * runs started through POST /runs/action.
+   *
+   * @example
+   * ```ts
+   * const generation = await client.generations.retrieve(
+   *   'run_abc123',
+   * );
+   * ```
+   */
+  retrieve(runID: string, options?: RequestOptions): APIPromise<GenerationRetrieveResponse> {
+    return this._client.get(path`/runs/${runID}`, options);
   }
 
   /**
@@ -158,6 +171,64 @@ export namespace GenerationCreateResponse {
      * Technique identifier
      */
     technique_id: string;
+  }
+}
+
+export interface GenerationRetrieveResponse {
+  created_at: number;
+
+  progress: number;
+
+  /**
+   * Run identifier
+   */
+  run_id: string;
+
+  status: 'pending' | 'running' | 'completed' | 'failed';
+
+  /**
+   * Cost charged in USD
+   */
+  charged_cost?: number;
+
+  completed_at?: number;
+
+  /**
+   * Machine-readable run error code
+   */
+  error_code?: string;
+
+  /**
+   * Human-readable run error message
+   */
+  error_message?: string;
+
+  outputs?: Array<GenerationRetrieveResponse.Output>;
+
+  /**
+   * URL to poll pending/running runs or fetch completed/failed run details.
+   */
+  poll_url?: string;
+
+  started_at?: number;
+}
+
+export namespace GenerationRetrieveResponse {
+  export interface Output {
+    /**
+     * Run output identifier
+     */
+    output_id: string;
+
+    /**
+     * Run output media type
+     */
+    type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
+
+    /**
+     * Run output URL or text content
+     */
+    url: string;
   }
 }
 
@@ -299,6 +370,7 @@ export interface GenerationListParams extends GenerationsCursorPageParams {
 export declare namespace Generations {
   export {
     type GenerationCreateResponse as GenerationCreateResponse,
+    type GenerationRetrieveResponse as GenerationRetrieveResponse,
     type GenerationListResponse as GenerationListResponse,
     type GenerationListResponsesGenerationsCursorPage as GenerationListResponsesGenerationsCursorPage,
     type GenerationCreateParams as GenerationCreateParams,
