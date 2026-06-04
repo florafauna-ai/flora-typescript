@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.8.0 (2026-06-04)
+
+Full Changelog: [v0.7.1...v0.8.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.7.1...v0.8.0)
+
+### Features
+
+* Expose generations.retrieve(run_id) in the SDK (ENG-5104) ([76f9527](https://github.com/florafauna-ai/flora-typescript/commit/76f9527b5988afa80c1736ee4dc024e044871a56))
+
+
+### Documentation
+
+* rewrite changelog with user-facing release descriptions ([414fa7d](https://github.com/florafauna-ai/flora-typescript/commit/414fa7d828db169d2ad7b9a9e6fc489442e8b6d6))
+
 ## 0.7.1 (2026-06-03)
 
 Full Changelog: [v0.7.0...v0.7.1](https://github.com/florafauna-ai/flora-typescript/compare/v0.7.0...v0.7.1)
