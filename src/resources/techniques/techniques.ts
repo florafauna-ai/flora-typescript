@@ -97,6 +97,11 @@ export namespace TechniqueRetrieveResponse {
     description?: string;
 
     /**
+     * When true, this input may be omitted when running the technique
+     */
+    optional?: boolean;
+
+    /**
      * Required aspect ratio
      */
     specified_aspect_ratio?: string;
@@ -127,6 +132,11 @@ export namespace TechniqueRetrieveResponse {
      * Technique input or output description
      */
     description?: string;
+
+    /**
+     * When true, this input may be omitted when running the technique
+     */
+    optional?: boolean;
 
     /**
      * Required aspect ratio
@@ -189,6 +199,11 @@ export namespace TechniqueListResponse {
     description?: string;
 
     /**
+     * When true, this input may be omitted when running the technique
+     */
+    optional?: boolean;
+
+    /**
      * Required aspect ratio
      */
     specified_aspect_ratio?: string;
@@ -219,6 +234,11 @@ export namespace TechniqueListResponse {
      * Technique input or output description
      */
     description?: string;
+
+    /**
+     * When true, this input may be omitted when running the technique
+     */
+    optional?: boolean;
 
     /**
      * Required aspect ratio
@@ -261,7 +281,7 @@ export declare namespace Techniques {
     type RunListResponse as RunListResponse,
     type RunListResponsesTechniqueRunsCursorPage as RunListResponsesTechniqueRunsCursorPage,
     type RunCreateParams as RunCreateParams,
-    type RunRetrieveParams as RunRetrieveParams,
     type RunListParams as RunListParams,
+    type RunRetrieveParams as RunRetrieveParams,
   };
 }

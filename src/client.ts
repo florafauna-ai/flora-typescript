@@ -930,8 +930,8 @@ export declare namespace FLORA {
     type ProjectListNodesResponse as ProjectListNodesResponse,
     type ProjectListResponsesProjectsCursorPage as ProjectListResponsesProjectsCursorPage,
     type ProjectListNodesResponsesCanvasNodesCursorPage as ProjectListNodesResponsesCanvasNodesCursorPage,
-    type ProjectCreateParams as ProjectCreateParams,
     type ProjectListParams as ProjectListParams,
+    type ProjectCreateParams as ProjectCreateParams,
     type ProjectListNodesParams as ProjectListNodesParams,
   };
 

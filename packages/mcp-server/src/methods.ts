@@ -29,33 +29,21 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/techniques/{techniqueId}/runs',
   },
   {
-    clientCallName: 'client.techniques.runs.retrieve',
-    fullyQualifiedName: 'techniques.runs.retrieve',
-    httpMethod: 'get',
-    httpPath: '/techniques/{techniqueId}/runs/{runId}',
-  },
-  {
     clientCallName: 'client.techniques.runs.list',
     fullyQualifiedName: 'techniques.runs.list',
     httpMethod: 'get',
     httpPath: '/technique-runs',
   },
   {
+    clientCallName: 'client.techniques.runs.retrieve',
+    fullyQualifiedName: 'techniques.runs.retrieve',
+    httpMethod: 'get',
+    httpPath: '/techniques/{techniqueId}/runs/{runId}',
+  },
+  {
     clientCallName: 'client.assets.create',
     fullyQualifiedName: 'assets.create',
     httpMethod: 'post',
-    httpPath: '/assets',
-  },
-  {
-    clientCallName: 'client.assets.retrieve',
-    fullyQualifiedName: 'assets.retrieve',
-    httpMethod: 'get',
-    httpPath: '/assets/{assetId}',
-  },
-  {
-    clientCallName: 'client.assets.list',
-    fullyQualifiedName: 'assets.list',
-    httpMethod: 'get',
     httpPath: '/assets',
   },
   {
@@ -71,10 +59,28 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/assets/{assetId}/retry',
   },
   {
+    clientCallName: 'client.assets.list',
+    fullyQualifiedName: 'assets.list',
+    httpMethod: 'get',
+    httpPath: '/assets',
+  },
+  {
+    clientCallName: 'client.assets.retrieve',
+    fullyQualifiedName: 'assets.retrieve',
+    httpMethod: 'get',
+    httpPath: '/assets/{assetId}',
+  },
+  {
     clientCallName: 'client.workspaces.list',
     fullyQualifiedName: 'workspaces.list',
     httpMethod: 'get',
     httpPath: '/workspaces',
+  },
+  {
+    clientCallName: 'client.projects.list',
+    fullyQualifiedName: 'projects.list',
+    httpMethod: 'get',
+    httpPath: '/projects',
   },
   {
     clientCallName: 'client.projects.create',
@@ -87,12 +93,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'projects.retrieve',
     httpMethod: 'get',
     httpPath: '/projects/{projectId}',
-  },
-  {
-    clientCallName: 'client.projects.list',
-    fullyQualifiedName: 'projects.list',
-    httpMethod: 'get',
-    httpPath: '/projects',
   },
   {
     clientCallName: 'client.projects.listNodes',

@@ -29,19 +29,6 @@ export class Runs extends APIResource {
   }
 
   /**
-   * Returns status, progress, outputs, and error details for a technique run when it
-   * is accessible to the authenticated public API key.
-   */
-  retrieve(
-    runID: string,
-    params: RunRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<RunRetrieveResponse> {
-    const { techniqueId } = params;
-    return this._client.get(path`/techniques/${techniqueId}/runs/${runID}`, options);
-  }
-
-  /**
    * Lists technique run history for the authenticated caller, including pending,
    * running, completed, and failed technique runs. Results are newest first and can
    * be filtered by workspace_id, project_id, technique_id, and status. Each item
@@ -56,6 +43,19 @@ export class Runs extends APIResource {
       query,
       ...options,
     });
+  }
+
+  /**
+   * Returns status, progress, outputs, and error details for a technique run when it
+   * is accessible to the authenticated public API key.
+   */
+  retrieve(
+    runID: string,
+    params: RunRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<RunRetrieveResponse> {
+    const { techniqueId } = params;
+    return this._client.get(path`/techniques/${techniqueId}/runs/${runID}`, options);
   }
 }
 
@@ -305,13 +305,6 @@ export namespace RunCreateParams {
   }
 }
 
-export interface RunRetrieveParams {
-  /**
-   * Technique identifier or slug
-   */
-  techniqueId: string;
-}
-
 export interface RunListParams extends TechniqueRunsCursorPageParams {
   /**
    * Project identifier
@@ -334,6 +327,13 @@ export interface RunListParams extends TechniqueRunsCursorPageParams {
   workspace_id?: string;
 }
 
+export interface RunRetrieveParams {
+  /**
+   * Technique identifier or slug
+   */
+  techniqueId: string;
+}
+
 export declare namespace Runs {
   export {
     type RunCreateResponse as RunCreateResponse,
@@ -341,7 +341,7 @@ export declare namespace Runs {
     type RunListResponse as RunListResponse,
     type RunListResponsesTechniqueRunsCursorPage as RunListResponsesTechniqueRunsCursorPage,
     type RunCreateParams as RunCreateParams,
-    type RunRetrieveParams as RunRetrieveParams,
     type RunListParams as RunListParams,
+    type RunRetrieveParams as RunRetrieveParams,
   };
 }

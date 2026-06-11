@@ -29,39 +29,6 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Returns metadata for one asset when it is accessible to the authenticated public
-   * API key. Missing and inaccessible assets both return 404.
-   *
-   * @example
-   * ```ts
-   * const asset = await client.assets.retrieve('asset_abc123');
-   * ```
-   */
-  retrieve(assetID: string, options?: RequestOptions): APIPromise<AssetRetrieveResponse> {
-    return this._client.get(path`/assets/${assetID}`, options);
-  }
-
-  /**
-   * Returns assets visible to the authenticated public API key. Filter by workspace,
-   * project canvas, search query, cursor, and limit without exposing raw file bytes
-   * or internal graph data.
-   *
-   * @example
-   * ```ts
-   * // Automatically fetches more pages as needed.
-   * for await (const assetListResponse of client.assets.list()) {
-   *   // ...
-   * }
-   * ```
-   */
-  list(
-    query: AssetListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<AssetListResponsesAssetsCursorPage, AssetListResponse> {
-    return this._client.getAPIList('/assets', AssetsCursorPage<AssetListResponse>, { query, ...options });
-  }
-
-  /**
    * Marks a signed asset upload as complete after the file has been uploaded.
    * Mutating public API requests support an optional Idempotency-Key header for
    * client retries; duplicate keys within two hours return idempotency_duplicate.
@@ -89,6 +56,39 @@ export class Assets extends APIResource {
    */
   retry(assetID: string, options?: RequestOptions): APIPromise<AssetRetryResponse> {
     return this._client.post(path`/assets/${assetID}/retry`, options);
+  }
+
+  /**
+   * Returns assets visible to the authenticated public API key. Filter by workspace,
+   * project canvas, search query, cursor, and limit without exposing raw file bytes
+   * or internal graph data.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const assetListResponse of client.assets.list()) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(
+    query: AssetListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<AssetListResponsesAssetsCursorPage, AssetListResponse> {
+    return this._client.getAPIList('/assets', AssetsCursorPage<AssetListResponse>, { query, ...options });
+  }
+
+  /**
+   * Returns metadata for one asset when it is accessible to the authenticated public
+   * API key. Missing and inaccessible assets both return 404.
+   *
+   * @example
+   * ```ts
+   * const asset = await client.assets.retrieve('asset_abc123');
+   * ```
+   */
+  retrieve(assetID: string, options?: RequestOptions): APIPromise<AssetRetrieveResponse> {
+    return this._client.get(path`/assets/${assetID}`, options);
   }
 }
 

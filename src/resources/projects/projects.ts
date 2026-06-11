@@ -30,6 +30,30 @@ export class Projects extends APIResource {
   actions: ActionsAPI.Actions = new ActionsAPI.Actions(this._client);
 
   /**
+   * Returns projects in the requested workspace that are accessible to the
+   * authenticated public API key, ordered by recent activity.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const projectListResponse of client.projects.list(
+   *   { workspace_id: 'ws_abc123' },
+   * )) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(
+    query: ProjectListParams,
+    options?: RequestOptions,
+  ): PagePromise<ProjectListResponsesProjectsCursorPage, ProjectListResponse> {
+    return this._client.getAPIList('/projects', ProjectsCursorPage<ProjectListResponse>, {
+      query,
+      ...options,
+    });
+  }
+
+  /**
    * Creates a new Flora project in the requested workspace. Mutating public API
    * requests support an optional Idempotency-Key header for client retries;
    * duplicate keys within two hours return idempotency_duplicate.
@@ -59,30 +83,6 @@ export class Projects extends APIResource {
    */
   retrieve(projectID: string, options?: RequestOptions): APIPromise<ProjectRetrieveResponse> {
     return this._client.get(path`/projects/${projectID}`, options);
-  }
-
-  /**
-   * Returns projects in the requested workspace that are accessible to the
-   * authenticated public API key, ordered by recent activity.
-   *
-   * @example
-   * ```ts
-   * // Automatically fetches more pages as needed.
-   * for await (const projectListResponse of client.projects.list(
-   *   { workspace_id: 'ws_abc123' },
-   * )) {
-   *   // ...
-   * }
-   * ```
-   */
-  list(
-    query: ProjectListParams,
-    options?: RequestOptions,
-  ): PagePromise<ProjectListResponsesProjectsCursorPage, ProjectListResponse> {
-    return this._client.getAPIList('/projects', ProjectsCursorPage<ProjectListResponse>, {
-      query,
-      ...options,
-    });
   }
 
   /**
@@ -226,18 +226,6 @@ export interface ProjectListNodesResponse {
   width?: number | null;
 }
 
-export interface ProjectCreateParams {
-  /**
-   * Project name
-   */
-  name: string;
-
-  /**
-   * Workspace identifier
-   */
-  workspace_id: string;
-}
-
 export interface ProjectListParams extends ProjectsCursorPageParams {
   /**
    * Workspace identifier
@@ -248,6 +236,18 @@ export interface ProjectListParams extends ProjectsCursorPageParams {
    * Search query
    */
   query?: string;
+}
+
+export interface ProjectCreateParams {
+  /**
+   * Project name
+   */
+  name: string;
+
+  /**
+   * Workspace identifier
+   */
+  workspace_id: string;
 }
 
 export interface ProjectListNodesParams extends CanvasNodesCursorPageParams {}
@@ -264,8 +264,8 @@ export declare namespace Projects {
     type ProjectListNodesResponse as ProjectListNodesResponse,
     type ProjectListResponsesProjectsCursorPage as ProjectListResponsesProjectsCursorPage,
     type ProjectListNodesResponsesCanvasNodesCursorPage as ProjectListNodesResponsesCanvasNodesCursorPage,
-    type ProjectCreateParams as ProjectCreateParams,
     type ProjectListParams as ProjectListParams,
+    type ProjectCreateParams as ProjectCreateParams,
     type ProjectListNodesParams as ProjectListNodesParams,
   };
 
