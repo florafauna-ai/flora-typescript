@@ -21,8 +21,8 @@ Types:
 Methods:
 
 - <code title="post /techniques/{techniqueId}/runs">client.techniques.runs.<a href="./src/resources/techniques/runs.ts">create</a>(techniqueID, { ...params }) -> RunCreateResponse</code>
-- <code title="get /techniques/{techniqueId}/runs/{runId}">client.techniques.runs.<a href="./src/resources/techniques/runs.ts">retrieve</a>(runID, { ...params }) -> RunRetrieveResponse</code>
 - <code title="get /technique-runs">client.techniques.runs.<a href="./src/resources/techniques/runs.ts">list</a>({ ...params }) -> RunListResponsesTechniqueRunsCursorPage</code>
+- <code title="get /techniques/{techniqueId}/runs/{runId}">client.techniques.runs.<a href="./src/resources/techniques/runs.ts">retrieve</a>(runID, { ...params }) -> RunRetrieveResponse</code>
 
 # Assets
 
@@ -37,10 +37,10 @@ Types:
 Methods:
 
 - <code title="post /assets">client.assets.<a href="./src/resources/assets.ts">create</a>({ ...params }) -> AssetCreateResponse</code>
-- <code title="get /assets/{assetId}">client.assets.<a href="./src/resources/assets.ts">retrieve</a>(assetID) -> AssetRetrieveResponse</code>
-- <code title="get /assets">client.assets.<a href="./src/resources/assets.ts">list</a>({ ...params }) -> AssetListResponsesAssetsCursorPage</code>
 - <code title="post /assets/{assetId}/complete">client.assets.<a href="./src/resources/assets.ts">complete</a>(assetID) -> AssetCompleteResponse</code>
 - <code title="post /assets/{assetId}/retry">client.assets.<a href="./src/resources/assets.ts">retry</a>(assetID) -> AssetRetryResponse</code>
+- <code title="get /assets">client.assets.<a href="./src/resources/assets.ts">list</a>({ ...params }) -> AssetListResponsesAssetsCursorPage</code>
+- <code title="get /assets/{assetId}">client.assets.<a href="./src/resources/assets.ts">retrieve</a>(assetID) -> AssetRetrieveResponse</code>
 
 # Workspaces
 
@@ -63,9 +63,9 @@ Types:
 
 Methods:
 
+- <code title="get /projects">client.projects.<a href="./src/resources/projects/projects.ts">list</a>({ ...params }) -> ProjectListResponsesProjectsCursorPage</code>
 - <code title="post /projects">client.projects.<a href="./src/resources/projects/projects.ts">create</a>({ ...params }) -> ProjectCreateResponse</code>
 - <code title="get /projects/{projectId}">client.projects.<a href="./src/resources/projects/projects.ts">retrieve</a>(projectID) -> ProjectRetrieveResponse</code>
-- <code title="get /projects">client.projects.<a href="./src/resources/projects/projects.ts">list</a>({ ...params }) -> ProjectListResponsesProjectsCursorPage</code>
 - <code title="get /projects/{projectId}/nodes">client.projects.<a href="./src/resources/projects/projects.ts">listNodes</a>(projectID, { ...params }) -> ProjectListNodesResponsesCanvasNodesCursorPage</code>
 
 ## Assets
@@ -117,9 +117,11 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/generations.ts">GenerationCreateResponse</a></code>
+- <code><a href="./src/resources/generations.ts">GenerationRetrieveResponse</a></code>
 - <code><a href="./src/resources/generations.ts">GenerationListResponse</a></code>
 
 Methods:
 
 - <code title="post /generate">client.generations.<a href="./src/resources/generations.ts">create</a>({ ...params }) -> GenerationCreateResponse</code>
+- <code title="get /runs/{runId}">client.generations.<a href="./src/resources/generations.ts">retrieve</a>(runID) -> GenerationRetrieveResponse</code>
 - <code title="get /generations">client.generations.<a href="./src/resources/generations.ts">list</a>({ ...params }) -> GenerationListResponsesGenerationsCursorPage</code>

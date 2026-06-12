@@ -51,6 +51,7 @@ import {
   GenerationListParams,
   GenerationListResponse,
   GenerationListResponsesGenerationsCursorPage,
+  GenerationRetrieveResponse,
   Generations,
 } from './resources/generations';
 import { ModelListParams, ModelListResponse, Models } from './resources/models';
@@ -844,9 +845,6 @@ export class FLORA {
    * Top-level run creation endpoints.
    */
   runs: API.Runs = new API.Runs(this);
-  /**
-   * Generation endpoints.
-   */
   generations: API.Generations = new API.Generations(this);
   /**
    * Product feedback endpoints.
@@ -932,8 +930,8 @@ export declare namespace FLORA {
     type ProjectListNodesResponse as ProjectListNodesResponse,
     type ProjectListResponsesProjectsCursorPage as ProjectListResponsesProjectsCursorPage,
     type ProjectListNodesResponsesCanvasNodesCursorPage as ProjectListNodesResponsesCanvasNodesCursorPage,
-    type ProjectCreateParams as ProjectCreateParams,
     type ProjectListParams as ProjectListParams,
+    type ProjectCreateParams as ProjectCreateParams,
     type ProjectListNodesParams as ProjectListNodesParams,
   };
 
@@ -954,6 +952,7 @@ export declare namespace FLORA {
   export {
     Generations as Generations,
     type GenerationCreateResponse as GenerationCreateResponse,
+    type GenerationRetrieveResponse as GenerationRetrieveResponse,
     type GenerationListResponse as GenerationListResponse,
     type GenerationListResponsesGenerationsCursorPage as GenerationListResponsesGenerationsCursorPage,
     type GenerationCreateParams as GenerationCreateParams,

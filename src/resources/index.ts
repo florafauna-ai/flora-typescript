@@ -15,6 +15,7 @@ export { Feedback, type FeedbackRecordResponse, type FeedbackRecordParams } from
 export {
   Generations,
   type GenerationCreateResponse,
+  type GenerationRetrieveResponse,
   type GenerationListResponse,
   type GenerationCreateParams,
   type GenerationListParams,
@@ -27,8 +28,8 @@ export {
   type ProjectRetrieveResponse,
   type ProjectListResponse,
   type ProjectListNodesResponse,
-  type ProjectCreateParams,
   type ProjectListParams,
+  type ProjectCreateParams,
   type ProjectListNodesParams,
   type ProjectListResponsesProjectsCursorPage,
   type ProjectListNodesResponsesCanvasNodesCursorPage,
