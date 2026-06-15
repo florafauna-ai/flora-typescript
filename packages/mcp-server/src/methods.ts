@@ -131,6 +131,24 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/projects/{projectId}/actions/{nodeId}/run',
   },
   {
+    clientCallName: 'client.actions.list',
+    fullyQualifiedName: 'actions.list',
+    httpMethod: 'get',
+    httpPath: '/actions',
+  },
+  {
+    clientCallName: 'client.actions.retrieve',
+    fullyQualifiedName: 'actions.retrieve',
+    httpMethod: 'get',
+    httpPath: '/actions/{actionId}',
+  },
+  {
+    clientCallName: 'client.actions.run',
+    fullyQualifiedName: 'actions.run',
+    httpMethod: 'post',
+    httpPath: '/runs/action',
+  },
+  {
     clientCallName: 'client.models.list',
     fullyQualifiedName: 'models.list',
     httpMethod: 'get',

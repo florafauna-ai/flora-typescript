@@ -248,7 +248,8 @@ export interface ActionCreateParams {
     | 'merge-audio-into-video';
 
   /**
-   * Action parameters
+   * Action parameters (snake_case keys). The accepted keys depend on action_id; see
+   * GET /actions/{actionId} or POST /runs/action for the per-action schema.
    */
   params?: { [key: string]: unknown };
 }
