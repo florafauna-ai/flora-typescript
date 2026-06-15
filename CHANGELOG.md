@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.8.0...v0.9.0) (2026-06-15)
+
+Adds a one-call upload helper. `client.assets.upload(file, { workspace_id })` now accepts a local file path, `Blob`, `Buffer`, stream, or `File`, and internally reserves a signed URL, uploads the bytes, marks the upload complete, and polls until the asset is ready — returning the final asset.
+
+### Features
+
+* **assets:** add `assets.upload()` helper that runs the full reserve → upload → complete → poll flow in a single call
+
 ## [0.8.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.7.1...v0.8.0) (2026-06-12)
 
 

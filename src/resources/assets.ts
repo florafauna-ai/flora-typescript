@@ -5,6 +5,7 @@ import { APIPromise } from '../core/api-promise';
 import { AssetsCursorPage, type AssetsCursorPageParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
+import { type AssetUploadable, type AssetUploadParams, uploadAsset } from '../lib/upload';
 
 /**
  * Asset upload and retrieval endpoints.
@@ -89,6 +90,30 @@ export class Assets extends APIResource {
    */
   retrieve(assetID: string, options?: RequestOptions): APIPromise<AssetRetrieveResponse> {
     return this._client.get(path`/assets/${assetID}`, options);
+  }
+
+  /**
+   * Uploads a local file to FLORA in a single call.
+   *
+   * Detects the input (a filesystem path, `Blob`, `Buffer`, stream, or `File`),
+   * reserves a signed upload URL, pushes the bytes directly to storage, marks the
+   * upload complete, and polls until the asset finishes processing — resolving to
+   * the final, ready asset.
+   *
+   * @example
+   * ```ts
+   * const asset = await client.assets.upload('./hero.png', {
+   *   workspace_id: 'ws_abc123',
+   * });
+   * console.log(asset.url);
+   * ```
+   */
+  upload(
+    file: AssetUploadable,
+    params: AssetUploadParams,
+    options?: RequestOptions,
+  ): Promise<AssetRetrieveResponse> {
+    return uploadAsset(this._client, file, params, options);
   }
 }
 
@@ -448,3 +473,5 @@ export declare namespace Assets {
     type AssetListParams as AssetListParams,
   };
 }
+
+export { type AssetUploadable, type AssetUploadParams } from '../lib/upload';
