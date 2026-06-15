@@ -93,16 +93,23 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Uploads a local file to FLORA in a single call.
+   * Uploads a file to FLORA in a single call.
    *
-   * Detects the input (a filesystem path, `Blob`, `Buffer`, stream, or `File`),
-   * reserves a signed upload URL, pushes the bytes directly to storage, marks the
-   * upload complete, and polls until the asset finishes processing — resolving to
-   * the final, ready asset.
+   * Pass an allowlisted `http(s)://` URL to have the API fetch it server-side, or
+   * a local file (a filesystem path, `Blob`, `Buffer`, stream, or `File`) to
+   * reserve a signed upload URL, push the bytes directly to storage, and mark the
+   * upload complete. Either way it polls until the asset finishes processing —
+   * resolving to the final, ready asset.
    *
    * @example
    * ```ts
+   * // From a local file:
    * const asset = await client.assets.upload('./hero.png', {
+   *   workspace_id: 'ws_abc123',
+   * });
+   *
+   * // From an allowlisted URL (fetched server-side):
+   * const fromUrl = await client.assets.upload('https://example.com/image.png', {
    *   workspace_id: 'ws_abc123',
    * });
    * console.log(asset.url);

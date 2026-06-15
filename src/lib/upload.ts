@@ -14,10 +14,14 @@ import type { FLORA } from '../client';
 import type { AssetCreateResponse, AssetRetrieveResponse } from '../resources/assets';
 
 /**
- * Anything {@link Assets.upload} accepts as the file argument: a filesystem path
- * (Node.js only), or any value that the SDK's {@link toFile} helper understands
- * (`File`, `Blob`, `Buffer`/`Uint8Array`, `ArrayBuffer`, `fetch` `Response`, an
- * `fs.ReadStream`, or an async iterable of bytes).
+ * Anything {@link Assets.upload} accepts as the file argument:
+ *
+ * - an allowlisted `http(s)://` URL — the FLORA API fetches it server-side (no
+ *   bytes leave the client);
+ * - a local filesystem path (Node.js only);
+ * - or any value that the SDK's {@link toFile} helper understands (`File`,
+ *   `Blob`, `Buffer`/`Uint8Array`, `ArrayBuffer`, `fetch` `Response`, an
+ *   `fs.ReadStream`, or an async iterable of bytes).
  */
 export type AssetUploadable = string | Uploadable | ToFileInput;
 
@@ -57,11 +61,13 @@ export interface AssetUploadParams {
 }
 
 /**
- * Upload a local file to FLORA in a single call.
+ * Upload a file to FLORA in a single call.
  *
- * Detects the input (path / Blob / Buffer / stream / `File`), reserves a signed
- * upload URL, pushes the bytes directly to storage, marks the upload complete,
- * and polls until the asset is processed — returning the final, ready asset.
+ * Given an allowlisted `http(s)://` URL, the API fetches it server-side. Given a
+ * local file (path / Blob / Buffer / stream / `File`), the helper reserves a
+ * signed upload URL, pushes the bytes directly to storage, and marks the upload
+ * complete. Either way it then polls until the asset is processed — returning the
+ * final, ready asset.
  */
 export async function uploadAsset(
   client: FLORA,
@@ -77,6 +83,23 @@ export async function uploadAsset(
     pollIntervalMs = 1000,
     pollTimeoutMs = 120_000,
   } = params;
+
+  // Server-side fetch: hand an allowlisted http(s) URL straight to the API as the
+  // source. The server pulls the bytes, so there is nothing to upload or complete.
+  if (typeof file === 'string' && isHttpURL(file)) {
+    const resolvedName = file_name ?? nameFromURL(file);
+    const fetched = await client.assets.create(
+      {
+        source: file,
+        workspace_id,
+        ...(content_type ? { content_type } : {}),
+        ...(resolvedName ? { file_name: resolvedName } : {}),
+        ...(folder ? { folder } : {}),
+      },
+      options,
+    );
+    return pollUntilReady(client, fetched.asset_id, pollIntervalMs, pollTimeoutMs, options);
+  }
 
   // 1. Normalize whatever we were handed into a `File` so we can read its name,
   //    type, and bytes consistently.
@@ -102,6 +125,18 @@ export async function uploadAsset(
 
   // 5. Poll until the asset is processed and ready.
   return pollUntilReady(client, reservation.asset_id, pollIntervalMs, pollTimeoutMs, options);
+}
+
+function isHttpURL(value: string): boolean {
+  return /^https?:\/\//i.test(value);
+}
+
+function nameFromURL(url: string): string | undefined {
+  try {
+    return new URL(url).pathname.split('/').pop() || undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 async function resolveUploadFile(file: AssetUploadable, fileName?: string): Promise<File> {

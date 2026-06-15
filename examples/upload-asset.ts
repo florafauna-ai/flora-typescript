@@ -23,6 +23,11 @@ async function main() {
   //   file_name: 'note.txt',
   //   content_type: 'text/plain',
   // });
+
+  // From an allowlisted URL — the API fetches it server-side (no local bytes):
+  // const asset = await client.assets.upload('https://media.flora.ai/example.png', {
+  //   workspace_id,
+  // });
 }
 
 main();

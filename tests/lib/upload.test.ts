@@ -180,4 +180,64 @@ describe('assets.upload helper', () => {
       client.assets.upload(Buffer.from('png'), { workspace_id: 'ws_abc123', pollIntervalMs: 1 }),
     ).rejects.toThrow(/failed to process: unsupported format/i);
   });
+
+  test('passes an http(s) URL to the API for server-side fetch (no byte upload)', async () => {
+    const calls: FetchCall[] = [];
+    const fetch = async (input: string | URL | Request, init?: RequestInit): Promise<Response> => {
+      const url =
+        typeof input === 'string' ? input
+        : input instanceof URL ? input.href
+        : input.url;
+      const method = (init?.method ?? 'GET').toUpperCase();
+      calls.push({ url, method, body: init?.body });
+
+      // Reserve/create: the body should carry the URL as `source`.
+      if (url.endsWith('/assets') && method === 'POST') {
+        const body = JSON.parse(String(init?.body));
+        expect(body.source).toBe('https://example.com/photos/image.png');
+        expect(body.file_name).toBe('image.png');
+        return jsonResponse({
+          asset_id: 'asset_url',
+          status: 'pending_upload',
+          uploaded_via: 'url',
+          url: 'https://cdn.flora.test/asset_url',
+          visibility: 'workspace',
+          workspace_id: 'ws_abc123',
+        });
+      }
+      if (url.endsWith('/assets/asset_url') && method === 'GET') {
+        return jsonResponse({
+          asset_id: 'asset_url',
+          content_type: 'image/png',
+          created_at: null,
+          description: null,
+          failure_message: null,
+          height: 512,
+          name: 'image.png',
+          size_bytes: 1024,
+          status: 'ready',
+          upload_content_type: 'image/png',
+          uploaded_via: 'url',
+          url: 'https://cdn.flora.test/asset_url',
+          width: 512,
+          workspace_id: 'ws_abc123',
+        });
+      }
+      throw new Error(`unexpected request: ${method} ${url}`);
+    };
+
+    const client = new FLORA({ apiKey: 'test', baseURL: 'http://flora.test/v1', fetch: fetch as any });
+
+    const asset = await client.assets.upload('https://example.com/photos/image.png', {
+      workspace_id: 'ws_abc123',
+      pollIntervalMs: 1,
+    });
+
+    expect(asset.status).toBe('ready');
+    expect(asset.uploaded_via).toBe('url');
+
+    // No presigned-storage upload and no /complete call happen on the URL path.
+    expect(calls.some((c) => c.url.includes('storage.flora.test'))).toBe(false);
+    expect(calls.some((c) => c.url.endsWith('/complete'))).toBe(false);
+  });
 });
