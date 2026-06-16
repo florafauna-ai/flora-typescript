@@ -28,6 +28,7 @@ describe('resource assets', () => {
       content_type: 'image/png',
       file_name: 'hero.png',
       folder: 'campaign-assets',
+      project_id: 'prj_abc123',
     });
   });
 
