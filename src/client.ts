@@ -89,6 +89,7 @@ import {
   TechniqueRetrieveResponse,
   Techniques,
 } from './resources/techniques/techniques';
+import { Webhooks } from './lib/webhooks';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -858,6 +859,11 @@ export class FLORA {
    * Product feedback endpoints.
    */
   feedback: API.Feedback = new API.Feedback(this);
+  /**
+   * Verify and parse incoming webhook callbacks. Stateless — needs only the raw
+   * body, request headers, and your signing secret.
+   */
+  webhooks: Webhooks = new Webhooks();
 }
 
 FLORA.Techniques = Techniques;
