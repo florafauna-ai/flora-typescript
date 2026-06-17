@@ -102,6 +102,20 @@ Methods:
 - <code title="post /projects/{projectId}/actions">client.projects.actions.<a href="./src/resources/projects/actions.ts">create</a>(projectID, { ...params }) -> ActionCreateResponse</code>
 - <code title="post /projects/{projectId}/actions/{nodeId}/run">client.projects.actions.<a href="./src/resources/projects/actions.ts">run</a>(nodeID, { ...params }) -> ActionRunResponse</code>
 
+# Actions
+
+Types:
+
+- <code><a href="./src/resources/actions.ts">ActionRetrieveResponse</a></code>
+- <code><a href="./src/resources/actions.ts">ActionListResponse</a></code>
+- <code><a href="./src/resources/actions.ts">ActionRunResponse</a></code>
+
+Methods:
+
+- <code title="get /actions">client.actions.<a href="./src/resources/actions.ts">list</a>() -> ActionListResponse</code>
+- <code title="get /actions/{actionId}">client.actions.<a href="./src/resources/actions.ts">retrieve</a>(actionID) -> ActionRetrieveResponse</code>
+- <code title="post /runs/action">client.actions.<a href="./src/resources/actions.ts">run</a>({ ...params }) -> ActionRunResponse</code>
+
 # Models
 
 Types:

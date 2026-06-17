@@ -34,6 +34,13 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  ActionListResponse,
+  ActionRetrieveResponse,
+  ActionRunParams,
+  ActionRunResponse,
+  Actions,
+} from './resources/actions';
+import {
   AssetCompleteResponse,
   AssetCreateParams,
   AssetCreateResponse,
@@ -837,6 +844,7 @@ export class FLORA {
    */
   workspaces: API.Workspaces = new API.Workspaces(this);
   projects: API.Projects = new API.Projects(this);
+  actions: API.Actions = new API.Actions(this);
   /**
    * Model catalog endpoints.
    */
@@ -856,6 +864,7 @@ FLORA.Techniques = Techniques;
 FLORA.Assets = Assets;
 FLORA.Workspaces = Workspaces;
 FLORA.Projects = Projects;
+FLORA.Actions = Actions;
 FLORA.Models = Models;
 FLORA.Runs = Runs;
 FLORA.Generations = Generations;
@@ -933,6 +942,14 @@ export declare namespace FLORA {
     type ProjectListParams as ProjectListParams,
     type ProjectCreateParams as ProjectCreateParams,
     type ProjectListNodesParams as ProjectListNodesParams,
+  };
+
+  export {
+    Actions as Actions,
+    type ActionRetrieveResponse as ActionRetrieveResponse,
+    type ActionListResponse as ActionListResponse,
+    type ActionRunResponse as ActionRunResponse,
+    type ActionRunParams as ActionRunParams,
   };
 
   export {

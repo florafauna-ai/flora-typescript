@@ -1,6 +1,13 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
+  Actions,
+  type ActionRetrieveResponse,
+  type ActionListResponse,
+  type ActionRunResponse,
+  type ActionRunParams,
+} from './actions';
+export {
   Assets,
   type AssetCreateResponse,
   type AssetRetrieveResponse,

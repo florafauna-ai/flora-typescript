@@ -4,6 +4,7 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { AssetsCursorPage, type AssetsCursorPageParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
+import { maybeMultipartFormRequestOptions } from '../internal/uploads';
 import { path } from '../internal/utils/path';
 
 /**
@@ -11,10 +12,19 @@ import { path } from '../internal/utils/path';
  */
 export class Assets extends APIResource {
   /**
-   * Creates an asset from a source string. Pass source="signed-url" to reserve a
-   * direct upload URL, or pass an allowlisted HTTPS URL for server-side fetch.
-   * Mutating public API requests support an optional Idempotency-Key header for
-   * client retries; duplicate keys within two hours return idempotency_duplicate.
+   * Creates an asset via one of three paths. (1) Direct bytes: send
+   * multipart/form-data with a `file` part (≤4 MB) plus `workspace_id` — FLORA
+   * stores the bytes and returns a ready asset in one call. (2) Server-side fetch:
+   * send JSON with `source` set to any public HTTPS URL (≤50 MB) — FLORA fetches the
+   * bytes with SSRF protection (private/loopback/metadata IPs and redirects to them
+   * are blocked) and stores them. (3) Signed upload: send JSON with
+   * source="signed-url" to reserve a presigned upload URL for files larger than 4
+   * MB; upload the bytes, then call the complete endpoint. Allowed types: images
+   * (jpeg, png, webp, gif, avif, heic, heif), video (mp4, webm, quicktime), audio
+   * (mpeg, wav, ogg), and pdf; images are capped at 150 MP. Pass `project_id` on any
+   * path to also surface the asset on that project's canvas. Mutating public API
+   * requests support an optional Idempotency-Key header for client retries;
+   * duplicate keys within two hours return idempotency_duplicate.
    *
    * @example
    * ```ts
@@ -25,7 +35,7 @@ export class Assets extends APIResource {
    * ```
    */
   create(body: AssetCreateParams, options?: RequestOptions): APIPromise<AssetCreateResponse> {
-    return this._client.post('/assets', { body, ...options });
+    return this._client.post('/assets', maybeMultipartFormRequestOptions({ body, ...options }, this._client));
   }
 
   /**
@@ -103,9 +113,10 @@ export interface AssetCreateResponse {
   status: 'pending_upload' | 'ready' | 'failed';
 
   /**
-   * Asset source
+   * Asset source: "url" (server-side fetch), "signed_url" (presigned upload
+   * reservation), or "direct" (multipart bytes streamed in this request).
    */
-  uploaded_via: 'url' | 'signed_url';
+  uploaded_via: 'url' | 'signed_url' | 'direct';
 
   /**
    * Asset URL
@@ -417,6 +428,13 @@ export interface AssetCreateParams {
    * Destination folder
    */
   folder?: string;
+
+  /**
+   * Project identifier. Use the public API ID returned by list projects; it must
+   * start with prj\_. When provided, the uploaded asset is also surfaced on the
+   * project's canvas.
+   */
+  project_id?: string;
 }
 
 export interface AssetListParams extends AssetsCursorPageParams {
