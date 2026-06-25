@@ -176,9 +176,29 @@ export namespace ActionRetrieveResponse {
     type: 'image' | 'video' | 'text' | 'audio';
 
     /**
-     * Whether the slot accepts multiple values
+     * Deprecated alias for `multiple: true`. Mirrors `multiple` for back-compat.
      */
     dynamic?: boolean;
+
+    /**
+     * Many-connections form. `true` is unbounded shorthand; the object form sets
+     * explicit min/max bounds.
+     */
+    multiple?: true | Input.UnionMember1;
+
+    /**
+     * Whether the slot allows zero connections in single-input mode. Ignored when
+     * `multiple` is the object form (use `min: 0` there instead).
+     */
+    optional?: boolean;
+  }
+
+  export namespace Input {
+    export interface UnionMember1 {
+      max?: number;
+
+      min?: number;
+    }
   }
 
   export interface Output {
@@ -193,9 +213,29 @@ export namespace ActionRetrieveResponse {
     type: 'image' | 'video' | 'text' | 'audio';
 
     /**
-     * Whether the slot accepts multiple values
+     * Deprecated alias for `multiple: true`. Mirrors `multiple` for back-compat.
      */
     dynamic?: boolean;
+
+    /**
+     * Many-connections form. `true` is unbounded shorthand; the object form sets
+     * explicit min/max bounds.
+     */
+    multiple?: true | Output.UnionMember1;
+
+    /**
+     * Whether the slot allows zero connections in single-input mode. Ignored when
+     * `multiple` is the object form (use `min: 0` there instead).
+     */
+    optional?: boolean;
+  }
+
+  export namespace Output {
+    export interface UnionMember1 {
+      max?: number;
+
+      min?: number;
+    }
   }
 
   export interface Param {
@@ -344,9 +384,29 @@ export namespace ActionListResponse {
       type: 'image' | 'video' | 'text' | 'audio';
 
       /**
-       * Whether the slot accepts multiple values
+       * Deprecated alias for `multiple: true`. Mirrors `multiple` for back-compat.
        */
       dynamic?: boolean;
+
+      /**
+       * Many-connections form. `true` is unbounded shorthand; the object form sets
+       * explicit min/max bounds.
+       */
+      multiple?: true | Input.UnionMember1;
+
+      /**
+       * Whether the slot allows zero connections in single-input mode. Ignored when
+       * `multiple` is the object form (use `min: 0` there instead).
+       */
+      optional?: boolean;
+    }
+
+    export namespace Input {
+      export interface UnionMember1 {
+        max?: number;
+
+        min?: number;
+      }
     }
 
     export interface Output {
@@ -361,9 +421,29 @@ export namespace ActionListResponse {
       type: 'image' | 'video' | 'text' | 'audio';
 
       /**
-       * Whether the slot accepts multiple values
+       * Deprecated alias for `multiple: true`. Mirrors `multiple` for back-compat.
        */
       dynamic?: boolean;
+
+      /**
+       * Many-connections form. `true` is unbounded shorthand; the object form sets
+       * explicit min/max bounds.
+       */
+      multiple?: true | Output.UnionMember1;
+
+      /**
+       * Whether the slot allows zero connections in single-input mode. Ignored when
+       * `multiple` is the object form (use `min: 0` there instead).
+       */
+      optional?: boolean;
+    }
+
+    export namespace Output {
+      export interface UnionMember1 {
+        max?: number;
+
+        min?: number;
+      }
     }
 
     export interface Param {
