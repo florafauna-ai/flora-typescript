@@ -23,7 +23,6 @@ export class Actions extends APIResource {
       | 'split-text'
       | 'find-and-replace-text'
       | 'concat-text'
-      | 'ken-burns-video'
       | 'color-grade-image'
       | 'change-image-ar'
       | 'rotate-image'
@@ -39,6 +38,7 @@ export class Actions extends APIResource {
       | 'add-text-to-image'
       | 'generate-text-image'
       | 'qr-code-generator'
+      | 'ken-burns-video'
       | 'stitch-videos'
       | 'split-video'
       | 'extract-video-frames'
@@ -92,7 +92,6 @@ export interface ActionRetrieveResponse {
     | 'split-text'
     | 'find-and-replace-text'
     | 'concat-text'
-    | 'ken-burns-video'
     | 'color-grade-image'
     | 'change-image-ar'
     | 'rotate-image'
@@ -108,6 +107,7 @@ export interface ActionRetrieveResponse {
     | 'add-text-to-image'
     | 'generate-text-image'
     | 'qr-code-generator'
+    | 'ken-burns-video'
     | 'stitch-videos'
     | 'split-video'
     | 'extract-video-frames'
@@ -300,7 +300,6 @@ export namespace ActionListResponse {
       | 'split-text'
       | 'find-and-replace-text'
       | 'concat-text'
-      | 'ken-burns-video'
       | 'color-grade-image'
       | 'change-image-ar'
       | 'rotate-image'
@@ -316,6 +315,7 @@ export namespace ActionListResponse {
       | 'add-text-to-image'
       | 'generate-text-image'
       | 'qr-code-generator'
+      | 'ken-burns-video'
       | 'stitch-videos'
       | 'split-video'
       | 'extract-video-frames'
@@ -540,7 +540,6 @@ export namespace ActionRunResponse {
       | 'split-text'
       | 'find-and-replace-text'
       | 'concat-text'
-      | 'ken-burns-video'
       | 'color-grade-image'
       | 'change-image-ar'
       | 'rotate-image'
@@ -556,6 +555,7 @@ export namespace ActionRunResponse {
       | 'add-text-to-image'
       | 'generate-text-image'
       | 'qr-code-generator'
+      | 'ken-burns-video'
       | 'stitch-videos'
       | 'split-video'
       | 'extract-video-frames'
@@ -903,7 +903,7 @@ export declare namespace ActionRunParams {
   }
 
   export interface Variant3 {
-    action_id: 'ken-burns-video';
+    action_id: 'color-grade-image';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
@@ -958,39 +958,29 @@ export declare namespace ActionRunParams {
      */
     export interface Params {
       /**
-       * Duration (s)
+       * Brightness
        */
-      duration?: number;
+      brightness?: number;
 
       /**
-       * Easing
+       * Contrast
        */
-      easing?: 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+      contrast?: number;
 
       /**
-       * FPS
+       * Saturation
        */
-      fps?: '24' | '30' | '60';
+      saturation?: number;
 
       /**
-       * Pan
+       * Warmth
        */
-      pan_direction?: 'none' | 'left' | 'right' | 'up' | 'down';
-
-      /**
-       * Zoom Level
-       */
-      zoom?: number;
-
-      /**
-       * Zoom Direction
-       */
-      zoom_direction?: 'none' | 'in' | 'out';
+      warmth?: number;
     }
   }
 
   export interface Variant4 {
-    action_id: 'color-grade-image';
+    action_id: 'change-image-ar';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
@@ -1045,29 +1035,34 @@ export declare namespace ActionRunParams {
      */
     export interface Params {
       /**
-       * Brightness
+       * Aspect Ratio
        */
-      brightness?: number;
+      aspect_ratio?: '1:1' | '16:9' | '9:16' | '4:3' | '3:4' | '3:2' | '2:3' | '21:9';
 
       /**
-       * Contrast
+       * Background
        */
-      contrast?: number;
+      background_mode?: 'solid' | 'blur';
 
       /**
-       * Saturation
+       * Blur Amount
        */
-      saturation?: number;
+      blur_amount?: number;
 
       /**
-       * Warmth
+       * Fit
        */
-      warmth?: number;
+      fit?: 'crop' | 'pad';
+
+      /**
+       * Pad Color
+       */
+      pad_color?: string;
     }
   }
 
   export interface Variant5 {
-    action_id: 'change-image-ar';
+    action_id: 'rotate-image';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
@@ -1122,34 +1117,29 @@ export declare namespace ActionRunParams {
      */
     export interface Params {
       /**
-       * Aspect Ratio
+       * Angle (°, clockwise)
        */
-      aspect_ratio?: '1:1' | '16:9' | '9:16' | '4:3' | '3:4' | '3:2' | '2:3' | '21:9';
+      angle?: number;
 
       /**
-       * Background
+       * Background Color
        */
-      background_mode?: 'solid' | 'blur';
+      background?: string;
 
       /**
-       * Blur Amount
+       * Expand Canvas to Fit
        */
-      blur_amount?: number;
+      expand?: boolean;
 
       /**
-       * Fit
+       * Transparent Background
        */
-      fit?: 'crop' | 'pad';
-
-      /**
-       * Pad Color
-       */
-      pad_color?: string;
+      transparent?: boolean;
     }
   }
 
   export interface Variant6 {
-    action_id: 'rotate-image';
+    action_id: 'flip-image';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
@@ -1204,29 +1194,14 @@ export declare namespace ActionRunParams {
      */
     export interface Params {
       /**
-       * Angle (°, clockwise)
+       * Direction
        */
-      angle?: number;
-
-      /**
-       * Background Color
-       */
-      background?: string;
-
-      /**
-       * Expand Canvas to Fit
-       */
-      expand?: boolean;
-
-      /**
-       * Transparent Background
-       */
-      transparent?: boolean;
+      direction?: 'horizontal' | 'vertical' | 'both';
     }
   }
 
   export interface Variant7 {
-    action_id: 'flip-image';
+    action_id: 'color-filter-image';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
@@ -1254,68 +1229,6 @@ export declare namespace ActionRunParams {
   }
 
   export namespace Variant7 {
-    export interface Input {
-      /**
-       * Action input type
-       */
-      type: 'image' | 'video' | 'audio' | 'text';
-
-      /**
-       * Optional input name
-       */
-      name?: string;
-
-      /**
-       * Input text value
-       */
-      text?: string;
-
-      /**
-       * Input media URL
-       */
-      url?: string;
-    }
-
-    /**
-     * Action parameters
-     */
-    export interface Params {
-      /**
-       * Direction
-       */
-      direction?: 'horizontal' | 'vertical' | 'both';
-    }
-  }
-
-  export interface Variant8 {
-    action_id: 'color-filter-image';
-
-    /**
-     * Action inputs. Direct action runs are headless and read inputs from URLs/text
-     * rather than canvas edges.
-     */
-    inputs: Array<Variant8.Input>;
-
-    /**
-     * Project identifier. Use the public API ID returned by list projects; it must
-     * start with prj\_. Used for ownership, billing, and run history. Direct action
-     * runs do not mutate the project canvas.
-     */
-    project_id: string;
-
-    /**
-     * Workspace identifier. Use the public API ID returned by list workspaces; it must
-     * start with ws\_.
-     */
-    workspace_id: string;
-
-    /**
-     * Action parameters
-     */
-    params?: Variant8.Params;
-  }
-
-  export namespace Variant8 {
     export interface Input {
       /**
        * Action input type
@@ -1445,14 +1358,14 @@ export declare namespace ActionRunParams {
     }
   }
 
-  export interface Variant9 {
+  export interface Variant8 {
     action_id: 'color-tint-image';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
      * rather than canvas edges.
      */
-    inputs: Array<Variant9.Input>;
+    inputs: Array<Variant8.Input>;
 
     /**
      * Project identifier. Use the public API ID returned by list projects; it must
@@ -1470,10 +1383,10 @@ export declare namespace ActionRunParams {
     /**
      * Action parameters
      */
-    params?: Variant9.Params;
+    params?: Variant8.Params;
   }
 
-  export namespace Variant9 {
+  export namespace Variant8 {
     export interface Input {
       /**
        * Action input type
@@ -1517,14 +1430,14 @@ export declare namespace ActionRunParams {
     }
   }
 
-  export interface Variant10 {
+  export interface Variant9 {
     action_id: 'filter-color-image';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
      * rather than canvas edges.
      */
-    inputs: Array<Variant10.Input>;
+    inputs: Array<Variant9.Input>;
 
     /**
      * Project identifier. Use the public API ID returned by list projects; it must
@@ -1542,10 +1455,10 @@ export declare namespace ActionRunParams {
     /**
      * Action parameters
      */
-    params?: Variant10.Params;
+    params?: Variant9.Params;
   }
 
-  export namespace Variant10 {
+  export namespace Variant9 {
     export interface Input {
       /**
        * Action input type
@@ -1604,14 +1517,14 @@ export declare namespace ActionRunParams {
     }
   }
 
-  export interface Variant11 {
+  export interface Variant10 {
     action_id: 'blur-image';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
      * rather than canvas edges.
      */
-    inputs: Array<Variant11.Input>;
+    inputs: Array<Variant10.Input>;
 
     /**
      * Project identifier. Use the public API ID returned by list projects; it must
@@ -1629,10 +1542,10 @@ export declare namespace ActionRunParams {
     /**
      * Action parameters
      */
-    params?: Variant11.Params;
+    params?: Variant10.Params;
   }
 
-  export namespace Variant11 {
+  export namespace Variant10 {
     export interface Input {
       /**
        * Action input type
@@ -1734,8 +1647,70 @@ export declare namespace ActionRunParams {
     }
   }
 
-  export interface Variant12 {
+  export interface Variant11 {
     action_id: 'duplicate-image';
+
+    /**
+     * Action inputs. Direct action runs are headless and read inputs from URLs/text
+     * rather than canvas edges.
+     */
+    inputs: Array<Variant11.Input>;
+
+    /**
+     * Project identifier. Use the public API ID returned by list projects; it must
+     * start with prj\_. Used for ownership, billing, and run history. Direct action
+     * runs do not mutate the project canvas.
+     */
+    project_id: string;
+
+    /**
+     * Workspace identifier. Use the public API ID returned by list workspaces; it must
+     * start with ws\_.
+     */
+    workspace_id: string;
+
+    /**
+     * Action parameters
+     */
+    params?: Variant11.Params;
+  }
+
+  export namespace Variant11 {
+    export interface Input {
+      /**
+       * Action input type
+       */
+      type: 'image' | 'video' | 'audio' | 'text';
+
+      /**
+       * Optional input name
+       */
+      name?: string;
+
+      /**
+       * Input text value
+       */
+      text?: string;
+
+      /**
+       * Input media URL
+       */
+      url?: string;
+    }
+
+    /**
+     * Action parameters
+     */
+    export interface Params {
+      /**
+       * Copies
+       */
+      count?: number;
+    }
+  }
+
+  export interface Variant12 {
+    action_id: 'side-by-side-composite';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
@@ -1790,14 +1765,29 @@ export declare namespace ActionRunParams {
      */
     export interface Params {
       /**
-       * Copies
+       * Background
        */
-      count?: number;
+      background?: string;
+
+      /**
+       * Gap (px)
+       */
+      gap?: number;
+
+      /**
+       * Layout
+       */
+      layout?: 'auto' | 'horizontal-2' | 'horizontal-3' | 'vertical-2' | 'vertical-3' | 'grid-2x2';
+
+      /**
+       * Size Match
+       */
+      normalize?: 'match-shortest' | 'match-largest' | 'pad-to-largest';
     }
   }
 
   export interface Variant13 {
-    action_id: 'side-by-side-composite';
+    action_id: 'add-shape-to-image';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
@@ -1825,83 +1815,6 @@ export declare namespace ActionRunParams {
   }
 
   export namespace Variant13 {
-    export interface Input {
-      /**
-       * Action input type
-       */
-      type: 'image' | 'video' | 'audio' | 'text';
-
-      /**
-       * Optional input name
-       */
-      name?: string;
-
-      /**
-       * Input text value
-       */
-      text?: string;
-
-      /**
-       * Input media URL
-       */
-      url?: string;
-    }
-
-    /**
-     * Action parameters
-     */
-    export interface Params {
-      /**
-       * Background
-       */
-      background?: string;
-
-      /**
-       * Gap (px)
-       */
-      gap?: number;
-
-      /**
-       * Layout
-       */
-      layout?: 'auto' | 'horizontal-2' | 'horizontal-3' | 'vertical-2' | 'vertical-3' | 'grid-2x2';
-
-      /**
-       * Size Match
-       */
-      normalize?: 'match-shortest' | 'match-largest' | 'pad-to-largest';
-    }
-  }
-
-  export interface Variant14 {
-    action_id: 'add-shape-to-image';
-
-    /**
-     * Action inputs. Direct action runs are headless and read inputs from URLs/text
-     * rather than canvas edges.
-     */
-    inputs: Array<Variant14.Input>;
-
-    /**
-     * Project identifier. Use the public API ID returned by list projects; it must
-     * start with prj\_. Used for ownership, billing, and run history. Direct action
-     * runs do not mutate the project canvas.
-     */
-    project_id: string;
-
-    /**
-     * Workspace identifier. Use the public API ID returned by list workspaces; it must
-     * start with ws\_.
-     */
-    workspace_id: string;
-
-    /**
-     * Action parameters
-     */
-    params?: Variant14.Params;
-  }
-
-  export namespace Variant14 {
     export interface Input {
       /**
        * Action input type
@@ -1990,14 +1903,14 @@ export declare namespace ActionRunParams {
     }
   }
 
-  export interface Variant15 {
+  export interface Variant14 {
     action_id: 'generate-shape-image';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
      * rather than canvas edges.
      */
-    inputs: Array<Variant15.Input>;
+    inputs: Array<Variant14.Input>;
 
     /**
      * Project identifier. Use the public API ID returned by list projects; it must
@@ -2015,10 +1928,10 @@ export declare namespace ActionRunParams {
     /**
      * Action parameters
      */
-    params?: Variant15.Params;
+    params?: Variant14.Params;
   }
 
-  export namespace Variant15 {
+  export namespace Variant14 {
     export interface Input {
       /**
        * Action input type
@@ -2122,14 +2035,14 @@ export declare namespace ActionRunParams {
     }
   }
 
-  export interface Variant16 {
+  export interface Variant15 {
     action_id: 'add-text-to-image';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
      * rather than canvas edges.
      */
-    inputs: Array<Variant16.Input>;
+    inputs: Array<Variant15.Input>;
 
     /**
      * Project identifier. Use the public API ID returned by list projects; it must
@@ -2147,10 +2060,10 @@ export declare namespace ActionRunParams {
     /**
      * Action parameters
      */
-    params?: Variant16.Params;
+    params?: Variant15.Params;
   }
 
-  export namespace Variant16 {
+  export namespace Variant15 {
     export interface Input {
       /**
        * Action input type
@@ -2228,14 +2141,14 @@ export declare namespace ActionRunParams {
     }
   }
 
-  export interface Variant17 {
+  export interface Variant16 {
     action_id: 'generate-text-image';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
      * rather than canvas edges.
      */
-    inputs: Array<Variant17.Input>;
+    inputs: Array<Variant16.Input>;
 
     /**
      * Project identifier. Use the public API ID returned by list projects; it must
@@ -2253,10 +2166,10 @@ export declare namespace ActionRunParams {
     /**
      * Action parameters
      */
-    params?: Variant17.Params;
+    params?: Variant16.Params;
   }
 
-  export namespace Variant17 {
+  export namespace Variant16 {
     export interface Input {
       /**
        * Action input type
@@ -2325,8 +2238,90 @@ export declare namespace ActionRunParams {
     }
   }
 
-  export interface Variant18 {
+  export interface Variant17 {
     action_id: 'qr-code-generator';
+
+    /**
+     * Action inputs. Direct action runs are headless and read inputs from URLs/text
+     * rather than canvas edges.
+     */
+    inputs: Array<Variant17.Input>;
+
+    /**
+     * Project identifier. Use the public API ID returned by list projects; it must
+     * start with prj\_. Used for ownership, billing, and run history. Direct action
+     * runs do not mutate the project canvas.
+     */
+    project_id: string;
+
+    /**
+     * Workspace identifier. Use the public API ID returned by list workspaces; it must
+     * start with ws\_.
+     */
+    workspace_id: string;
+
+    /**
+     * Action parameters
+     */
+    params?: Variant17.Params;
+  }
+
+  export namespace Variant17 {
+    export interface Input {
+      /**
+       * Action input type
+       */
+      type: 'image' | 'video' | 'audio' | 'text';
+
+      /**
+       * Optional input name
+       */
+      name?: string;
+
+      /**
+       * Input text value
+       */
+      text?: string;
+
+      /**
+       * Input media URL
+       */
+      url?: string;
+    }
+
+    /**
+     * Action parameters
+     */
+    export interface Params {
+      /**
+       * Background Color
+       */
+      bg_color?: string;
+
+      /**
+       * Quiet-Zone Border (modules)
+       */
+      border?: number;
+
+      /**
+       * Error Correction
+       */
+      error_correction?: 'L' | 'M' | 'Q' | 'H';
+
+      /**
+       * Foreground Color
+       */
+      fg_color?: string;
+
+      /**
+       * Size (px)
+       */
+      size?: number;
+    }
+  }
+
+  export interface Variant18 {
+    action_id: 'ken-burns-video';
 
     /**
      * Action inputs. Direct action runs are headless and read inputs from URLs/text
@@ -2381,29 +2376,34 @@ export declare namespace ActionRunParams {
      */
     export interface Params {
       /**
-       * Background Color
+       * Duration (s)
        */
-      bg_color?: string;
+      duration?: number;
 
       /**
-       * Quiet-Zone Border (modules)
+       * Easing
        */
-      border?: number;
+      easing?: 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
 
       /**
-       * Error Correction
+       * FPS
        */
-      error_correction?: 'L' | 'M' | 'Q' | 'H';
+      fps?: '24' | '30' | '60';
 
       /**
-       * Foreground Color
+       * Pan
        */
-      fg_color?: string;
+      pan_direction?: 'none' | 'left' | 'right' | 'up' | 'down';
 
       /**
-       * Size (px)
+       * Zoom Level
        */
-      size?: number;
+      zoom?: number;
+
+      /**
+       * Zoom Direction
+       */
+      zoom_direction?: 'none' | 'in' | 'out';
     }
   }
 
