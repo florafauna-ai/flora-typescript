@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.8.1 (2026-06-17)
+
+Full Changelog: [v0.8.0...v0.8.1](https://github.com/florafauna-ai/flora-typescript/compare/v0.8.0...v0.8.1)
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([334cb7f](https://github.com/florafauna-ai/flora-typescript/commit/334cb7f59dae042fd0ca053bfbea5ad074f2d0f1))
+
+## [0.8.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.7.1...v0.8.0) (2026-06-12)
+
+
+### Features
+
+* **elements-v2:** server-side guards for reference generation ([51f98bd](https://github.com/florafauna-ai/flora-typescript/commit/51f98bda7cc5094bdae15b8144eb61579f22c7a6))
+* Expose generations.retrieve(run_id) in the SDK (ENG-5104) ([76f9527](https://github.com/florafauna-ai/flora-typescript/commit/76f9527b5988afa80c1736ee4dc024e044871a56))
+* **sdk:** scaffold stlc SDK generation pipeline (Stainless migration) ([ad1fe25](https://github.com/florafauna-ai/flora-typescript/commit/ad1fe2537ab7afdd07152a389107da774bc152cb))
+
+
+### Documentation
+
+* rewrite changelog with user-facing release descriptions ([0c95338](https://github.com/florafauna-ai/flora-typescript/commit/0c9533873f0b6482a548e0f4b8813ab41e8decdf))
+* rewrite changelog with user-facing release descriptions ([414fa7d](https://github.com/florafauna-ai/flora-typescript/commit/414fa7d828db169d2ad7b9a9e6fc489442e8b6d6))
+
 ## 0.7.1 (2026-06-03)
 
 Full Changelog: [v0.7.0...v0.7.1](https://github.com/florafauna-ai/flora-typescript/compare/v0.7.0...v0.7.1)
