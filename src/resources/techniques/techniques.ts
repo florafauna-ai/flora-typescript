@@ -92,6 +92,11 @@ export namespace TechniqueRetrieveResponse {
     type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
 
     /**
+     * When true, fill this input by passing an element id as the input value
+     */
+    accepts_element?: boolean;
+
+    /**
      * Technique input or output description
      */
     description?: string;
@@ -127,6 +132,11 @@ export namespace TechniqueRetrieveResponse {
      * Technique input or output media type
      */
     type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
+
+    /**
+     * When true, fill this input by passing an element id as the input value
+     */
+    accepts_element?: boolean;
 
     /**
      * Technique input or output description
@@ -194,6 +204,11 @@ export namespace TechniqueListResponse {
     type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
 
     /**
+     * When true, fill this input by passing an element id as the input value
+     */
+    accepts_element?: boolean;
+
+    /**
      * Technique input or output description
      */
     description?: string;
@@ -229,6 +244,11 @@ export namespace TechniqueListResponse {
      * Technique input or output media type
      */
     type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl';
+
+    /**
+     * When true, fill this input by passing an element id as the input value
+     */
+    accepts_element?: boolean;
 
     /**
      * Technique input or output description

@@ -6,6 +6,7 @@ import { AssetsCursorPage, type AssetsCursorPageParams, PagePromise } from '../c
 import { RequestOptions } from '../internal/request-options';
 import { maybeMultipartFormRequestOptions } from '../internal/uploads';
 import { path } from '../internal/utils/path';
+import { type AssetUploadable, type AssetUploadParams, uploadAsset } from '../lib/upload';
 
 /**
  * Asset upload and retrieval endpoints.
@@ -99,6 +100,38 @@ export class Assets extends APIResource {
    */
   retrieve(assetID: string, options?: RequestOptions): APIPromise<AssetRetrieveResponse> {
     return this._client.get(path`/assets/${assetID}`, options);
+  }
+
+  /**
+   * Uploads a file to FLORA in a single call, picking the optimal path for the
+   * input and size and polling until the asset is ready.
+   *
+   * - a public `http(s)://` URL is fetched server-side (no bytes leave the client);
+   * - a local file ≤ 4 MB is sent as direct multipart bytes in one request;
+   * - a larger local file reserves a signed upload URL, streams the bytes, and is
+   *   marked complete.
+   *
+   * Local input can be a filesystem path (Node.js), `Blob`, `Buffer`, stream, or
+   * `File`. Resolves to the final, ready asset.
+   *
+   * @example
+   * ```ts
+   * // Local file:
+   * const asset = await client.assets.upload('./hero.png', { workspace_id: 'ws_abc123' });
+   *
+   * // Public URL (fetched server-side):
+   * const fromUrl = await client.assets.upload('https://example.com/image.png', {
+   *   workspace_id: 'ws_abc123',
+   * });
+   * console.log(asset.url);
+   * ```
+   */
+  upload(
+    file: AssetUploadable,
+    params: AssetUploadParams,
+    options?: RequestOptions,
+  ): Promise<AssetRetrieveResponse> {
+    return uploadAsset(this._client, file, params, options);
   }
 }
 
@@ -466,3 +499,5 @@ export declare namespace Assets {
     type AssetListParams as AssetListParams,
   };
 }
+
+export { type AssetUploadable, type AssetUploadParams } from '../lib/upload';

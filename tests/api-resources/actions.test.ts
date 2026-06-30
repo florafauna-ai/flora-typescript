@@ -22,7 +22,7 @@ describe('resource actions', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.actions.retrieve('split-text');
+    const responsePromise = client.actions.retrieve('color-grade-image-browser');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -35,7 +35,7 @@ describe('resource actions', () => {
   // Mock server tests are disabled
   test.skip('run: only required params', async () => {
     const responsePromise = client.actions.run({
-      action_id: 'split-text',
+      action_id: 'color-grade-image-browser',
       inputs: [{ type: 'image' }],
       project_id: 'prj_abc123',
       workspace_id: 'ws_abc123',
@@ -52,7 +52,7 @@ describe('resource actions', () => {
   // Mock server tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.actions.run({
-      action_id: 'split-text',
+      action_id: 'color-grade-image-browser',
       inputs: [
         {
           type: 'image',
@@ -64,13 +64,16 @@ describe('resource actions', () => {
       project_id: 'prj_abc123',
       workspace_id: 'ws_abc123',
       params: {
-        chars_per_part: 1,
-        lines_per_part: 1,
-        max_parts: 1,
-        separator: 'separator',
-        skip_empty: true,
-        split_mode: 'separator',
-        trim_parts: true,
+        advanced: true,
+        brightness: 0.5,
+        contrast: 0.5,
+        highlights: -1,
+        hue_shift: -180,
+        saturation: 0,
+        shadows: -1,
+        show_scope: true,
+        tint: -1,
+        warmth: -0.5,
       },
     });
   });

@@ -10,7 +10,9 @@ const client = new FLORA({
 describe('resource actions', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.projects.actions.create('prj_abc123', { action_id: 'split-text' });
+    const responsePromise = client.projects.actions.create('prj_abc123', {
+      action_id: 'color-grade-image-browser',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,7 +25,7 @@ describe('resource actions', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.projects.actions.create('prj_abc123', {
-      action_id: 'split-text',
+      action_id: 'color-grade-image-browser',
       params: { foo: 'bar' },
     });
   });

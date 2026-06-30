@@ -61,23 +61,23 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     qualified: 'client.techniques.retrieve',
     params: ['techniqueId: string;'],
     response:
-      "{ inputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; name: string; outputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; run_cost: number; technique_id: string; description?: string; }",
+      "{ inputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; accepts_element?: boolean; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; name: string; outputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; accepts_element?: boolean; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; run_cost: number; technique_id: string; description?: string; }",
     markdown:
-      "## retrieve\n\n`client.techniques.retrieve(techniqueId: string): { inputs: object[]; name: string; outputs: object[]; run_cost: number; technique_id: string; description?: string; }`\n\n**get** `/techniques/{techniqueId}`\n\nReturns the public definition for one technique, including its input and output schema used to start runs.\n\n### Parameters\n\n- `techniqueId: string`\n  Technique identifier or slug\n\n### Returns\n\n- `{ inputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; name: string; outputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; run_cost: number; technique_id: string; description?: string; }`\n\n  - `inputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]`\n  - `name: string`\n  - `outputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]`\n  - `run_cost: number`\n  - `technique_id: string`\n  - `description?: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst technique = await client.techniques.retrieve('art-directors-critique');\n\nconsole.log(technique);\n```",
+      "## retrieve\n\n`client.techniques.retrieve(techniqueId: string): { inputs: object[]; name: string; outputs: object[]; run_cost: number; technique_id: string; description?: string; }`\n\n**get** `/techniques/{techniqueId}`\n\nReturns the public definition for one technique, including its input and output schema used to start runs.\n\n### Parameters\n\n- `techniqueId: string`\n  Technique identifier or slug\n\n### Returns\n\n- `{ inputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; accepts_element?: boolean; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; name: string; outputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; accepts_element?: boolean; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; run_cost: number; technique_id: string; description?: string; }`\n\n  - `inputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; accepts_element?: boolean; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]`\n  - `name: string`\n  - `outputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; accepts_element?: boolean; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]`\n  - `run_cost: number`\n  - `technique_id: string`\n  - `description?: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst technique = await client.techniques.retrieve('art-directors-critique');\n\nconsole.log(technique);\n```",
     perLanguage: {
       typescript: {
         method: 'client.techniques.retrieve',
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst technique = await client.techniques.retrieve('art-directors-critique');\n\nconsole.log(technique.technique_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Techniques.Get',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\ttechnique, err := client.Techniques.Get(context.TODO(), "art-directors-critique")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", technique.TechniqueID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -92,23 +92,23 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     qualified: 'client.techniques.list',
     params: ['cursor?: string;', 'limit?: number;', 'query?: string;', 'workspace_id?: string;'],
     response:
-      "{ inputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; name: string; outputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; run_cost: number; technique_id: string; description?: string; }",
+      "{ inputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; accepts_element?: boolean; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; name: string; outputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; accepts_element?: boolean; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; run_cost: number; technique_id: string; description?: string; }",
     markdown:
-      "## list\n\n`client.techniques.list(cursor?: string, limit?: number, query?: string, workspace_id?: string): { inputs: object[]; name: string; outputs: object[]; run_cost: number; technique_id: string; description?: string; }`\n\n**get** `/techniques`\n\nReturns reusable Flora techniques visible to the authenticated public API key. Use workspace_id, query, cursor, and limit to filter the catalog.\n\n### Parameters\n\n- `cursor?: string`\n  Opaque cursor for fetching the next page\n\n- `limit?: number`\n  Maximum number of results to return\n\n- `query?: string`\n  Search query\n\n- `workspace_id?: string`\n  Workspace identifier\n\n### Returns\n\n- `{ inputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; name: string; outputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; run_cost: number; technique_id: string; description?: string; }`\n\n  - `inputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]`\n  - `name: string`\n  - `outputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]`\n  - `run_cost: number`\n  - `technique_id: string`\n  - `description?: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\n// Automatically fetches more pages as needed.\nfor await (const techniqueListResponse of client.techniques.list()) {\n  console.log(techniqueListResponse);\n}\n```",
+      "## list\n\n`client.techniques.list(cursor?: string, limit?: number, query?: string, workspace_id?: string): { inputs: object[]; name: string; outputs: object[]; run_cost: number; technique_id: string; description?: string; }`\n\n**get** `/techniques`\n\nReturns reusable Flora techniques visible to the authenticated public API key. Use workspace_id, query, cursor, and limit to filter the catalog.\n\n### Parameters\n\n- `cursor?: string`\n  Opaque cursor for fetching the next page\n\n- `limit?: number`\n  Maximum number of results to return\n\n- `query?: string`\n  Search query\n\n- `workspace_id?: string`\n  Workspace identifier\n\n### Returns\n\n- `{ inputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; accepts_element?: boolean; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; name: string; outputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; accepts_element?: boolean; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]; run_cost: number; technique_id: string; description?: string; }`\n\n  - `inputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; accepts_element?: boolean; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]`\n  - `name: string`\n  - `outputs: { id: string; name: string; type: 'imageUrl' | 'videoUrl' | 'audioUrl' | 'text' | 'documentUrl'; accepts_element?: boolean; description?: string; optional?: boolean; specified_aspect_ratio?: string; specified_duration?: number; }[]`\n  - `run_cost: number`\n  - `technique_id: string`\n  - `description?: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\n// Automatically fetches more pages as needed.\nfor await (const techniqueListResponse of client.techniques.list()) {\n  console.log(techniqueListResponse);\n}\n```",
     perLanguage: {
       typescript: {
         method: 'client.techniques.list',
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const techniqueListResponse of client.techniques.list()) {\n  console.log(techniqueListResponse.technique_id);\n}",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/techniques \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Techniques.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Techniques.List(context.TODO(), flora.TechniqueListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/techniques \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -138,14 +138,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst run = await client.techniques.runs.create('art-directors-critique', {\n  inputs: [\n    {\n      id: 'id',\n      type: 'text',\n      value: 'value',\n    },\n  ],\n  mode: 'async',\n});\n\nconsole.log(run.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID/runs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": [\n            {\n              "id": "id",\n              "type": "text",\n              "value": "value"\n            }\n          ],\n          "mode": "async"\n        }\'',
-      },
       go: {
         method: 'client.Techniques.Runs.New',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\trun, err := client.Techniques.Runs.New(\n\t\tcontext.TODO(),\n\t\t"art-directors-critique",\n\t\tflora.TechniqueRunNewParams{\n\t\t\tInputs: []flora.TechniqueRunNewParamsInput{{\n\t\t\t\tID:    "id",\n\t\t\t\tType:  "text",\n\t\t\t\tValue: "value",\n\t\t\t}},\n\t\t\tMode: flora.TechniqueRunNewParamsModeAsync,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", run.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID/runs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": [\n            {\n              "id": "id",\n              "type": "text",\n              "value": "value"\n            }\n          ],\n          "mode": "async"\n        }\'',
       },
     },
   },
@@ -176,14 +176,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const runListResponse of client.techniques.runs.list()) {\n  console.log(runListResponse.project_id);\n}",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/technique-runs \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Techniques.Runs.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Techniques.Runs.List(context.TODO(), flora.TechniqueRunListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/technique-runs \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -207,14 +207,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst run = await client.techniques.runs.retrieve('run_abc123', {\n  techniqueId: 'art-directors-critique',\n});\n\nconsole.log(run.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID/runs/$RUN_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Techniques.Runs.Get',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\trun, err := client.Techniques.Runs.Get(\n\t\tcontext.TODO(),\n\t\t"run_abc123",\n\t\tflora.TechniqueRunGetParams{\n\t\t\tTechniqueID: "art-directors-critique",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", run.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID/runs/$RUN_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -245,14 +245,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst asset = await client.assets.create({ source: 'signed-url', workspace_id: 'ws_abc123' });\n\nconsole.log(asset.asset_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/assets \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "source": "signed-url",\n          "workspace_id": "ws_abc123",\n          "content_type": "image/png",\n          "file_name": "hero.png",\n          "folder": "campaign-assets",\n          "project_id": "prj_abc123"\n        }\'',
-      },
       go: {
         method: 'client.Assets.New',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tasset, err := client.Assets.New(context.TODO(), flora.AssetNewParams{\n\t\tSource:      "signed-url",\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", asset.AssetID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/assets \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "source": "signed-url",\n          "workspace_id": "ws_abc123",\n          "content_type": "image/png",\n          "file_name": "hero.png",\n          "folder": "campaign-assets",\n          "project_id": "prj_abc123"\n        }\'',
       },
     },
   },
@@ -276,14 +276,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.assets.complete('asset_abc123');\n\nconsole.log(response.asset_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID/complete \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Assets.Complete',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Assets.Complete(context.TODO(), "asset_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.AssetID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID/complete \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -307,14 +307,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.assets.retry('asset_abc123');\n\nconsole.log(response.asset_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID/retry \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Assets.Retry',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Assets.Retry(context.TODO(), "asset_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.AssetID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID/retry \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -344,13 +344,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const assetListResponse of client.assets.list()) {\n  console.log(assetListResponse.asset_id);\n}",
       },
-      http: {
-        example: 'curl https://app.flora.ai/api/v1/assets \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Assets.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Assets.List(context.TODO(), flora.AssetListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      http: {
+        example: 'curl https://app.flora.ai/api/v1/assets \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -374,14 +374,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst asset = await client.assets.retrieve('asset_abc123');\n\nconsole.log(asset.asset_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Assets.Get',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tasset, err := client.Assets.Get(context.TODO(), "asset_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", asset.AssetID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -403,14 +403,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst workspaces = await client.workspaces.list();\n\nconsole.log(workspaces.workspaces);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/workspaces \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Workspaces.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tworkspaces, err := client.Workspaces.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", workspaces.Workspaces)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -434,14 +434,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const projectListResponse of client.projects.list({ workspace_id: 'ws_abc123' })) {\n  console.log(projectListResponse.project_id);\n}",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Projects.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Projects.List(context.TODO(), flora.ProjectListParams{\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -465,14 +465,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst project = await client.projects.create({\n  name: 'Spring Campaign',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(project.project_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "name": "Spring Campaign",\n          "workspace_id": "ws_abc123"\n        }\'',
-      },
       go: {
         method: 'client.Projects.New',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tproject, err := client.Projects.New(context.TODO(), flora.ProjectNewParams{\n\t\tName:        "Spring Campaign",\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", project.ProjectID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "name": "Spring Campaign",\n          "workspace_id": "ws_abc123"\n        }\'',
       },
     },
   },
@@ -496,14 +496,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst project = await client.projects.retrieve('prj_abc123');\n\nconsole.log(project.project_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Projects.Get',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tproject, err := client.Projects.Get(context.TODO(), "prj_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", project.ProjectID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -527,14 +527,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const projectListNodesResponse of client.projects.listNodes('prj_abc123')) {\n  console.log(projectListNodesResponse.node_id);\n}",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/nodes \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Projects.ListNodes',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Projects.ListNodes(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.ProjectListNodesParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/nodes \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -557,14 +557,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.projects.assets.attachAsset('asset_abc123', {\n  projectId: 'prj_abc123',\n});\n\nconsole.log(response.asset_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/assets/$ASSET_ID/attach \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Projects.Assets.AttachAsset',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Projects.Assets.AttachAsset(\n\t\tcontext.TODO(),\n\t\t"asset_abc123",\n\t\tflora.ProjectAssetAttachAssetParams{\n\t\t\tProjectID: "prj_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.AssetID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/assets/$ASSET_ID/attach \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -588,14 +588,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst canvas = await client.projects.canvas.retrieve('prj_abc123');\n\nconsole.log(canvas.project_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/canvas \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Projects.Canvas.Get',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcanvas, err := client.Projects.Canvas.Get(context.TODO(), "prj_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", canvas.ProjectID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/canvas \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -619,14 +619,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst canvas = await client.projects.canvas.update('prj_abc123', {\n  diagram:\n    'graph LR\\n  source[\"Product photo (Image)\"]\\n  output[\"Editorial campaign image (Image)\"]\\n  source --> output',\n});\n\nconsole.log(canvas.project_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/canvas \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "diagram": "graph LR\\\\n  source[\\\\"Product photo (Image)\\\\"]\\\\n  output[\\\\"Editorial campaign image (Image)\\\\"]\\\\n  source --> output"\n        }\'',
-      },
       go: {
         method: 'client.Projects.Canvas.Update',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcanvas, err := client.Projects.Canvas.Update(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.ProjectCanvasUpdateParams{\n\t\t\tDiagram: "graph LR\\n  source[\\"Product photo (Image)\\"]\\n  output[\\"Editorial campaign image (Image)\\"]\\n  source --> output",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", canvas.ProjectID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/canvas \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "diagram": "graph LR\\\\n  source[\\\\"Product photo (Image)\\\\"]\\\\n  output[\\\\"Editorial campaign image (Image)\\\\"]\\\\n  source --> output"\n        }\'',
       },
     },
   },
@@ -641,21 +641,21 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     params: ['projectId: string;', 'action_id: string;', 'params?: object;'],
     response: '{ action_id: string; canvas_url: string; node_id: string; project_id: string; }',
     markdown:
-      "## create\n\n`client.projects.actions.create(projectId: string, action_id: string, params?: object): { action_id: string; canvas_url: string; node_id: string; project_id: string; }`\n\n**post** `/projects/{projectId}/actions`\n\nCreates a prebuilt action node on a project canvas using a raw action slug.\n\n### Parameters\n\n- `projectId: string`\n  Project identifier\n\n- `action_id: string`\n  Action identifier\n\n- `params?: object`\n  Action parameters (snake_case keys). The accepted keys depend on action_id; see GET /actions/{actionId} or POST /runs/action for the per-action schema.\n\n### Returns\n\n- `{ action_id: string; canvas_url: string; node_id: string; project_id: string; }`\n\n  - `action_id: string`\n  - `canvas_url: string`\n  - `node_id: string`\n  - `project_id: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst action = await client.projects.actions.create('prj_abc123', { action_id: 'split-text' });\n\nconsole.log(action);\n```",
+      "## create\n\n`client.projects.actions.create(projectId: string, action_id: string, params?: object): { action_id: string; canvas_url: string; node_id: string; project_id: string; }`\n\n**post** `/projects/{projectId}/actions`\n\nCreates a prebuilt action node on a project canvas using a raw action slug.\n\n### Parameters\n\n- `projectId: string`\n  Project identifier\n\n- `action_id: string`\n  Action identifier\n\n- `params?: object`\n  Action parameters (snake_case keys). The accepted keys depend on action_id; see GET /actions/{actionId} or POST /runs/action for the per-action schema.\n\n### Returns\n\n- `{ action_id: string; canvas_url: string; node_id: string; project_id: string; }`\n\n  - `action_id: string`\n  - `canvas_url: string`\n  - `node_id: string`\n  - `project_id: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst action = await client.projects.actions.create('prj_abc123', { action_id: 'color-grade-image-browser' });\n\nconsole.log(action);\n```",
     perLanguage: {
       typescript: {
         method: 'client.projects.actions.create',
         example:
-          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst action = await client.projects.actions.create('prj_abc123', { action_id: 'split-text' });\n\nconsole.log(action.action_id);",
-      },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/actions \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "action_id": "split-text"\n        }\'',
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst action = await client.projects.actions.create('prj_abc123', {\n  action_id: 'color-grade-image-browser',\n});\n\nconsole.log(action.action_id);",
       },
       go: {
         method: 'client.Projects.Actions.New',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\taction, err := client.Projects.Actions.New(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.ProjectActionNewParams{\n\t\t\tActionID: flora.ProjectActionNewParamsActionIDSplitText,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", action.ActionID)\n}\n',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\taction, err := client.Projects.Actions.New(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.ProjectActionNewParams{\n\t\t\tActionID: flora.ProjectActionNewParamsActionIDColorGradeImageBrowser,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", action.ActionID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/actions \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "action_id": "color-grade-image-browser"\n        }\'',
       },
     },
   },
@@ -678,14 +678,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.projects.actions.run('nodeId', { projectId: 'prj_abc123' });\n\nconsole.log(response.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/actions/$NODE_ID/run \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Projects.Actions.Run',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Projects.Actions.Run(\n\t\tcontext.TODO(),\n\t\t"nodeId",\n\t\tflora.ProjectActionRunParams{\n\t\t\tProjectID: "prj_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/actions/$NODE_ID/run \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -699,22 +699,22 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     stainlessPath: '(resource) actions > (method) list',
     qualified: 'client.actions.list',
     response:
-      "{ actions: { action_id: string; charged_cost: number; description: string; inputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; }[]; language: 'javascript' | 'python'; name: string; outputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; }[]; params: { key: string; type: string; available_values?: object[]; default_value?: object; info_tooltip?: string; label?: string; max_number_value?: number; min_number_value?: number; number_step?: number; }[]; }[]; }",
+      "{ actions: { action_id: string; charged_cost: number; description: string; inputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; multiple?: true | object; optional?: boolean; }[]; language: 'javascript' | 'python'; name: string; outputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; multiple?: true | object; optional?: boolean; }[]; params: { key: string; type: string; available_values?: object[]; default_value?: object; info_tooltip?: string; label?: string; max_number_value?: number; min_number_value?: number; number_step?: number; }[]; }[]; }",
     markdown:
-      "## list\n\n`client.actions.list(): { actions: object[]; }`\n\n**get** `/actions`\n\nReturns released prebuilt Flora actions that can be executed by the public API. Action identifiers are raw slugs such as rotate-image, not action-prefixed IDs.\n\n### Returns\n\n- `{ actions: { action_id: string; charged_cost: number; description: string; inputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; }[]; language: 'javascript' | 'python'; name: string; outputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; }[]; params: { key: string; type: string; available_values?: object[]; default_value?: object; info_tooltip?: string; label?: string; max_number_value?: number; min_number_value?: number; number_step?: number; }[]; }[]; }`\n\n  - `actions: { action_id: string; charged_cost: number; description: string; inputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; }[]; language: 'javascript' | 'python'; name: string; outputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; }[]; params: { key: string; type: string; available_values?: { label: string; value: string; description?: string; }[]; default_value?: object; info_tooltip?: string; label?: string; max_number_value?: number; min_number_value?: number; number_step?: number; }[]; }[]`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst actions = await client.actions.list();\n\nconsole.log(actions);\n```",
+      "## list\n\n`client.actions.list(): { actions: object[]; }`\n\n**get** `/actions`\n\nReturns released prebuilt Flora actions that can be executed by the public API. Action identifiers are raw slugs such as rotate-image, not action-prefixed IDs.\n\n### Returns\n\n- `{ actions: { action_id: string; charged_cost: number; description: string; inputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; multiple?: true | object; optional?: boolean; }[]; language: 'javascript' | 'python'; name: string; outputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; multiple?: true | object; optional?: boolean; }[]; params: { key: string; type: string; available_values?: object[]; default_value?: object; info_tooltip?: string; label?: string; max_number_value?: number; min_number_value?: number; number_step?: number; }[]; }[]; }`\n\n  - `actions: { action_id: string; charged_cost: number; description: string; inputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; multiple?: true | { max?: number; min?: number; }; optional?: boolean; }[]; language: 'javascript' | 'python'; name: string; outputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; multiple?: true | { max?: number; min?: number; }; optional?: boolean; }[]; params: { key: string; type: string; available_values?: { label: string; value: string; description?: string; }[]; default_value?: object; info_tooltip?: string; label?: string; max_number_value?: number; min_number_value?: number; number_step?: number; }[]; }[]`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst actions = await client.actions.list();\n\nconsole.log(actions);\n```",
     perLanguage: {
       typescript: {
         method: 'client.actions.list',
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst actions = await client.actions.list();\n\nconsole.log(actions.actions);",
       },
-      http: {
-        example: 'curl https://app.flora.ai/api/v1/actions \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Actions.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tactions, err := client.Actions.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", actions.Actions)\n}\n',
+      },
+      http: {
+        example: 'curl https://app.flora.ai/api/v1/actions \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -729,23 +729,23 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     qualified: 'client.actions.retrieve',
     params: ['actionId: string;'],
     response:
-      "{ action_id: string; charged_cost: number; description: string; inputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; }[]; language: 'javascript' | 'python'; name: string; outputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; }[]; params: { key: string; type: string; available_values?: { label: string; value: string; description?: string; }[]; default_value?: object; info_tooltip?: string; label?: string; max_number_value?: number; min_number_value?: number; number_step?: number; }[]; }",
+      "{ action_id: string; charged_cost: number; description: string; inputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; multiple?: true | { max?: number; min?: number; }; optional?: boolean; }[]; language: 'javascript' | 'python'; name: string; outputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; multiple?: true | { max?: number; min?: number; }; optional?: boolean; }[]; params: { key: string; type: string; available_values?: { label: string; value: string; description?: string; }[]; default_value?: object; info_tooltip?: string; label?: string; max_number_value?: number; min_number_value?: number; number_step?: number; }[]; }",
     markdown:
-      "## retrieve\n\n`client.actions.retrieve(actionId: string): { action_id: string; charged_cost: number; description: string; inputs: object[]; language: 'javascript' | 'python'; name: string; outputs: object[]; params: object[]; }`\n\n**get** `/actions/{actionId}`\n\nReturns metadata for one released prebuilt Flora action. Action identifiers are raw slugs such as rotate-image, not action-prefixed IDs.\n\n### Parameters\n\n- `actionId: string`\n  Action identifier\n\n### Returns\n\n- `{ action_id: string; charged_cost: number; description: string; inputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; }[]; language: 'javascript' | 'python'; name: string; outputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; }[]; params: { key: string; type: string; available_values?: { label: string; value: string; description?: string; }[]; default_value?: object; info_tooltip?: string; label?: string; max_number_value?: number; min_number_value?: number; number_step?: number; }[]; }`\n\n  - `action_id: string`\n  - `charged_cost: number`\n  - `description: string`\n  - `inputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; }[]`\n  - `language: 'javascript' | 'python'`\n  - `name: string`\n  - `outputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; }[]`\n  - `params: { key: string; type: string; available_values?: { label: string; value: string; description?: string; }[]; default_value?: object; info_tooltip?: string; label?: string; max_number_value?: number; min_number_value?: number; number_step?: number; }[]`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst action = await client.actions.retrieve('split-text');\n\nconsole.log(action);\n```",
+      "## retrieve\n\n`client.actions.retrieve(actionId: string): { action_id: string; charged_cost: number; description: string; inputs: object[]; language: 'javascript' | 'python'; name: string; outputs: object[]; params: object[]; }`\n\n**get** `/actions/{actionId}`\n\nReturns metadata for one released prebuilt Flora action. Action identifiers are raw slugs such as rotate-image, not action-prefixed IDs.\n\n### Parameters\n\n- `actionId: string`\n  Action identifier\n\n### Returns\n\n- `{ action_id: string; charged_cost: number; description: string; inputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; multiple?: true | { max?: number; min?: number; }; optional?: boolean; }[]; language: 'javascript' | 'python'; name: string; outputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; multiple?: true | { max?: number; min?: number; }; optional?: boolean; }[]; params: { key: string; type: string; available_values?: { label: string; value: string; description?: string; }[]; default_value?: object; info_tooltip?: string; label?: string; max_number_value?: number; min_number_value?: number; number_step?: number; }[]; }`\n\n  - `action_id: string`\n  - `charged_cost: number`\n  - `description: string`\n  - `inputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; multiple?: true | { max?: number; min?: number; }; optional?: boolean; }[]`\n  - `language: 'javascript' | 'python'`\n  - `name: string`\n  - `outputs: { name: string; type: 'image' | 'video' | 'text' | 'audio'; dynamic?: boolean; multiple?: true | { max?: number; min?: number; }; optional?: boolean; }[]`\n  - `params: { key: string; type: string; available_values?: { label: string; value: string; description?: string; }[]; default_value?: object; info_tooltip?: string; label?: string; max_number_value?: number; min_number_value?: number; number_step?: number; }[]`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst action = await client.actions.retrieve('color-grade-image-browser');\n\nconsole.log(action);\n```",
     perLanguage: {
       typescript: {
         method: 'client.actions.retrieve',
         example:
-          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst action = await client.actions.retrieve('split-text');\n\nconsole.log(action.action_id);",
-      },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/actions/$ACTION_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst action = await client.actions.retrieve('color-grade-image-browser');\n\nconsole.log(action.action_id);",
       },
       go: {
         method: 'client.Actions.Get',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\taction, err := client.Actions.Get(context.TODO(), flora.ActionGetParamsActionIDSplitText)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", action.ActionID)\n}\n',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\taction, err := client.Actions.Get(context.TODO(), flora.ActionGetParamsActionIDColorGradeImageBrowser)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", action.ActionID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/actions/$ACTION_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -759,7 +759,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     stainlessPath: '(resource) actions > (method) run',
     qualified: 'client.actions.run',
     params: [
-      "{ action_id: 'split-text'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { chars_per_part?: number; lines_per_part?: number; max_parts?: number; separator?: string; skip_empty?: boolean; split_mode?: 'separator' | 'paragraph' | 'lines' | 'charCount'; trim_parts?: boolean; }; } | { action_id: 'find-and-replace-text'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { case_sensitive?: boolean; find?: string; replace?: string; replace_all?: boolean; whole_word?: boolean; }; } | { action_id: 'concat-text'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { add_headers?: boolean; prefix?: string; separator?: string; skip_empty?: boolean; suffix?: string; trim_parts?: boolean; wrap_each_part?: boolean; }; } | { action_id: 'ken-burns-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { duration?: number; easing?: 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out'; fps?: '24' | '30' | '60'; pan_direction?: 'none' | 'left' | 'right' | 'up' | 'down'; zoom?: number; zoom_direction?: 'none' | 'in' | 'out'; }; } | { action_id: 'color-grade-image'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { brightness?: number; contrast?: number; saturation?: number; warmth?: number; }; } | { action_id: 'change-image-ar'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { aspect_ratio?: '1:1' | '16:9' | '9:16' | '4:3' | '3:4' | '3:2' | '2:3' | '21:9'; background_mode?: 'solid' | 'blur'; blur_amount?: number; fit?: 'crop' | 'pad'; pad_color?: string; }; } | { action_id: 'rotate-image'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { angle?: number; background?: string; expand?: boolean; transparent?: boolean; }; } | { action_id: 'flip-image'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { direction?: 'horizontal' | 'vertical' | 'both'; }; } | { action_id: 'color-filter-image'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { bw_threshold?: number; colorpop_tolerance?: number; dot_angle?: number; dot_bg?: string; dot_color?: string; dot_size?: number; filter?: string; grain?: number; highlight_color?: string; intensity?: number; posterize_bits?: number; sepia_warmth?: number; shadow_color?: string; solarize_threshold?: number; target_color?: string; vignette_softness?: number; vignette_strength?: number; }; } | { action_id: 'color-tint-image'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { blend_mode?: 'multiply' | 'screen' | 'overlay' | 'soft_light' | 'color'; color?: string; intensity?: number; }; } | { action_id: 'filter-color-image'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { invert?: boolean; mode?: 'remove' | 'replace' | 'keep'; replacement_color?: string; softness?: number; target_color?: string; tolerance?: number; }; } | { action_id: 'blur-image'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { angle?: number; blur_type?: 'gaussian' | 'box' | 'motion' | 'radial' | 'bilateral' | 'bokeh' | 'tiltshift' | 'targetcolor'; bokeh_shape?: 'circle' | 'hexagon' | 'pentagon'; edge_threshold?: number; radial_mode?: 'zoom' | 'spin'; radial_strength?: number; radius?: number; target_color?: string; target_invert?: boolean; target_tolerance?: number; tilt_center?: number; tilt_orientation?: 'horizontal' | 'vertical'; tilt_width?: number; }; } | { action_id: 'duplicate-image'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { count?: number; }; } | { action_id: 'side-by-side-composite'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { background?: string; gap?: number; layout?: 'auto' | 'horizontal-2' | 'horizontal-3' | 'vertical-2' | 'vertical-3' | 'grid-2x2'; normalize?: 'match-shortest' | 'match-largest' | 'pad-to-largest'; }; } | { action_id: 'add-shape-to-image'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { center?: { x: number; y: number; }; fill_color?: string; fill_opacity?: number; rotation?: number; shape?: 'rectangle' | 'ellipse' | 'triangle' | 'star' | 'hexagon'; size?: { x: number; y: number; }; stroke_color?: string; stroke_width?: number; }; } | { action_id: 'generate-shape-image'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { background?: string; center?: { x: number; y: number; }; fill_color?: string; fill_opacity?: number; height?: number; rotation?: number; shape?: 'rectangle' | 'ellipse' | 'triangle' | 'star' | 'hexagon'; size?: { x: number; y: number; }; stroke_color?: string; stroke_width?: number; width?: number; }; } | { action_id: 'add-text-to-image'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { color?: string; font_family?: 'sans' | 'sans-bold' | 'sans-italic' | 'serif' | 'serif-bold' | 'mono' | 'mono-bold'; font_size?: number; margin?: number; opacity?: number; position?: string; shadow?: boolean; text?: string; }; } | { action_id: 'generate-text-image'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { background?: string; color?: string; font_family?: 'sans' | 'sans-bold' | 'sans-italic' | 'serif' | 'serif-bold' | 'mono' | 'mono-bold'; font_size?: number; height?: number; margin?: number; text?: string; width?: number; }; } | { action_id: 'qr-code-generator'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { bg_color?: string; border?: number; error_correction?: 'L' | 'M' | 'Q' | 'H'; fg_color?: string; size?: number; }; } | { action_id: 'stitch-videos'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { aspect_ratio?: 'auto' | '21:9' | '16:9' | '3:2' | '4:3' | '5:4' | '1:1' | '4:5' | '3:4' | '2:3' | '9:16' | '9:21'; background_color?: string; background_mode?: 'solid' | 'blur'; blur_amount?: number; fit_mode?: 'contain' | 'cover'; transition?: 'none' | 'fade' | 'wipeleft' | 'wiperight'; transition_duration?: number; }; } | { action_id: 'split-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { scene_sensitivity?: number; segment_duration?: number; segments?: number; split_mode?: 'equal' | 'duration' | 'scene'; strip_audio?: boolean; trim_handles?: number; }; } | { action_id: 'extract-video-frames'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { every_seconds?: number; frame_count?: number; mode?: 'single' | 'evenly' | 'interval' | 'scene'; range?: { max: number; min: number; }; scene_sensitivity?: number; time_percent?: number; }; } | { action_id: 'color-grade-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { brightness?: number; contrast?: number; gamma?: number; saturation?: number; }; } | { action_id: 'video-to-frame-grid'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { background?: string; cell_width?: number; cols?: number; gap?: number; rows?: number; }; } | { action_id: 'boomerang-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { include_audio?: boolean; speed?: number; }; } | { action_id: 'reverse-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { audio_mode?: 'strip' | 'reverse' | 'keep'; }; } | { action_id: 'video-to-long-exposure'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { blend_mode?: 'average' | 'lighten' | 'darken'; frame_stride?: number; max_frames?: number; }; } | { action_id: 'video-effect'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { chromatic_offset?: number; effect?: 'vignette' | 'grain' | 'pixelate' | 'shake' | 'chromatic' | 'vhs'; grain_strength?: number; pixel_block_size?: number; shake_amount?: number; vignette_angle?: number; }; } | { action_id: 'color-filter-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { bw_threshold?: number; filter?: string; grain?: number; posterize_bits?: number; solarize_threshold?: number; }; } | { action_id: 'speed-up-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { factor?: number; keep_audio?: boolean; }; } | { action_id: 'slow-down-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { factor?: number; keep_audio?: boolean; smoothing?: 'off' | 'blend' | 'motion'; }; } | { action_id: 'duplicate-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { count?: number; }; } | { action_id: 'greenscreen-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { blend?: number; color_preset?: 'green' | 'blue' | 'custom'; custom_color?: string; similarity?: number; spill?: boolean; }; } | { action_id: 'resize-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { custom_resolution?: number; resolution?: '240' | '360' | '480' | '540' | '720' | '1080' | '1440' | '2160' | 'custom'; }; } | { action_id: 'change-video-ar'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { aspect_ratio?: '1:1' | '16:9' | '9:16' | '4:3' | '3:4' | '3:2' | '2:3' | '21:9'; background_mode?: 'solid' | 'blur'; blur_amount?: number; fit?: 'crop' | 'pad'; pad_color?: string; }; } | { action_id: 'split-audio-from-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { audio_format?: 'auto' | 'm4a' | 'mp3' | 'wav'; }; } | { action_id: 'merge-audio-into-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { duration?: 'shortest' | 'video' | 'audio'; }; };",
+      "{ action_id: 'color-grade-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { advanced?: boolean; brightness?: number; contrast?: number; highlights?: number; hue_shift?: number; saturation?: number; shadows?: number; show_scope?: boolean; tint?: number; warmth?: number; }; } | { action_id: 'overlay-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { blend?: 'normal' | 'multiply' | 'screen' | 'overlay' | 'soft-light'; center?: { x: number; y: number; }; opacity?: number; rotation?: number; size?: { x: number; y: number; }; }; } | { action_id: 'draw-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { color?: string; erase?: boolean; size?: number; }; } | { action_id: 'crop-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { center?: { x: number; y: number; }; rotation?: number; size?: { x: number; y: number; }; }; } | { action_id: 'scene-3d-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { aspect_ratio?: '1:1' | '16:9' | '9:16' | '4:3' | '3:4'; background?: string; color?: string; offset?: { x: number; y: number; }; rotation?: { x: number; y: number; z: number; }; scale?: { x: number; y: number; z: number; }; shape?: 'cube' | 'sphere' | 'torus' | 'cone' | 'cylinder'; show_background?: boolean; size?: number; }; } | { action_id: 'blur-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { angle?: number; blur_type?: 'gaussian' | 'box' | 'motion' | 'radial' | 'bilateral' | 'bokeh' | 'tiltshift' | 'targetcolor'; bokeh_shape?: 'circle' | 'hexagon' | 'pentagon'; brush_hardness?: number; brush_intensity?: number; brush_size?: number; edge_threshold?: number; erase?: boolean; mode?: 'full' | 'draw'; radial_mode?: 'zoom' | 'spin'; radial_strength?: number; radius?: number; target_color?: string; target_invert?: boolean; target_tolerance?: number; tilt_center?: number; tilt_orientation?: 'horizontal' | 'vertical'; tilt_width?: number; }; } | { action_id: 'change-image-ar-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { aspect_ratio?: '1:1' | '16:9' | '9:16' | '4:3' | '3:4' | '3:2' | '2:3' | '21:9'; background_mode?: 'solid' | 'blur'; blur_amount?: number; fit?: 'crop' | 'pad'; pad_color?: string; }; } | { action_id: 'rotate-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { angle?: number; background?: string; canvas_mode?: 'shrink' | 'keep' | 'expand'; direction?: 'none' | 'horizontal' | 'vertical' | 'both'; transparent?: boolean; }; } | { action_id: 'color-filter-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { bw_threshold?: number; colorpop_tolerance?: number; dot_angle?: number; dot_bg?: string; dot_color?: string; dot_size?: number; filter?: string; grain?: number; highlight_color?: string; intensity?: number; posterize_bits?: number; sepia_warmth?: number; shadow_color?: string; solarize_threshold?: number; target_color?: string; vignette_softness?: number; vignette_strength?: number; }; } | { action_id: 'color-tint-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { blend_mode?: 'multiply' | 'screen' | 'overlay' | 'soft_light' | 'color'; color?: string; intensity?: number; }; } | { action_id: 'filter-color-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { invert?: boolean; mode?: 'remove' | 'replace' | 'keep'; replacement_color?: string; softness?: number; target_color?: string; tolerance?: number; }; } | { action_id: 'duplicate-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { count?: number; }; } | { action_id: 'side-by-side-composite-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { background?: string; gap?: number; layout?: 'auto' | 'horizontal-2' | 'horizontal-3' | 'vertical-2' | 'vertical-3' | 'grid-2x2'; normalize?: 'match-shortest' | 'match-largest' | 'pad-to-largest'; }; } | { action_id: 'add-shape-to-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { background?: string; center?: { x: number; y: number; }; fill_color?: string; fill_opacity?: number; height?: number; rotation?: number; shape?: 'rectangle' | 'ellipse' | 'triangle' | 'star' | 'hexagon'; show_background?: boolean; size?: { x: number; y: number; }; stroke_color?: string; stroke_width?: number; width?: number; }; } | { action_id: 'add-text-to-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { background?: string; center?: { x: number; y: number; }; color?: string; dimensions?: { x: number; y: number; }; font_family?: 'sans' | 'sans-bold' | 'sans-italic' | 'serif' | 'serif-bold' | 'mono' | 'mono-bold'; font_size?: number; max_width?: number; opacity?: number; rotation?: number; shadow?: boolean; show_background?: boolean; text?: string; }; } | { action_id: 'qr-code-generator-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { bg_color?: string; border?: number; error_correction?: 'L' | 'M' | 'Q' | 'H'; fg_color?: string; size?: number; }; } | { action_id: 'resize-image-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { bg_color?: string; fit?: 'contain' | 'cover' | 'stretch'; height?: number; longest?: number; mode?: 'exact' | 'percent' | 'longest'; percent?: number; width?: number; }; } | { action_id: 'shader-effect-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { bloom_strength?: number; bloom_threshold?: number; edge_thickness?: number; effect?: 'chromatic' | 'glitch' | 'edges' | 'crt' | 'ripple' | 'kaleidoscope' | 'bloom' | 'pixelate'; glitch_amount?: number; intensity?: number; ripple_amp?: number; ripple_freq?: number; scanline_strength?: number; segments?: number; shift?: number; }; } | { action_id: 'split-text-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { chars_per_part?: number; lines_per_part?: number; max_parts?: number; separator?: string; skip_empty?: boolean; split_mode?: 'separator' | 'paragraph' | 'lines' | 'charCount'; trim_parts?: boolean; }; } | { action_id: 'find-and-replace-text-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { case_sensitive?: boolean; find?: string; replace?: string; replace_all?: boolean; whole_word?: boolean; }; } | { action_id: 'concat-text-browser'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { add_headers?: boolean; prefix?: string; separator?: string; skip_empty?: boolean; suffix?: string; trim_parts?: boolean; wrap_each_part?: boolean; }; } | { action_id: 'ken-burns-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { duration?: number; easing?: 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out'; fps?: '24' | '30' | '60'; pan_direction?: 'none' | 'left' | 'right' | 'up' | 'down'; zoom?: number; zoom_direction?: 'none' | 'in' | 'out'; }; } | { action_id: 'stitch-videos'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { aspect_ratio?: 'auto' | '21:9' | '16:9' | '3:2' | '4:3' | '5:4' | '1:1' | '4:5' | '3:4' | '2:3' | '9:16' | '9:21'; background_color?: string; background_mode?: 'solid' | 'blur'; blur_amount?: number; fit_mode?: 'contain' | 'cover'; transition?: 'none' | 'fade' | 'wipeleft' | 'wiperight'; transition_duration?: number; }; } | { action_id: 'split-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { scene_sensitivity?: number; segment_duration?: number; segments?: number; split_mode?: 'equal' | 'duration' | 'scene'; strip_audio?: boolean; trim_handles?: number; }; } | { action_id: 'extract-video-frames'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { every_seconds?: number; frame_count?: number; mode?: 'single' | 'evenly' | 'interval' | 'scene'; range?: { max: number; min: number; }; scene_sensitivity?: number; time_percent?: number; }; } | { action_id: 'color-grade-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { brightness?: number; contrast?: number; gamma?: number; saturation?: number; }; } | { action_id: 'video-to-frame-grid'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { background?: string; cell_width?: number; cols?: number; gap?: number; rows?: number; }; } | { action_id: 'boomerang-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { include_audio?: boolean; speed?: number; }; } | { action_id: 'reverse-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { audio_mode?: 'strip' | 'reverse' | 'keep'; }; } | { action_id: 'video-to-long-exposure'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { blend_mode?: 'average' | 'lighten' | 'darken'; frame_stride?: number; max_frames?: number; }; } | { action_id: 'video-effect'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { chromatic_offset?: number; effect?: 'vignette' | 'grain' | 'pixelate' | 'shake' | 'chromatic' | 'vhs'; grain_strength?: number; pixel_block_size?: number; shake_amount?: number; vignette_angle?: number; }; } | { action_id: 'color-filter-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { bw_threshold?: number; filter?: string; grain?: number; posterize_bits?: number; solarize_threshold?: number; }; } | { action_id: 'speed-up-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { factor?: number; keep_audio?: boolean; }; } | { action_id: 'slow-down-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { factor?: number; keep_audio?: boolean; smoothing?: 'off' | 'blend' | 'motion'; }; } | { action_id: 'duplicate-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { count?: number; }; } | { action_id: 'greenscreen-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { blend?: number; color_preset?: 'green' | 'blue' | 'custom'; custom_color?: string; similarity?: number; spill?: boolean; }; } | { action_id: 'resize-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { custom_resolution?: number; resolution?: '240' | '360' | '480' | '540' | '720' | '1080' | '1440' | '2160' | 'custom'; }; } | { action_id: 'change-video-ar'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { aspect_ratio?: '1:1' | '16:9' | '9:16' | '4:3' | '3:4' | '3:2' | '2:3' | '21:9'; background_mode?: 'solid' | 'blur'; blur_amount?: number; fit?: 'crop' | 'pad'; pad_color?: string; }; } | { action_id: 'split-audio-from-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { audio_format?: 'auto' | 'm4a' | 'mp3' | 'wav'; }; } | { action_id: 'merge-audio-into-video'; inputs: { type: 'image' | 'video' | 'audio' | 'text'; name?: string; text?: string; url?: string; }[]; project_id: string; workspace_id: string; params?: { duration?: 'shortest' | 'video' | 'audio'; }; };",
     ],
     response:
       "{ charged_cost: number; estimated_seconds: number; run_id: string; type: 'generation' | 'technique' | 'action'; action?: { action_id: string; }; model?: { model_id: string; }; poll_url?: string; project_id?: string; technique?: { name: string; technique_id: string; }; }",
@@ -767,16 +767,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       typescript: {
         method: 'client.actions.run',
         example:
-          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.actions.run({\n  action_id: 'split-text',\n  inputs: [{ type: 'image' }],\n  project_id: 'prj_abc123',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(response.run_id);",
-      },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/runs/action \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "action_id": "split-text",\n          "inputs": [\n            {\n              "type": "image"\n            }\n          ],\n          "project_id": "prj_abc123",\n          "workspace_id": "ws_abc123"\n        }\'',
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.actions.run({\n  action_id: 'color-grade-image-browser',\n  inputs: [{ type: 'image' }],\n  project_id: 'prj_abc123',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(response.run_id);",
       },
       go: {
         method: 'client.Actions.Run',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Actions.Run(context.TODO(), flora.ActionRunParams{\n\t\tOfObject: &flora.ActionRunParamsBodyObject{\n\t\t\tInputs: []flora.ActionRunParamsBodyObjectInput{{\n\t\t\t\tType: "image",\n\t\t\t}},\n\t\t\tProjectID:   "prj_abc123",\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/runs/action \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "action_id": "color-grade-image-browser",\n          "inputs": [\n            {\n              "type": "image"\n            }\n          ],\n          "project_id": "prj_abc123",\n          "workspace_id": "ws_abc123"\n        }\'',
       },
     },
   },
@@ -800,13 +800,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst models = await client.models.list();\n\nconsole.log(models.models);",
       },
-      http: {
-        example: 'curl https://app.flora.ai/api/v1/models \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Models.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmodels, err := client.Models.List(context.TODO(), flora.ModelListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", models.Models)\n}\n',
+      },
+      http: {
+        example: 'curl https://app.flora.ai/api/v1/models \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -837,14 +837,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.runs.startGeneration({\n  project_id: 'prj_abc123',\n  prompt: 'A cinematic product photo of a ceramic mug on a sunlit table',\n  type: 'image',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(response.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/runs/generation \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "project_id": "prj_abc123",\n          "prompt": "A cinematic product photo of a ceramic mug on a sunlit table",\n          "type": "image",\n          "workspace_id": "ws_abc123",\n          "model": "t2i-flux-2-pro"\n        }\'',
-      },
       go: {
         method: 'client.Runs.StartGeneration',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Runs.StartGeneration(context.TODO(), flora.RunStartGenerationParams{\n\t\tProjectID:   "prj_abc123",\n\t\tPrompt:      "A cinematic product photo of a ceramic mug on a sunlit table",\n\t\tType:        flora.RunStartGenerationParamsTypeImage,\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/runs/generation \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "project_id": "prj_abc123",\n          "prompt": "A cinematic product photo of a ceramic mug on a sunlit table",\n          "type": "image",\n          "workspace_id": "ws_abc123",\n          "model": "t2i-flux-2-pro"\n        }\'',
       },
     },
   },
@@ -868,14 +868,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.runs.startTechnique({\n  inputs: { foo: 'bar' },\n  technique_id: 'tech_abcd1234',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(response.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/runs/technique \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": {\n            "foo": "bar"\n          },\n          "technique_id": "tech_abcd1234",\n          "workspace_id": "ws_abc123"\n        }\'',
-      },
       go: {
         method: 'client.Runs.StartTechnique',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Runs.StartTechnique(context.TODO(), flora.RunStartTechniqueParams{\n\t\tInputs: map[string]any{\n\t\t\t"foo": "bar",\n\t\t},\n\t\tTechniqueID: "tech_abcd1234",\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/runs/technique \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": {\n            "foo": "bar"\n          },\n          "technique_id": "tech_abcd1234",\n          "workspace_id": "ws_abc123"\n        }\'',
       },
     },
   },
@@ -906,14 +906,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst generation = await client.generations.create({\n  project_id: 'prj_abc123',\n  prompt: 'A cinematic product photo of a ceramic mug on a sunlit table',\n  type: 'image',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(generation.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/generate \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "project_id": "prj_abc123",\n          "prompt": "A cinematic product photo of a ceramic mug on a sunlit table",\n          "type": "image",\n          "workspace_id": "ws_abc123",\n          "model": "t2i-flux-2-pro"\n        }\'',
-      },
       go: {
         method: 'client.Generations.New',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tgeneration, err := client.Generations.New(context.TODO(), flora.GenerationNewParams{\n\t\tProjectID:   "prj_abc123",\n\t\tPrompt:      "A cinematic product photo of a ceramic mug on a sunlit table",\n\t\tType:        flora.GenerationNewParamsTypeImage,\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", generation.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/generate \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "project_id": "prj_abc123",\n          "prompt": "A cinematic product photo of a ceramic mug on a sunlit table",\n          "type": "image",\n          "workspace_id": "ws_abc123",\n          "model": "t2i-flux-2-pro"\n        }\'',
       },
     },
   },
@@ -937,14 +937,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst generation = await client.generations.retrieve('run_abc123');\n\nconsole.log(generation.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/runs/$RUN_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Generations.Get',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tgeneration, err := client.Generations.Get(context.TODO(), "run_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", generation.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/runs/$RUN_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -974,14 +974,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const generationListResponse of client.generations.list()) {\n  console.log(generationListResponse.generation_id);\n}",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/generations \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Generations.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Generations.List(context.TODO(), flora.GenerationListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/generations \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
