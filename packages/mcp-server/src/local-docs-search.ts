@@ -70,14 +70,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst technique = await client.techniques.retrieve('art-directors-critique');\n\nconsole.log(technique.technique_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Techniques.Get',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\ttechnique, err := client.Techniques.Get(context.TODO(), "art-directors-critique")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", technique.TechniqueID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -101,14 +101,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const techniqueListResponse of client.techniques.list()) {\n  console.log(techniqueListResponse.technique_id);\n}",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/techniques \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Techniques.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Techniques.List(context.TODO(), flora.TechniqueListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/techniques \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -138,14 +138,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst run = await client.techniques.runs.create('art-directors-critique', {\n  inputs: [\n    {\n      id: 'id',\n      type: 'text',\n      value: 'value',\n    },\n  ],\n  mode: 'async',\n});\n\nconsole.log(run.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID/runs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": [\n            {\n              "id": "id",\n              "type": "text",\n              "value": "value"\n            }\n          ],\n          "mode": "async"\n        }\'',
-      },
       go: {
         method: 'client.Techniques.Runs.New',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\trun, err := client.Techniques.Runs.New(\n\t\tcontext.TODO(),\n\t\t"art-directors-critique",\n\t\tflora.TechniqueRunNewParams{\n\t\t\tInputs: []flora.TechniqueRunNewParamsInput{{\n\t\t\t\tID:    "id",\n\t\t\t\tType:  "text",\n\t\t\t\tValue: "value",\n\t\t\t}},\n\t\t\tMode: flora.TechniqueRunNewParamsModeAsync,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", run.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID/runs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": [\n            {\n              "id": "id",\n              "type": "text",\n              "value": "value"\n            }\n          ],\n          "mode": "async"\n        }\'',
       },
     },
   },
@@ -176,14 +176,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const runListResponse of client.techniques.runs.list()) {\n  console.log(runListResponse.project_id);\n}",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/technique-runs \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Techniques.Runs.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Techniques.Runs.List(context.TODO(), flora.TechniqueRunListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/technique-runs \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -207,14 +207,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst run = await client.techniques.runs.retrieve('run_abc123', {\n  techniqueId: 'art-directors-critique',\n});\n\nconsole.log(run.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID/runs/$RUN_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Techniques.Runs.Get',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\trun, err := client.Techniques.Runs.Get(\n\t\tcontext.TODO(),\n\t\t"run_abc123",\n\t\tflora.TechniqueRunGetParams{\n\t\t\tTechniqueID: "art-directors-critique",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", run.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/techniques/$TECHNIQUE_ID/runs/$RUN_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -245,14 +245,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst asset = await client.assets.create({ source: 'signed-url', workspace_id: 'ws_abc123' });\n\nconsole.log(asset.asset_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/assets \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "source": "signed-url",\n          "workspace_id": "ws_abc123",\n          "content_type": "image/png",\n          "file_name": "hero.png",\n          "folder": "campaign-assets",\n          "project_id": "prj_abc123"\n        }\'',
-      },
       go: {
         method: 'client.Assets.New',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tasset, err := client.Assets.New(context.TODO(), flora.AssetNewParams{\n\t\tSource:      "signed-url",\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", asset.AssetID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/assets \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "source": "signed-url",\n          "workspace_id": "ws_abc123",\n          "content_type": "image/png",\n          "file_name": "hero.png",\n          "folder": "campaign-assets",\n          "project_id": "prj_abc123"\n        }\'',
       },
     },
   },
@@ -276,14 +276,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.assets.complete('asset_abc123');\n\nconsole.log(response.asset_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID/complete \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Assets.Complete',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Assets.Complete(context.TODO(), "asset_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.AssetID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID/complete \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -307,14 +307,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.assets.retry('asset_abc123');\n\nconsole.log(response.asset_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID/retry \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Assets.Retry',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Assets.Retry(context.TODO(), "asset_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.AssetID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID/retry \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -344,13 +344,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const assetListResponse of client.assets.list()) {\n  console.log(assetListResponse.asset_id);\n}",
       },
-      http: {
-        example: 'curl https://app.flora.ai/api/v1/assets \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Assets.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Assets.List(context.TODO(), flora.AssetListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      http: {
+        example: 'curl https://app.flora.ai/api/v1/assets \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -374,14 +374,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst asset = await client.assets.retrieve('asset_abc123');\n\nconsole.log(asset.asset_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Assets.Get',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tasset, err := client.Assets.Get(context.TODO(), "asset_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", asset.AssetID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/assets/$ASSET_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -403,14 +403,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst workspaces = await client.workspaces.list();\n\nconsole.log(workspaces.workspaces);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/workspaces \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Workspaces.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tworkspaces, err := client.Workspaces.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", workspaces.Workspaces)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -434,14 +434,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const projectListResponse of client.projects.list({ workspace_id: 'ws_abc123' })) {\n  console.log(projectListResponse.project_id);\n}",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Projects.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Projects.List(context.TODO(), flora.ProjectListParams{\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -465,14 +465,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst project = await client.projects.create({\n  name: 'Spring Campaign',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(project.project_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "name": "Spring Campaign",\n          "workspace_id": "ws_abc123"\n        }\'',
-      },
       go: {
         method: 'client.Projects.New',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tproject, err := client.Projects.New(context.TODO(), flora.ProjectNewParams{\n\t\tName:        "Spring Campaign",\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", project.ProjectID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "name": "Spring Campaign",\n          "workspace_id": "ws_abc123"\n        }\'',
       },
     },
   },
@@ -496,14 +496,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst project = await client.projects.retrieve('prj_abc123');\n\nconsole.log(project.project_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Projects.Get',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tproject, err := client.Projects.Get(context.TODO(), "prj_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", project.ProjectID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -527,14 +527,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const projectListNodesResponse of client.projects.listNodes('prj_abc123')) {\n  console.log(projectListNodesResponse.node_id);\n}",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/nodes \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Projects.ListNodes',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Projects.ListNodes(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.ProjectListNodesParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/nodes \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -557,14 +557,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.projects.assets.attachAsset('asset_abc123', {\n  projectId: 'prj_abc123',\n});\n\nconsole.log(response.asset_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/assets/$ASSET_ID/attach \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Projects.Assets.AttachAsset',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Projects.Assets.AttachAsset(\n\t\tcontext.TODO(),\n\t\t"asset_abc123",\n\t\tflora.ProjectAssetAttachAssetParams{\n\t\t\tProjectID: "prj_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.AssetID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/assets/$ASSET_ID/attach \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -588,14 +588,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst canvas = await client.projects.canvas.retrieve('prj_abc123');\n\nconsole.log(canvas.project_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/canvas \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Projects.Canvas.Get',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcanvas, err := client.Projects.Canvas.Get(context.TODO(), "prj_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", canvas.ProjectID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/canvas \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -619,14 +619,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst canvas = await client.projects.canvas.update('prj_abc123', {\n  diagram:\n    'graph LR\\n  source[\"Product photo (Image)\"]\\n  output[\"Editorial campaign image (Image)\"]\\n  source --> output',\n});\n\nconsole.log(canvas.project_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/canvas \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "diagram": "graph LR\\\\n  source[\\\\"Product photo (Image)\\\\"]\\\\n  output[\\\\"Editorial campaign image (Image)\\\\"]\\\\n  source --> output"\n        }\'',
-      },
       go: {
         method: 'client.Projects.Canvas.Update',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcanvas, err := client.Projects.Canvas.Update(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.ProjectCanvasUpdateParams{\n\t\t\tDiagram: "graph LR\\n  source[\\"Product photo (Image)\\"]\\n  output[\\"Editorial campaign image (Image)\\"]\\n  source --> output",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", canvas.ProjectID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/canvas \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "diagram": "graph LR\\\\n  source[\\\\"Product photo (Image)\\\\"]\\\\n  output[\\\\"Editorial campaign image (Image)\\\\"]\\\\n  source --> output"\n        }\'',
       },
     },
   },
@@ -648,14 +648,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst action = await client.projects.actions.create('prj_abc123', { action_id: 'split-text' });\n\nconsole.log(action.action_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/actions \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "action_id": "split-text"\n        }\'',
-      },
       go: {
         method: 'client.Projects.Actions.New',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\taction, err := client.Projects.Actions.New(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.ProjectActionNewParams{\n\t\t\tActionID: flora.ProjectActionNewParamsActionIDSplitText,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", action.ActionID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/actions \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "action_id": "split-text"\n        }\'',
       },
     },
   },
@@ -678,14 +678,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.projects.actions.run('nodeId', { projectId: 'prj_abc123' });\n\nconsole.log(response.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/actions/$NODE_ID/run \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Projects.Actions.Run',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Projects.Actions.Run(\n\t\tcontext.TODO(),\n\t\t"nodeId",\n\t\tflora.ProjectActionRunParams{\n\t\t\tProjectID: "prj_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/projects/$PROJECT_ID/actions/$NODE_ID/run \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -708,13 +708,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst actions = await client.actions.list();\n\nconsole.log(actions.actions);",
       },
-      http: {
-        example: 'curl https://app.flora.ai/api/v1/actions \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Actions.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tactions, err := client.Actions.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", actions.Actions)\n}\n',
+      },
+      http: {
+        example: 'curl https://app.flora.ai/api/v1/actions \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -738,14 +738,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst action = await client.actions.retrieve('split-text');\n\nconsole.log(action.action_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/actions/$ACTION_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Actions.Get',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\taction, err := client.Actions.Get(context.TODO(), flora.ActionGetParamsActionIDSplitText)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", action.ActionID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/actions/$ACTION_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -769,14 +769,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.actions.run({\n  action_id: 'split-text',\n  inputs: [{ type: 'image' }],\n  project_id: 'prj_abc123',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(response.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/runs/action \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "action_id": "split-text",\n          "inputs": [\n            {\n              "type": "image"\n            }\n          ],\n          "project_id": "prj_abc123",\n          "workspace_id": "ws_abc123"\n        }\'',
-      },
       go: {
         method: 'client.Actions.Run',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Actions.Run(context.TODO(), flora.ActionRunParams{\n\t\tOfObject: &flora.ActionRunParamsBodyObject{\n\t\t\tInputs: []flora.ActionRunParamsBodyObjectInput{{\n\t\t\t\tType: "image",\n\t\t\t}},\n\t\t\tProjectID:   "prj_abc123",\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/runs/action \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "action_id": "split-text",\n          "inputs": [\n            {\n              "type": "image"\n            }\n          ],\n          "project_id": "prj_abc123",\n          "workspace_id": "ws_abc123"\n        }\'',
       },
     },
   },
@@ -800,13 +800,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst models = await client.models.list();\n\nconsole.log(models.models);",
       },
-      http: {
-        example: 'curl https://app.flora.ai/api/v1/models \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Models.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmodels, err := client.Models.List(context.TODO(), flora.ModelListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", models.Models)\n}\n',
+      },
+      http: {
+        example: 'curl https://app.flora.ai/api/v1/models \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -837,14 +837,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.runs.startGeneration({\n  project_id: 'prj_abc123',\n  prompt: 'A cinematic product photo of a ceramic mug on a sunlit table',\n  type: 'image',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(response.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/runs/generation \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "project_id": "prj_abc123",\n          "prompt": "A cinematic product photo of a ceramic mug on a sunlit table",\n          "type": "image",\n          "workspace_id": "ws_abc123",\n          "model": "t2i-flux-2-pro"\n        }\'',
-      },
       go: {
         method: 'client.Runs.StartGeneration',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Runs.StartGeneration(context.TODO(), flora.RunStartGenerationParams{\n\t\tProjectID:   "prj_abc123",\n\t\tPrompt:      "A cinematic product photo of a ceramic mug on a sunlit table",\n\t\tType:        flora.RunStartGenerationParamsTypeImage,\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/runs/generation \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "project_id": "prj_abc123",\n          "prompt": "A cinematic product photo of a ceramic mug on a sunlit table",\n          "type": "image",\n          "workspace_id": "ws_abc123",\n          "model": "t2i-flux-2-pro"\n        }\'',
       },
     },
   },
@@ -868,14 +868,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.runs.startTechnique({\n  inputs: { foo: 'bar' },\n  technique_id: 'tech_abcd1234',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(response.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/runs/technique \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": {\n            "foo": "bar"\n          },\n          "technique_id": "tech_abcd1234",\n          "workspace_id": "ws_abc123"\n        }\'',
-      },
       go: {
         method: 'client.Runs.StartTechnique',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Runs.StartTechnique(context.TODO(), flora.RunStartTechniqueParams{\n\t\tInputs: map[string]any{\n\t\t\t"foo": "bar",\n\t\t},\n\t\tTechniqueID: "tech_abcd1234",\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/runs/technique \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "inputs": {\n            "foo": "bar"\n          },\n          "technique_id": "tech_abcd1234",\n          "workspace_id": "ws_abc123"\n        }\'',
       },
     },
   },
@@ -906,14 +906,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst generation = await client.generations.create({\n  project_id: 'prj_abc123',\n  prompt: 'A cinematic product photo of a ceramic mug on a sunlit table',\n  type: 'image',\n  workspace_id: 'ws_abc123',\n});\n\nconsole.log(generation.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/generate \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "project_id": "prj_abc123",\n          "prompt": "A cinematic product photo of a ceramic mug on a sunlit table",\n          "type": "image",\n          "workspace_id": "ws_abc123",\n          "model": "t2i-flux-2-pro"\n        }\'',
-      },
       go: {
         method: 'client.Generations.New',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tgeneration, err := client.Generations.New(context.TODO(), flora.GenerationNewParams{\n\t\tProjectID:   "prj_abc123",\n\t\tPrompt:      "A cinematic product photo of a ceramic mug on a sunlit table",\n\t\tType:        flora.GenerationNewParamsTypeImage,\n\t\tWorkspaceID: "ws_abc123",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", generation.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/generate \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "project_id": "prj_abc123",\n          "prompt": "A cinematic product photo of a ceramic mug on a sunlit table",\n          "type": "image",\n          "workspace_id": "ws_abc123",\n          "model": "t2i-flux-2-pro"\n        }\'',
       },
     },
   },
@@ -937,14 +937,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst generation = await client.generations.retrieve('run_abc123');\n\nconsole.log(generation.run_id);",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/runs/$RUN_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Generations.Get',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tgeneration, err := client.Generations.Get(context.TODO(), "run_abc123")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", generation.RunID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/runs/$RUN_ID \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
@@ -974,14 +974,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const generationListResponse of client.generations.list()) {\n  console.log(generationListResponse.generation_id);\n}",
       },
-      http: {
-        example:
-          'curl https://app.flora.ai/api/v1/generations \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
-      },
       go: {
         method: 'client.Generations.List',
         example:
           'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Generations.List(context.TODO(), flora.GenerationListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/generations \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
       },
     },
   },
