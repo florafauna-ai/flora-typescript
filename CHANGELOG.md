@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.10.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.9.0...v0.10.0) (2026-07-09)
+
+
+### Features
+
+* **webhooks:** add client.webhooks.unwrap() signature-verification helper ([e9e21ed](https://github.com/florafauna-ai/flora-typescript/commit/e9e21edcff1f8a940d39e7de4ae2396a2ef4496d))
+
+
+### Bug Fixes
+
+* **mcp:** restore remote code execution and hosted docs search for self-hosted builds ([6c5e033](https://github.com/florafauna-ai/flora-typescript/commit/6c5e033a4d33c038c15b83eca1f87e1157c32921))
+* **stainless:** restore remote code execution + hosted docs search in generated flora-mcp ([e21d3f8](https://github.com/florafauna-ai/flora-typescript/commit/e21d3f8303146a01a9aa0c9b5db6d066bc77b808))
+
+
+### Styles
+
+* prettier-format upload.test.ts ([ceb0d2d](https://github.com/florafauna-ai/flora-typescript/commit/ceb0d2de05d42a1d432cd89196cf9d45d1fce8da))
+
 ## [0.9.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.8.2...v0.9.0) (2026-07-09)
 
 
