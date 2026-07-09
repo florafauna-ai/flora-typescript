@@ -1,6 +1,6 @@
 {
   "name": "@flora-ai/flora",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "The official TypeScript library for the FLORA API",
   "author": "FLORA <>",
   "types": "dist/index.d.ts",
