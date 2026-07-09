@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.9.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.8.2...v0.9.0) (2026-07-09)
+
+
+### Features
+
+* **webhooks:** add `client.webhooks.unwrap()` signature-verification helper for run-completion callbacks ([df8de05](https://github.com/florafauna-ai/flora-typescript/commit/df8de05ffbfa6a140acc1655c5dcf6fe4da9028c))
+* **assets:** add `assets.upload()` one-call helper (url / direct-bytes / signed-url) ([4087c2e](https://github.com/florafauna-ai/flora-typescript/commit/4087c2e07ee61dd24a6a57146ced096768bd2c9f))
+* **generations:** expose `generations.retrieve(run_id)` (ENG-5104) ([76f9527](https://github.com/florafauna-ai/flora-typescript/commit/76f9527b5988afa80c1736ee4dc024e044871a56))
+* **techniques:** accept an element as a technique input (ENG-5227) ([7ec1fae](https://github.com/florafauna-ai/flora-typescript/commit/7ec1faedc49dc6e175f01c4ee911eedac9e60d95))
+* **api:** signed webhook callbacks for technique runs ([42a4532](https://github.com/florafauna-ai/flora-typescript/commit/42a45324e4c860a594a436b4fc7a222f19018d82))
+* **api:** fire webhook on generate-run terminal state (ENG-5357) ([034817b](https://github.com/florafauna-ai/flora-typescript/commit/034817b1b0f860cc9c98561c6c603c9c17433362))
+* **api:** direct-bytes upload, SSRF-safe URL fetch, symmetric project_id, upfront limits ([ec91ede](https://github.com/florafauna-ai/flora-typescript/commit/ec91ede791cb58036271b5ee43393455a94e6c07))
+* **actions:** enforce action param values against their schema ([3a333d7](https://github.com/florafauna-ai/flora-typescript/commit/3a333d7aa15aa78ed709b9faaf75634d47b07220))
+* **actions:** release v2 browser actions, unlist legacy twins ([7ceed85](https://github.com/florafauna-ai/flora-typescript/commit/7ceed85be9cf9396649a806c0d9ef9a6e0630fc8))
+* **actions:** point3d param, browser-action framework improvements, and action-set polish ([3915d09](https://github.com/florafauna-ai/flora-typescript/commit/3915d0969c2a84bdc566f45e0fb5f3f01400f6ec))
+* **actions:** add `optional` and `multiple` keys to action-input schema ([bac0776](https://github.com/florafauna-ai/flora-typescript/commit/bac0776b4f04769d18eef1544e5d1bf156e717af))
+* **elements-v2:** server-side guards for reference generation ([51f98bd](https://github.com/florafauna-ai/flora-typescript/commit/51f98bda7cc5094bdae15b8144eb61579f22c7a6))
+* **mcp:** add OAuth resource metadata ([2c12390](https://github.com/florafauna-ai/flora-typescript/commit/2c12390e7f27e436acb48cf028532a04630c3829))
+* **client:** render client class name as `FLORA` ([8b663b4](https://github.com/florafauna-ai/flora-typescript/commit/8b663b4565524c031fcce9b7af50b1530219686b))
+
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi for Node 26 compatibility ([8ed4f6d](https://github.com/florafauna-ai/flora-typescript/commit/8ed4f6d390d8cbb83dd6bf7ca7cc10f07ae30441))
+
 ## 0.8.1 (2026-06-17)
 
 Full Changelog: [v0.8.0...v0.8.1](https://github.com/florafauna-ai/flora-typescript/compare/v0.8.0...v0.8.1)
