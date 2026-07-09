@@ -7,18 +7,6 @@ export { APIPromise } from './core/api-promise';
 export { FLORA, type ClientOptions } from './client';
 export { PagePromise } from './core/pagination';
 export {
-  Webhooks,
-  WebhookVerificationError,
-  type WebhookEvent,
-  type WebhookRunData,
-  type WebhookEventType,
-  type WebhookRunType,
-  type WebhookRunStatus,
-  type WebhookPayload,
-  type WebhookHeaders,
-  type WebhookUnwrapOptions,
-} from './lib/webhooks';
-export {
   FLORAError,
   APIError,
   APIConnectionError,

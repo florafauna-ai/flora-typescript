@@ -7,9 +7,7 @@ function jsonResponse(body: unknown, status = 200): Response {
 }
 
 const urlOf = (input: string | URL | Request): string =>
-  typeof input === 'string' ? input
-  : input instanceof URL ? input.href
-  : input.url;
+  typeof input === 'string' ? input : input instanceof URL ? input.href : input.url;
 
 const readyAsset = (id: string, extra: Record<string, unknown> = {}) => ({
   asset_id: id,
@@ -53,8 +51,7 @@ describe('assets.upload helper (3-path)', () => {
           workspace_id: 'ws_abc123',
         });
       }
-      if (url.endsWith('/assets/asset_direct') && method === 'GET')
-        return jsonResponse(readyAsset('asset_direct'));
+      if (url.endsWith('/assets/asset_direct') && method === 'GET') return jsonResponse(readyAsset('asset_direct'));
       throw new Error(`unexpected request: ${method} ${url}`);
     };
 
@@ -136,21 +133,10 @@ describe('assets.upload helper (3-path)', () => {
       }
       if (url === 'https://storage.flora.test/signed-post') return new Response(null, { status: 204 });
       if (url.endsWith('/assets/asset_big/complete') && method === 'POST')
-        return jsonResponse({
-          asset_id: 'asset_big',
-          status: 'pending_upload',
-          url: null,
-          visibility: 'workspace',
-          workspace_id: 'ws_abc123',
-        });
+        return jsonResponse({ asset_id: 'asset_big', status: 'pending_upload', url: null, visibility: 'workspace', workspace_id: 'ws_abc123' });
       if (url.endsWith('/assets/asset_big') && method === 'GET') {
         polls += 1;
-        return jsonResponse(
-          readyAsset('asset_big', {
-            uploaded_via: 'signed_url',
-            status: polls >= 2 ? 'ready' : 'pending_upload',
-          }),
-        );
+        return jsonResponse(readyAsset('asset_big', { uploaded_via: 'signed_url', status: polls >= 2 ? 'ready' : 'pending_upload' }));
       }
       throw new Error(`unexpected request: ${method} ${url}`);
     };
@@ -165,9 +151,7 @@ describe('assets.upload helper (3-path)', () => {
     });
 
     expect(asset.status).toBe('ready');
-    expect(calls.some((c) => c.url === 'https://storage.flora.test/signed-post' && c.method === 'POST')).toBe(
-      true,
-    );
+    expect(calls.some((c) => c.url === 'https://storage.flora.test/signed-post' && c.method === 'POST')).toBe(true);
     expect(calls.some((c) => c.url.endsWith('/assets/asset_big/complete'))).toBe(true);
     expect(polls).toBe(2);
   });
