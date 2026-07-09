@@ -32,6 +32,7 @@ describe('resource generations', () => {
       prompt: 'A cinematic product photo of a ceramic mug on a sunlit table',
       type: 'image',
       workspace_id: 'ws_abc123',
+      callback_url: 'https://example.com',
       model: 't2i-flux-2-pro',
       params: { foo: 'bar' },
     });
