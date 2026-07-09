@@ -22,7 +22,7 @@ export type McpOptions = {
   oAuthCookieSecret: string;
   serverURL: string;
   stainlessApiKey?: string | undefined;
-  docsSearchMode?: 'local' | undefined;
+  docsSearchMode?: 'stainless-api' | 'local' | undefined;
   docsDir?: string | undefined;
   codeAllowHttpGets?: boolean | undefined;
   codeAllowedMethods?: string[] | undefined;
@@ -31,7 +31,7 @@ export type McpOptions = {
   customInstructionsPath?: string | undefined;
 };
 
-export type McpCodeExecutionMode = 'local';
+export type McpCodeExecutionMode = 'stainless-sandbox' | 'local';
 
 export function parseCLIOptions(): CLIOptions {
   const opts = yargs(hideBin(process.argv))
@@ -54,10 +54,10 @@ export function parseCLIOptions(): CLIOptions {
     })
     .option('code-execution-mode', {
       type: 'string',
-      choices: ['local'],
-      default: 'local',
+      choices: ['stainless-sandbox', 'local'],
+      default: 'stainless-sandbox',
       description:
-        'The server was generated without access to the Stainless API, so code execution can only run locally on the MCP server machine.',
+        "Where to run code execution in code tool; 'stainless-sandbox' will execute code in Stainless-hosted sandboxes whereas 'local' will execute code locally on the MCP server machine.",
     })
     .option('custom-instructions-path', {
       type: 'string',
@@ -71,10 +71,10 @@ export function parseCLIOptions(): CLIOptions {
     })
     .option('docs-search-mode', {
       type: 'string',
-      choices: ['local'],
-      default: 'local',
+      choices: ['stainless-api', 'local'],
+      default: 'stainless-api',
       description:
-        "Documentation search will use an in-memory search index built from embedded SDK method data and optional local docs files; the 'stainless-api' option is unavailable.",
+        "Where to search documentation; 'stainless-api' uses the Stainless-hosted search API whereas 'local' uses an in-memory search index built from embedded SDK method data and optional local docs files.",
     })
     .option('log-format', {
       type: 'string',
@@ -158,7 +158,7 @@ export function parseCLIOptions(): CLIOptions {
     serverURL: argv.serverUrl ? argv.serverUrl : `http://localhost:${argv.port ?? 3000}`,
     debug: !!argv.debug,
     stainlessApiKey: argv.stainlessApiKey,
-    docsSearchMode: argv.docsSearchMode as 'local' | undefined,
+    docsSearchMode: argv.docsSearchMode as 'stainless-api' | 'local' | undefined,
     docsDir: argv.docsDir,
     codeAllowHttpGets: argv.codeAllowHttpGets,
     codeAllowedMethods: argv.codeAllowedMethods,
