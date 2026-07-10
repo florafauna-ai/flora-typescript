@@ -28,7 +28,7 @@ export const newMcpServer = async ({
   new McpServer(
     {
       name: 'flora_ai_flora_api',
-      version: '0.9.0',
+      version: '0.10.0',
     },
     {
       instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),
