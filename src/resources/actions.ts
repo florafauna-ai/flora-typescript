@@ -993,6 +993,11 @@ export declare namespace ActionRunParams {
       center?: Params.Center;
 
       /**
+       * Lock ratio
+       */
+      lock_aspect?: boolean;
+
+      /**
        * Rotation (deg)
        */
       rotation?: number;
