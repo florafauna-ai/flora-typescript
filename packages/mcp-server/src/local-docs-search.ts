@@ -451,14 +451,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'post',
     summary: 'Create a project',
     description:
-      'Creates a new Flora project in the requested workspace. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.',
+      'Creates a new Flora project in the requested workspace. To file the project into a project folder, use POST /workspaces/{workspace_id}/folders/{folder_id}/projects. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.',
     stainlessPath: '(resource) projects > (method) create',
     qualified: 'client.projects.create',
     params: ['name: string;', 'workspace_id: string;'],
     response:
       '{ created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }',
     markdown:
-      "## create\n\n`client.projects.create(name: string, workspace_id: string): { created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }`\n\n**post** `/projects`\n\nCreates a new Flora project in the requested workspace. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `name: string`\n  Project name\n\n- `workspace_id: string`\n  Workspace identifier\n\n### Returns\n\n- `{ created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }`\n\n  - `created_at: number`\n  - `last_modified: number`\n  - `name: string`\n  - `origin: string`\n  - `project_id: string`\n  - `workspace_id: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst project = await client.projects.create({ name: 'Spring Campaign', workspace_id: 'ws_abc123' });\n\nconsole.log(project);\n```",
+      "## create\n\n`client.projects.create(name: string, workspace_id: string): { created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }`\n\n**post** `/projects`\n\nCreates a new Flora project in the requested workspace. To file the project into a project folder, use POST /workspaces/{workspace_id}/folders/{folder_id}/projects. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `name: string`\n  Project name\n\n- `workspace_id: string`\n  Workspace identifier\n\n### Returns\n\n- `{ created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }`\n\n  - `created_at: number`\n  - `last_modified: number`\n  - `name: string`\n  - `origin: string`\n  - `project_id: string`\n  - `workspace_id: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst project = await client.projects.create({ name: 'Spring Campaign', workspace_id: 'ws_abc123' });\n\nconsole.log(project);\n```",
     perLanguage: {
       typescript: {
         method: 'client.projects.create',

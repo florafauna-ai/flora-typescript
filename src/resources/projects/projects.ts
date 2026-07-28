@@ -54,7 +54,9 @@ export class Projects extends APIResource {
   }
 
   /**
-   * Creates a new Flora project in the requested workspace. Mutating public API
+   * Creates a new Flora project in the requested workspace. To file the project into
+   * a project folder, use POST
+   * /workspaces/{workspace_id}/folders/{folder_id}/projects. Mutating public API
    * requests support an optional Idempotency-Key header for client retries;
    * duplicate keys within two hours return idempotency_duplicate.
    *
