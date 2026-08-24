@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.11.0 (2026-08-24)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.10.0...v0.11.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** workspace-scoped project creation, folder placement moves to the path
+
+### Features
+
+* **api:** workspace-scoped project creation, folder placement moves to the path ([7f94958](https://github.com/florafauna-ai/flora-typescript/commit/7f9495888393f0f408ac4322ff7dc437d018f0df))
+* **techniques:** allowMultiple input field + flagged builder toggle (ENG-6224) ([3826b28](https://github.com/florafauna-ai/flora-typescript/commit/3826b28e5fdfb72d4462c75f087e157571fe8eb5))
+
+
+### Bug Fixes
+
+* **assets:** drop duplicate upload() left by custom-code re-apply ([55f3b22](https://github.com/florafauna-ai/flora-typescript/commit/55f3b22536311bda150e5e4dabe3d029b59e48a1))
+
+
+### Chores
+
+* **sdk:** manual regenerate from main 30364a4578 ([5732dff](https://github.com/florafauna-ai/flora-typescript/commit/5732dffdb0556fc63421e4e87aebf40efe876af9))
+
+
+### Refactors
+
+* **assets:** make GCS the sole upload store, remove ImageKit write path ([28c79a9](https://github.com/florafauna-ai/flora-typescript/commit/28c79a9013ff6f6de01468a7278ee8bcba31ca44))
+
 ## 0.10.0 (2026-07-09)
 
 Full Changelog: [v0.9.0...v0.10.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.9.0...v0.10.0)
