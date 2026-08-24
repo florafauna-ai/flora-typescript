@@ -55,4 +55,4 @@ export {
   type TechniqueListParams,
   type TechniqueListResponsesTechniquesCursorPage,
 } from './techniques/techniques';
-export { Workspaces, type WorkspaceListResponse } from './workspaces';
+export { Workspaces, type WorkspaceListResponse } from './workspaces/workspaces';

@@ -415,6 +415,660 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'create',
+    endpoint: '/workspaces/{workspaceId}/projects',
+    httpMethod: 'post',
+    summary: 'Create a project in a workspace',
+    description:
+      'Creates a new Flora project in the workspace named in the path. Prefer this over `POST /projects` when a credential can reach more than one workspace: the destination is explicit rather than carried in the body. To file the project into a project folder, use the folder route below. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.',
+    stainlessPath: '(resource) workspaces.projects > (method) create',
+    qualified: 'client.workspaces.projects.create',
+    params: ['workspaceId: string;', 'name: string;'],
+    response:
+      '{ created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }',
+    markdown:
+      "## create\n\n`client.workspaces.projects.create(workspaceId: string, name: string): { created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }`\n\n**post** `/workspaces/{workspaceId}/projects`\n\nCreates a new Flora project in the workspace named in the path. Prefer this over `POST /projects` when a credential can reach more than one workspace: the destination is explicit rather than carried in the body. To file the project into a project folder, use the folder route below. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `name: string`\n  Project name\n\n### Returns\n\n- `{ created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }`\n\n  - `created_at: number`\n  - `last_modified: number`\n  - `name: string`\n  - `origin: string`\n  - `project_id: string`\n  - `workspace_id: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst project = await client.workspaces.projects.create('ws_abc123', { name: 'Spring Campaign' });\n\nconsole.log(project);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.projects.create',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst project = await client.workspaces.projects.create('ws_abc123', { name: 'Spring Campaign' });\n\nconsole.log(project.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/projects \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "name": "Spring Campaign"\n        }\'',
+      },
+      go: {
+        method: 'client.Workspaces.Projects.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tproject, err := client.Workspaces.Projects.New(\n\t\tcontext.TODO(),\n\t\t"ws_abc123",\n\t\tflora.WorkspaceProjectNewParams{\n\t\t\tName: "Spring Campaign",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", project.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'graph',
+    endpoint: '/workspaces/{workspaceId}/projects/{projectId}/graph',
+    httpMethod: 'get',
+    summary: 'Get a project graph',
+    description:
+      "Returns the full state of a project canvas: every node's short id, node UUID, type, label, prompt, model, parameters, absolute position, generation status and current output, plus the edges between them and a revision marker. This is the lossless counterpart of the Mermaid canvas rendering, which collapses node types and truncates labels. Short ids are persisted as part of the read, so the id reported for a node is the same on every subsequent read and is the id canvas write operations accept. The revision is opaque: an identical value means nothing this endpoint reports has changed, a different value means something has, and no ordering can be inferred from two values.",
+    stainlessPath: '(resource) workspaces.projects > (method) graph',
+    qualified: 'client.workspaces.projects.graph',
+    params: ['workspaceId: string;', 'projectId: string;'],
+    response:
+      "{ canvas_url: string; edges: { from: string; in: string; to: string; }[]; nodes: { id: string; action: { action_id: string; params: object; }; label: string; model: string; model_id: string; node_id: string; output_text: string; output_url: string; params: object; position: { x: number; y: number; }; prompt: string; status: 'idle' | 'generating' | 'done' | 'error'; type: string; error_code?: string; error_message?: string; }[]; project_id: string; revision: string; }",
+    markdown:
+      "## graph\n\n`client.workspaces.projects.graph(workspaceId: string, projectId: string): { canvas_url: string; edges: object[]; nodes: object[]; project_id: string; revision: string; }`\n\n**get** `/workspaces/{workspaceId}/projects/{projectId}/graph`\n\nReturns the full state of a project canvas: every node's short id, node UUID, type, label, prompt, model, parameters, absolute position, generation status and current output, plus the edges between them and a revision marker. This is the lossless counterpart of the Mermaid canvas rendering, which collapses node types and truncates labels. Short ids are persisted as part of the read, so the id reported for a node is the same on every subsequent read and is the id canvas write operations accept. The revision is opaque: an identical value means nothing this endpoint reports has changed, a different value means something has, and no ordering can be inferred from two values.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `projectId: string`\n  Project identifier\n\n### Returns\n\n- `{ canvas_url: string; edges: { from: string; in: string; to: string; }[]; nodes: { id: string; action: { action_id: string; params: object; }; label: string; model: string; model_id: string; node_id: string; output_text: string; output_url: string; params: object; position: { x: number; y: number; }; prompt: string; status: 'idle' | 'generating' | 'done' | 'error'; type: string; error_code?: string; error_message?: string; }[]; project_id: string; revision: string; }`\n\n  - `canvas_url: string`\n  - `edges: { from: string; in: string; to: string; }[]`\n  - `nodes: { id: string; action: { action_id: string; params: object; }; label: string; model: string; model_id: string; node_id: string; output_text: string; output_url: string; params: object; position: { x: number; y: number; }; prompt: string; status: 'idle' | 'generating' | 'done' | 'error'; type: string; error_code?: string; error_message?: string; }[]`\n  - `project_id: string`\n  - `revision: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.projects.graph('prj_abc123', { workspaceId: 'ws_abc123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.projects.graph',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.projects.graph('prj_abc123', { workspaceId: 'ws_abc123' });\n\nconsole.log(response.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/projects/$PROJECT_ID/graph \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+      go: {
+        method: 'client.Workspaces.Projects.Graph',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Projects.Graph(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.WorkspaceProjectGraphParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'run_nodes',
+    endpoint: '/workspaces/{workspaceId}/projects/{projectId}/nodes/run',
+    httpMethod: 'post',
+    summary: 'Run canvas nodes',
+    description:
+      "Runs generation nodes that already exist on a project canvas. Each node runs with the model, prompt, parameters and wired upstream inputs it already carries — this endpoint supplies nothing but ids, so configure a node with a canvas changeset first. THESE RUNS SPEND THE WORKSPACE'S CREDITS IMMEDIATELY: there is no confirmation step and no dry run, and the charge lands whether or not you poll the result. Nodes are addressed by the short id or node UUID the project graph endpoint reports, and each entry echoes the identifier you sent. The response returns as soon as every run has an id — it never waits for the generations, which continue in the background — so poll each run_id for status and output. Nodes requested in one call run in dependency order: connected nodes run children before parents, so a chain can be started in a single request, and independent nodes run in parallel. A node that cannot run is reported as its own skipped entry with a machine-readable reason and never fails the rest of the batch; only an empty or oversized node_ids list, a project that does not exist in the workspace, or denied write access fail the whole request. Credits are not checked up front: insufficient credits surface on the individual run, not on this request. Known limits compared with running a node in the Flora editor: automatic model routing covers image nodes only, an element node with several assets counts as one input, and collections, batch fan-out, per-run parameter overrides and multi-model selections are not supported. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.",
+    stainlessPath: '(resource) workspaces.projects > (method) run_nodes',
+    qualified: 'client.workspaces.projects.runNodes',
+    params: ['workspaceId: string;', 'projectId: string;', 'node_ids: string[];'],
+    response:
+      "{ project_id: string; runs: { node_id: string; status: 'started' | 'skipped'; charged_cost?: number; estimated_seconds?: number; message?: string; model?: { model_id: string; }; poll_url?: string; reason?: string; run_id?: string; type?: 'generation'; }[]; }",
+    markdown:
+      "## run_nodes\n\n`client.workspaces.projects.runNodes(workspaceId: string, projectId: string, node_ids: string[]): { project_id: string; runs: object[]; }`\n\n**post** `/workspaces/{workspaceId}/projects/{projectId}/nodes/run`\n\nRuns generation nodes that already exist on a project canvas. Each node runs with the model, prompt, parameters and wired upstream inputs it already carries — this endpoint supplies nothing but ids, so configure a node with a canvas changeset first. THESE RUNS SPEND THE WORKSPACE'S CREDITS IMMEDIATELY: there is no confirmation step and no dry run, and the charge lands whether or not you poll the result. Nodes are addressed by the short id or node UUID the project graph endpoint reports, and each entry echoes the identifier you sent. The response returns as soon as every run has an id — it never waits for the generations, which continue in the background — so poll each run_id for status and output. Nodes requested in one call run in dependency order: connected nodes run children before parents, so a chain can be started in a single request, and independent nodes run in parallel. A node that cannot run is reported as its own skipped entry with a machine-readable reason and never fails the rest of the batch; only an empty or oversized node_ids list, a project that does not exist in the workspace, or denied write access fail the whole request. Credits are not checked up front: insufficient credits surface on the individual run, not on this request. Known limits compared with running a node in the Flora editor: automatic model routing covers image nodes only, an element node with several assets counts as one input, and collections, batch fan-out, per-run parameter overrides and multi-model selections are not supported. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `projectId: string`\n  Project identifier\n\n- `node_ids: string[]`\n  Nodes to run, addressed by the short id or node UUID the project graph endpoint reports. Between 1 and 50 per request.\n\n### Returns\n\n- `{ project_id: string; runs: { node_id: string; status: 'started' | 'skipped'; charged_cost?: number; estimated_seconds?: number; message?: string; model?: { model_id: string; }; poll_url?: string; reason?: string; run_id?: string; type?: 'generation'; }[]; }`\n\n  - `project_id: string`\n  - `runs: { node_id: string; status: 'started' | 'skipped'; charged_cost?: number; estimated_seconds?: number; message?: string; model?: { model_id: string; }; poll_url?: string; reason?: string; run_id?: string; type?: 'generation'; }[]`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.projects.runNodes('prj_abc123', { workspaceId: 'ws_abc123', node_ids: ['n3'] });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.projects.runNodes',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.projects.runNodes('prj_abc123', {\n  workspaceId: 'ws_abc123',\n  node_ids: ['n3'],\n});\n\nconsole.log(response.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/projects/$PROJECT_ID/nodes/run \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "node_ids": [\n            "n3"\n          ]\n        }\'',
+      },
+      go: {
+        method: 'client.Workspaces.Projects.RunNodes',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Projects.RunNodes(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.WorkspaceProjectRunNodesParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t\tNodeIDs:     []string{"n3"},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'retrieve_definition',
+    endpoint: '/workspaces/{workspaceId}/projects/{projectId}/canvas/definition',
+    httpMethod: 'get',
+    summary: 'Get a canvas definition',
+    description:
+      'Returns the canonical JSON definition needed to reconstruct a project canvas, including nodes, edges, inputs, current outputs, positions, and Layer Editor documents when present.',
+    stainlessPath: '(resource) workspaces.projects.canvas > (method) retrieve_definition',
+    qualified: 'client.workspaces.projects.canvas.retrieveDefinition',
+    params: ['workspaceId: string;', 'projectId: string;'],
+    response:
+      "{ canvas_url: string; definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; position: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }; project_id: string; summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }; }",
+    markdown:
+      "## retrieve_definition\n\n`client.workspaces.projects.canvas.retrieveDefinition(workspaceId: string, projectId: string): { canvas_url: string; definition: object; project_id: string; summary: object; }`\n\n**get** `/workspaces/{workspaceId}/projects/{projectId}/canvas/definition`\n\nReturns the canonical JSON definition needed to reconstruct a project canvas, including nodes, edges, inputs, current outputs, positions, and Layer Editor documents when present.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `projectId: string`\n  Project identifier\n\n### Returns\n\n- `{ canvas_url: string; definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; position: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }; project_id: string; summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }; }`\n\n  - `canvas_url: string`\n  - `definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; position: { x: number; y: number; }; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }`\n  - `project_id: string`\n  - `summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.projects.canvas.retrieveDefinition('prj_abc123', { workspaceId: 'ws_abc123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.projects.canvas.retrieveDefinition',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.projects.canvas.retrieveDefinition('prj_abc123', {\n  workspaceId: 'ws_abc123',\n});\n\nconsole.log(response.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/projects/$PROJECT_ID/canvas/definition \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+      go: {
+        method: 'client.Workspaces.Projects.Canvas.GetDefinition',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Projects.Canvas.GetDefinition(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.WorkspaceProjectCanvasGetDefinitionParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'replace_definition',
+    endpoint: '/workspaces/{workspaceId}/projects/{projectId}/canvas/definition',
+    httpMethod: 'put',
+    summary: 'Replace a canvas definition',
+    description:
+      'Validates and atomically replaces the complete project canvas definition. Supplied positions are preserved and omitted positions receive deterministic automatic layout. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.',
+    stainlessPath: '(resource) workspaces.projects.canvas > (method) replace_definition',
+    qualified: 'client.workspaces.projects.canvas.replaceDefinition',
+    params: [
+      'workspaceId: string;',
+      'projectId: string;',
+      "definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; position?: { x: number; y: number; }; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; };",
+    ],
+    response:
+      "{ canvas_url: string; definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; position: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }; project_id: string; summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }; }",
+    markdown:
+      "## replace_definition\n\n`client.workspaces.projects.canvas.replaceDefinition(workspaceId: string, projectId: string, definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; position?: object; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }): { canvas_url: string; definition: object; project_id: string; summary: object; }`\n\n**put** `/workspaces/{workspaceId}/projects/{projectId}/canvas/definition`\n\nValidates and atomically replaces the complete project canvas definition. Supplied positions are preserved and omitted positions receive deterministic automatic layout. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `projectId: string`\n  Project identifier\n\n- `definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; position?: { x: number; y: number; }; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }`\n  Complete canvas definition to replace\n  - `edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]`\n    Complete canvas edge list\n  - `node_inputs: object`\n    Complete per-node generation and action input configuration\n  - `node_outputs: object`\n    Complete current durable output attached to each node\n  - `nodes: { id: string; data: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; position?: { x: number; y: number; }; style?: object; width?: number; z_index?: number; }[]`\n    Complete replacement canvas node list\n  - `layer_editor_documents?: object`\n    Portable Layer Editor documents keyed by Layer Editor node identifier; omitted when no Layer Editor nodes exist\n\n### Returns\n\n- `{ canvas_url: string; definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; position: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }; project_id: string; summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }; }`\n\n  - `canvas_url: string`\n  - `definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; position: { x: number; y: number; }; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }`\n  - `project_id: string`\n  - `summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.projects.canvas.replaceDefinition('prj_abc123', {\n  workspaceId: 'ws_abc123',\n  definition: {\n  edges: [{\n  id: 'edge_abc123',\n  source: 'x',\n  source_handle: 'source_handle',\n  target: 'x',\n  target_handle: 'target_handle',\n}],\n  node_inputs: { foo: { foo: 'bar' } },\n  node_outputs: { foo: { foo: 'bar' } },\n  nodes: [{\n  id: 'node_abc123',\n  data: { foo: 'bar' },\n  type: 'videoBlock',\n}],\n},\n});\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.projects.canvas.replaceDefinition',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.projects.canvas.replaceDefinition('prj_abc123', {\n  workspaceId: 'ws_abc123',\n  definition: {\n    edges: [\n      {\n        id: 'edge_abc123',\n        source: 'x',\n        source_handle: 'source_handle',\n        target: 'x',\n        target_handle: 'target_handle',\n      },\n    ],\n    node_inputs: { foo: { foo: 'bar' } },\n    node_outputs: { foo: { foo: 'bar' } },\n    nodes: [\n      {\n        id: 'node_abc123',\n        data: { foo: 'bar' },\n        type: 'videoBlock',\n      },\n    ],\n  },\n});\n\nconsole.log(response.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/projects/$PROJECT_ID/canvas/definition \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "definition": {\n            "edges": [\n              {\n                "id": "edge_abc123",\n                "source": "x",\n                "source_handle": "source_handle",\n                "target": "x",\n                "target_handle": "target_handle"\n              }\n            ],\n            "node_inputs": {\n              "foo": {\n                "foo": "bar"\n              }\n            },\n            "node_outputs": {\n              "foo": {\n                "foo": "bar"\n              }\n            },\n            "nodes": [\n              {\n                "id": "node_abc123",\n                "data": {\n                  "foo": "bar"\n                },\n                "type": "videoBlock"\n              }\n            ]\n          }\n        }\'',
+      },
+      go: {
+        method: 'client.Workspaces.Projects.Canvas.ReplaceDefinition',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Projects.Canvas.ReplaceDefinition(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.WorkspaceProjectCanvasReplaceDefinitionParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t\tDefinition: flora.WorkspaceProjectCanvasReplaceDefinitionParamsDefinition{\n\t\t\t\tEdges: []flora.WorkspaceProjectCanvasReplaceDefinitionParamsDefinitionEdge{{\n\t\t\t\t\tID:           "edge_abc123",\n\t\t\t\t\tSource:       "x",\n\t\t\t\t\tSourceHandle: flora.String("source_handle"),\n\t\t\t\t\tTarget:       "x",\n\t\t\t\t\tTargetHandle: flora.String("target_handle"),\n\t\t\t\t}},\n\t\t\t\tNodeInputs: map[string]map[string]any{\n\t\t\t\t\t"foo": {\n\t\t\t\t\t\t"foo": "bar",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tNodeOutputs: map[string]map[string]any{\n\t\t\t\t\t"foo": {\n\t\t\t\t\t\t"foo": "bar",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tNodes: []flora.WorkspaceProjectCanvasReplaceDefinitionParamsDefinitionNode{{\n\t\t\t\t\tID: "node_abc123",\n\t\t\t\t\tData: map[string]any{\n\t\t\t\t\t\t"foo": "bar",\n\t\t\t\t\t},\n\t\t\t\t\tType: "videoBlock",\n\t\t\t\t}},\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'apply_changeset',
+    endpoint: '/workspaces/{workspaceId}/projects/{projectId}/canvas/changeset',
+    httpMethod: 'post',
+    summary: 'Apply a canvas changeset',
+    description:
+      "Edits a project canvas: add, update, connect, disconnect and remove operations validate together and apply as ONE atomic transaction. Nothing applies if any operation is invalid, and every cause is reported with a machine-readable code in the error's fields array. Operations apply in the order add, update, connect, disconnect, remove, with groups created before their members — so one call can create a group, fill it, wire the new nodes to existing ones by the ref names it chose, and delete something else. Nodes are addressed by the short id or node UUID the project graph endpoint reports, or by a ref declared by an add operation in the same request. REMOVE IS IMMEDIATE AND IRREVERSIBLE through the API: there is no confirmation step and no undo, deleting a node also deletes its edges and any group members, so confirm destructive changesets with your user before sending them. The revision returned is the same change-detection marker the project graph endpoint reports, so it can be compared directly against a later read. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.",
+    stainlessPath: '(resource) workspaces.projects.canvas > (method) apply_changeset',
+    qualified: 'client.workspaces.projects.canvas.applyChangeset',
+    params: [
+      'workspaceId: string;',
+      'projectId: string;',
+      "add?: { ref: string; type: 'image' | 'video' | 'text' | 'audio' | 'group' | 'static_image' | 'layer_editor'; content_url?: string; group?: string; label?: string; model?: string; params?: object; position?: { x: number; y: number; }; prompt?: string; }[];",
+      'connect?: { from: string; to: string; in?: string; }[];',
+      'disconnect?: { from: string; to: string; in?: string; }[];',
+      'remove?: { id: string; }[];',
+      'update?: { id: string; label?: string; model?: string; params?: object; position?: { x: number; y: number; }; prompt?: string; }[];',
+    ],
+    response:
+      '{ applied: { added: number; connected: number; disconnected: number; removed: number; updated: number; }; canvas_url: string; created: object; project_id: string; revision: string; warnings: string[]; }',
+    markdown:
+      "## apply_changeset\n\n`client.workspaces.projects.canvas.applyChangeset(workspaceId: string, projectId: string, add?: { ref: string; type: 'image' | 'video' | 'text' | 'audio' | 'group' | 'static_image' | 'layer_editor'; content_url?: string; group?: string; label?: string; model?: string; params?: object; position?: { x: number; y: number; }; prompt?: string; }[], connect?: { from: string; to: string; in?: string; }[], disconnect?: { from: string; to: string; in?: string; }[], remove?: { id: string; }[], update?: { id: string; label?: string; model?: string; params?: object; position?: { x: number; y: number; }; prompt?: string; }[]): { applied: object; canvas_url: string; created: object; project_id: string; revision: string; warnings: string[]; }`\n\n**post** `/workspaces/{workspaceId}/projects/{projectId}/canvas/changeset`\n\nEdits a project canvas: add, update, connect, disconnect and remove operations validate together and apply as ONE atomic transaction. Nothing applies if any operation is invalid, and every cause is reported with a machine-readable code in the error's fields array. Operations apply in the order add, update, connect, disconnect, remove, with groups created before their members — so one call can create a group, fill it, wire the new nodes to existing ones by the ref names it chose, and delete something else. Nodes are addressed by the short id or node UUID the project graph endpoint reports, or by a ref declared by an add operation in the same request. REMOVE IS IMMEDIATE AND IRREVERSIBLE through the API: there is no confirmation step and no undo, deleting a node also deletes its edges and any group members, so confirm destructive changesets with your user before sending them. The revision returned is the same change-detection marker the project graph endpoint reports, so it can be compared directly against a later read. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `projectId: string`\n  Project identifier\n\n- `add?: { ref: string; type: 'image' | 'video' | 'text' | 'audio' | 'group' | 'static_image' | 'layer_editor'; content_url?: string; group?: string; label?: string; model?: string; params?: object; position?: { x: number; y: number; }; prompt?: string; }[]`\n  Nodes to create. Groups are created before their members.\n\n- `connect?: { from: string; to: string; in?: string; }[]`\n  Edges to create. Either endpoint may be a ref created by this same changeset. The canvas carries one edge per pair, so a duplicate pair is skipped with a warning.\n\n- `disconnect?: { from: string; to: string; in?: string; }[]`\n  Edges to remove, addressed by their endpoints as the graph read reports them\n\n- `remove?: { id: string; }[]`\n  Nodes to delete. Their edges and any group members go too. Removal is immediate and cannot be undone through the API.\n\n- `update?: { id: string; label?: string; model?: string; params?: object; position?: { x: number; y: number; }; prompt?: string; }[]`\n  Existing nodes to modify. One operation per node.\n\n### Returns\n\n- `{ applied: { added: number; connected: number; disconnected: number; removed: number; updated: number; }; canvas_url: string; created: object; project_id: string; revision: string; warnings: string[]; }`\n\n  - `applied: { added: number; connected: number; disconnected: number; removed: number; updated: number; }`\n  - `canvas_url: string`\n  - `created: object`\n  - `project_id: string`\n  - `revision: string`\n  - `warnings: string[]`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.projects.canvas.applyChangeset('prj_abc123', { workspaceId: 'ws_abc123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.projects.canvas.applyChangeset',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.projects.canvas.applyChangeset('prj_abc123', {\n  workspaceId: 'ws_abc123',\n});\n\nconsole.log(response.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/projects/$PROJECT_ID/canvas/changeset \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+      go: {
+        method: 'client.Workspaces.Projects.Canvas.ApplyChangeset',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Projects.Canvas.ApplyChangeset(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.WorkspaceProjectCanvasApplyChangesetParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'create_project',
+    endpoint: '/workspaces/{workspaceId}/folders/{folderId}/projects',
+    httpMethod: 'post',
+    summary: 'Create a project in a project folder',
+    description:
+      'Creates a new Flora project filed into the given project folder. The folder must belong to the workspace named in the path; private folders are reachable only by their owner, and an unreachable folder returns 404 rather than disclosing that it exists. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.',
+    stainlessPath: '(resource) workspaces.folders > (method) create_project',
+    qualified: 'client.workspaces.folders.createProject',
+    params: ['workspaceId: string;', 'folderId: string;', 'name: string;'],
+    response:
+      '{ created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }',
+    markdown:
+      "## create_project\n\n`client.workspaces.folders.createProject(workspaceId: string, folderId: string, name: string): { created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }`\n\n**post** `/workspaces/{workspaceId}/folders/{folderId}/projects`\n\nCreates a new Flora project filed into the given project folder. The folder must belong to the workspace named in the path; private folders are reachable only by their owner, and an unreachable folder returns 404 rather than disclosing that it exists. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `folderId: string`\n  Project folder identifier\n\n- `name: string`\n  Project name\n\n### Returns\n\n- `{ created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }`\n\n  - `created_at: number`\n  - `last_modified: number`\n  - `name: string`\n  - `origin: string`\n  - `project_id: string`\n  - `workspace_id: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.folders.createProject('fld_abc123', { workspaceId: 'ws_abc123', name: 'Spring Campaign' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.folders.createProject',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.folders.createProject('fld_abc123', {\n  workspaceId: 'ws_abc123',\n  name: 'Spring Campaign',\n});\n\nconsole.log(response.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/folders/$FOLDER_ID/projects \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "name": "Spring Campaign"\n        }\'',
+      },
+      go: {
+        method: 'client.Workspaces.Folders.NewProject',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Folders.NewProject(\n\t\tcontext.TODO(),\n\t\t"fld_abc123",\n\t\tflora.WorkspaceFolderNewProjectParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t\tName:        "Spring Campaign",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/workspaces/{workspaceId}/library/folders',
+    httpMethod: 'post',
+    summary: 'Create a library folder',
+    description:
+      "Creates a folder in the authenticated user's FLORA library. Used by the Web Clipper to group images clipped from a page. Defaults to the credential's workspace when workspace_id is omitted. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.",
+    stainlessPath: '(resource) workspaces.library.folders > (method) create',
+    qualified: 'client.workspaces.library.folders.create',
+    params: ['workspaceId: string;', 'name?: string;'],
+    response: '{ folder_id: string; name: string; workspace_id: string; }',
+    markdown:
+      "## create\n\n`client.workspaces.library.folders.create(workspaceId: string, name?: string): { folder_id: string; name: string; workspace_id: string; }`\n\n**post** `/workspaces/{workspaceId}/library/folders`\n\nCreates a folder in the authenticated user's FLORA library. Used by the Web Clipper to group images clipped from a page. Defaults to the credential's workspace when workspace_id is omitted. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `name?: string`\n  Library folder name. Defaults to a generated name when omitted; renameable later in the library.\n\n### Returns\n\n- `{ folder_id: string; name: string; workspace_id: string; }`\n\n  - `folder_id: string`\n  - `name: string`\n  - `workspace_id: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst folder = await client.workspaces.library.folders.create('ws_abc123');\n\nconsole.log(folder);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.library.folders.create',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst folder = await client.workspaces.library.folders.create('ws_abc123');\n\nconsole.log(folder.folder_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/library/folders \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+      go: {
+        method: 'client.Workspaces.Library.Folders.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tfolder, err := client.Workspaces.Library.Folders.New(\n\t\tcontext.TODO(),\n\t\t"ws_abc123",\n\t\tflora.WorkspaceLibraryFolderNewParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", folder.FolderID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/workspaces/{workspaceId}/library/folders/{folderId}',
+    httpMethod: 'delete',
+    summary: 'Delete a library folder',
+    description:
+      'Deletes a library folder owned by the authenticated user, detaching any saved nodes still in it. Used by the Web Clipper to clean up an empty folder when a clip saved nothing.',
+    stainlessPath: '(resource) workspaces.library.folders > (method) delete',
+    qualified: 'client.workspaces.library.folders.delete',
+    params: ['workspaceId: string;', 'folderId: string;'],
+    response: '{ deleted: true; folder_id: string; workspace_id: string; }',
+    markdown:
+      "## delete\n\n`client.workspaces.library.folders.delete(workspaceId: string, folderId: string): { deleted: true; folder_id: string; workspace_id: string; }`\n\n**delete** `/workspaces/{workspaceId}/library/folders/{folderId}`\n\nDeletes a library folder owned by the authenticated user, detaching any saved nodes still in it. Used by the Web Clipper to clean up an empty folder when a clip saved nothing.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `folderId: string`\n  Library folder identifier\n\n### Returns\n\n- `{ deleted: true; folder_id: string; workspace_id: string; }`\n\n  - `deleted: true`\n  - `folder_id: string`\n  - `workspace_id: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst folder = await client.workspaces.library.folders.delete('libfolder_abc123', { workspaceId: 'ws_abc123' });\n\nconsole.log(folder);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.library.folders.delete',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst folder = await client.workspaces.library.folders.delete('libfolder_abc123', {\n  workspaceId: 'ws_abc123',\n});\n\nconsole.log(folder.folder_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/library/folders/$FOLDER_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+      go: {
+        method: 'client.Workspaces.Library.Folders.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tfolder, err := client.Workspaces.Library.Folders.Delete(\n\t\tcontext.TODO(),\n\t\t"libfolder_abc123",\n\t\tflora.WorkspaceLibraryFolderDeleteParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", folder.FolderID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'add_item',
+    endpoint: '/workspaces/{workspaceId}/library/folders/{folderId}/items',
+    httpMethod: 'post',
+    summary: 'Add an image to a library folder',
+    description:
+      "Fetches an image from a public HTTPS URL (SSRF-safe) and saves it into the given library folder as a media node. Used by the Web Clipper's send pipeline, one call per selected image. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.",
+    stainlessPath: '(resource) workspaces.library.folders > (method) add_item',
+    qualified: 'client.workspaces.library.folders.addItem',
+    params: [
+      'workspaceId: string;',
+      'folderId: string;',
+      'description?: string;',
+      'source?: string;',
+      'text?: string;',
+      "type?: 'image' | 'text';",
+    ],
+    response:
+      '{ folder_id: string; saved_node_id: string; workspace_id: string; asset_id?: string; url?: string; }',
+    markdown:
+      "## add_item\n\n`client.workspaces.library.folders.addItem(workspaceId: string, folderId: string, description?: string, source?: string, text?: string, type?: 'image' | 'text'): { folder_id: string; saved_node_id: string; workspace_id: string; asset_id?: string; url?: string; }`\n\n**post** `/workspaces/{workspaceId}/library/folders/{folderId}/items`\n\nFetches an image from a public HTTPS URL (SSRF-safe) and saves it into the given library folder as a media node. Used by the Web Clipper's send pipeline, one call per selected image. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `folderId: string`\n  Library folder identifier\n\n- `description?: string`\n  Optional caption/label for the saved item\n\n- `source?: string`\n  Public HTTPS URL of the image to save (required when type=image). FLORA fetches the bytes server-side with SSRF protection (private/loopback/metadata IPs and redirects to them are blocked) and stores them.\n\n- `text?: string`\n  Text to save as a text node (required when type=text).\n\n- `type?: 'image' | 'text'`\n  Kind of item to save.\n\n### Returns\n\n- `{ folder_id: string; saved_node_id: string; workspace_id: string; asset_id?: string; url?: string; }`\n\n  - `folder_id: string`\n  - `saved_node_id: string`\n  - `workspace_id: string`\n  - `asset_id?: string`\n  - `url?: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.library.folders.addItem('libfolder_abc123', { workspaceId: 'ws_abc123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.library.folders.addItem',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.library.folders.addItem('libfolder_abc123', {\n  workspaceId: 'ws_abc123',\n});\n\nconsole.log(response.folder_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/library/folders/$FOLDER_ID/items \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+      go: {
+        method: 'client.Workspaces.Library.Folders.AddItem',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Library.Folders.AddItem(\n\t\tcontext.TODO(),\n\t\t"libfolder_abc123",\n\t\tflora.WorkspaceLibraryFolderAddItemParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.FolderID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/workspaces/{workspaceId}/projects',
+    httpMethod: 'post',
+    summary: 'Create a project in a workspace',
+    description:
+      'Creates a new Flora project in the workspace named in the path. Prefer this over `POST /projects` when a credential can reach more than one workspace: the destination is explicit rather than carried in the body. To file the project into a project folder, use the folder route below. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.',
+    stainlessPath: '(resource) workspaces.projects > (method) create',
+    qualified: 'client.workspaces.projects.create',
+    params: ['workspaceId: string;', 'name: string;'],
+    response:
+      '{ created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }',
+    markdown:
+      "## create\n\n`client.workspaces.projects.create(workspaceId: string, name: string): { created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }`\n\n**post** `/workspaces/{workspaceId}/projects`\n\nCreates a new Flora project in the workspace named in the path. Prefer this over `POST /projects` when a credential can reach more than one workspace: the destination is explicit rather than carried in the body. To file the project into a project folder, use the folder route below. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `name: string`\n  Project name\n\n### Returns\n\n- `{ created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }`\n\n  - `created_at: number`\n  - `last_modified: number`\n  - `name: string`\n  - `origin: string`\n  - `project_id: string`\n  - `workspace_id: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst project = await client.workspaces.projects.create('ws_abc123', { name: 'Spring Campaign' });\n\nconsole.log(project);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.projects.create',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst project = await client.workspaces.projects.create('ws_abc123', { name: 'Spring Campaign' });\n\nconsole.log(project.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/projects \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "name": "Spring Campaign"\n        }\'',
+      },
+      go: {
+        method: 'client.Workspaces.Projects.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tproject, err := client.Workspaces.Projects.New(\n\t\tcontext.TODO(),\n\t\t"ws_abc123",\n\t\tflora.WorkspaceProjectNewParams{\n\t\t\tName: "Spring Campaign",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", project.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'graph',
+    endpoint: '/workspaces/{workspaceId}/projects/{projectId}/graph',
+    httpMethod: 'get',
+    summary: 'Get a project graph',
+    description:
+      "Returns the full state of a project canvas: every node's short id, node UUID, type, label, prompt, model, parameters, absolute position, generation status and current output, plus the edges between them and a revision marker. This is the lossless counterpart of the Mermaid canvas rendering, which collapses node types and truncates labels. Short ids are persisted as part of the read, so the id reported for a node is the same on every subsequent read and is the id canvas write operations accept. The revision is opaque: an identical value means nothing this endpoint reports has changed, a different value means something has, and no ordering can be inferred from two values.",
+    stainlessPath: '(resource) workspaces.projects > (method) graph',
+    qualified: 'client.workspaces.projects.graph',
+    params: ['workspaceId: string;', 'projectId: string;'],
+    response:
+      "{ canvas_url: string; edges: { from: string; in: string; to: string; }[]; nodes: { id: string; action: { action_id: string; params: object; }; label: string; model: string; model_id: string; node_id: string; output_text: string; output_url: string; params: object; position: { x: number; y: number; }; prompt: string; status: 'idle' | 'generating' | 'done' | 'error'; type: string; error_code?: string; error_message?: string; }[]; project_id: string; revision: string; }",
+    markdown:
+      "## graph\n\n`client.workspaces.projects.graph(workspaceId: string, projectId: string): { canvas_url: string; edges: object[]; nodes: object[]; project_id: string; revision: string; }`\n\n**get** `/workspaces/{workspaceId}/projects/{projectId}/graph`\n\nReturns the full state of a project canvas: every node's short id, node UUID, type, label, prompt, model, parameters, absolute position, generation status and current output, plus the edges between them and a revision marker. This is the lossless counterpart of the Mermaid canvas rendering, which collapses node types and truncates labels. Short ids are persisted as part of the read, so the id reported for a node is the same on every subsequent read and is the id canvas write operations accept. The revision is opaque: an identical value means nothing this endpoint reports has changed, a different value means something has, and no ordering can be inferred from two values.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `projectId: string`\n  Project identifier\n\n### Returns\n\n- `{ canvas_url: string; edges: { from: string; in: string; to: string; }[]; nodes: { id: string; action: { action_id: string; params: object; }; label: string; model: string; model_id: string; node_id: string; output_text: string; output_url: string; params: object; position: { x: number; y: number; }; prompt: string; status: 'idle' | 'generating' | 'done' | 'error'; type: string; error_code?: string; error_message?: string; }[]; project_id: string; revision: string; }`\n\n  - `canvas_url: string`\n  - `edges: { from: string; in: string; to: string; }[]`\n  - `nodes: { id: string; action: { action_id: string; params: object; }; label: string; model: string; model_id: string; node_id: string; output_text: string; output_url: string; params: object; position: { x: number; y: number; }; prompt: string; status: 'idle' | 'generating' | 'done' | 'error'; type: string; error_code?: string; error_message?: string; }[]`\n  - `project_id: string`\n  - `revision: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.projects.graph('prj_abc123', { workspaceId: 'ws_abc123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.projects.graph',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.projects.graph('prj_abc123', { workspaceId: 'ws_abc123' });\n\nconsole.log(response.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/projects/$PROJECT_ID/graph \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+      go: {
+        method: 'client.Workspaces.Projects.Graph',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Projects.Graph(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.WorkspaceProjectGraphParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'run_nodes',
+    endpoint: '/workspaces/{workspaceId}/projects/{projectId}/nodes/run',
+    httpMethod: 'post',
+    summary: 'Run canvas nodes',
+    description:
+      "Runs generation nodes that already exist on a project canvas. Each node runs with the model, prompt, parameters and wired upstream inputs it already carries — this endpoint supplies nothing but ids, so configure a node with a canvas changeset first. THESE RUNS SPEND THE WORKSPACE'S CREDITS IMMEDIATELY: there is no confirmation step and no dry run, and the charge lands whether or not you poll the result. Nodes are addressed by the short id or node UUID the project graph endpoint reports, and each entry echoes the identifier you sent. The response returns as soon as every run has an id — it never waits for the generations, which continue in the background — so poll each run_id for status and output. Nodes requested in one call run in dependency order: connected nodes run children before parents, so a chain can be started in a single request, and independent nodes run in parallel. A node that cannot run is reported as its own skipped entry with a machine-readable reason and never fails the rest of the batch; only an empty or oversized node_ids list, a project that does not exist in the workspace, or denied write access fail the whole request. Credits are not checked up front: insufficient credits surface on the individual run, not on this request. Known limits compared with running a node in the Flora editor: automatic model routing covers image nodes only, an element node with several assets counts as one input, and collections, batch fan-out, per-run parameter overrides and multi-model selections are not supported. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.",
+    stainlessPath: '(resource) workspaces.projects > (method) run_nodes',
+    qualified: 'client.workspaces.projects.runNodes',
+    params: ['workspaceId: string;', 'projectId: string;', 'node_ids: string[];'],
+    response:
+      "{ project_id: string; runs: { node_id: string; status: 'started' | 'skipped'; charged_cost?: number; estimated_seconds?: number; message?: string; model?: { model_id: string; }; poll_url?: string; reason?: string; run_id?: string; type?: 'generation'; }[]; }",
+    markdown:
+      "## run_nodes\n\n`client.workspaces.projects.runNodes(workspaceId: string, projectId: string, node_ids: string[]): { project_id: string; runs: object[]; }`\n\n**post** `/workspaces/{workspaceId}/projects/{projectId}/nodes/run`\n\nRuns generation nodes that already exist on a project canvas. Each node runs with the model, prompt, parameters and wired upstream inputs it already carries — this endpoint supplies nothing but ids, so configure a node with a canvas changeset first. THESE RUNS SPEND THE WORKSPACE'S CREDITS IMMEDIATELY: there is no confirmation step and no dry run, and the charge lands whether or not you poll the result. Nodes are addressed by the short id or node UUID the project graph endpoint reports, and each entry echoes the identifier you sent. The response returns as soon as every run has an id — it never waits for the generations, which continue in the background — so poll each run_id for status and output. Nodes requested in one call run in dependency order: connected nodes run children before parents, so a chain can be started in a single request, and independent nodes run in parallel. A node that cannot run is reported as its own skipped entry with a machine-readable reason and never fails the rest of the batch; only an empty or oversized node_ids list, a project that does not exist in the workspace, or denied write access fail the whole request. Credits are not checked up front: insufficient credits surface on the individual run, not on this request. Known limits compared with running a node in the Flora editor: automatic model routing covers image nodes only, an element node with several assets counts as one input, and collections, batch fan-out, per-run parameter overrides and multi-model selections are not supported. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `projectId: string`\n  Project identifier\n\n- `node_ids: string[]`\n  Nodes to run, addressed by the short id or node UUID the project graph endpoint reports. Between 1 and 50 per request.\n\n### Returns\n\n- `{ project_id: string; runs: { node_id: string; status: 'started' | 'skipped'; charged_cost?: number; estimated_seconds?: number; message?: string; model?: { model_id: string; }; poll_url?: string; reason?: string; run_id?: string; type?: 'generation'; }[]; }`\n\n  - `project_id: string`\n  - `runs: { node_id: string; status: 'started' | 'skipped'; charged_cost?: number; estimated_seconds?: number; message?: string; model?: { model_id: string; }; poll_url?: string; reason?: string; run_id?: string; type?: 'generation'; }[]`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.projects.runNodes('prj_abc123', { workspaceId: 'ws_abc123', node_ids: ['n3'] });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.projects.runNodes',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.projects.runNodes('prj_abc123', {\n  workspaceId: 'ws_abc123',\n  node_ids: ['n3'],\n});\n\nconsole.log(response.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/projects/$PROJECT_ID/nodes/run \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "node_ids": [\n            "n3"\n          ]\n        }\'',
+      },
+      go: {
+        method: 'client.Workspaces.Projects.RunNodes',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Projects.RunNodes(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.WorkspaceProjectRunNodesParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t\tNodeIDs:     []string{"n3"},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'retrieve_definition',
+    endpoint: '/workspaces/{workspaceId}/projects/{projectId}/canvas/definition',
+    httpMethod: 'get',
+    summary: 'Get a canvas definition',
+    description:
+      'Returns the canonical JSON definition needed to reconstruct a project canvas, including nodes, edges, inputs, current outputs, positions, and Layer Editor documents when present.',
+    stainlessPath: '(resource) workspaces.projects.canvas > (method) retrieve_definition',
+    qualified: 'client.workspaces.projects.canvas.retrieveDefinition',
+    params: ['workspaceId: string;', 'projectId: string;'],
+    response:
+      "{ canvas_url: string; definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; position: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }; project_id: string; summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }; }",
+    markdown:
+      "## retrieve_definition\n\n`client.workspaces.projects.canvas.retrieveDefinition(workspaceId: string, projectId: string): { canvas_url: string; definition: object; project_id: string; summary: object; }`\n\n**get** `/workspaces/{workspaceId}/projects/{projectId}/canvas/definition`\n\nReturns the canonical JSON definition needed to reconstruct a project canvas, including nodes, edges, inputs, current outputs, positions, and Layer Editor documents when present.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `projectId: string`\n  Project identifier\n\n### Returns\n\n- `{ canvas_url: string; definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; position: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }; project_id: string; summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }; }`\n\n  - `canvas_url: string`\n  - `definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; position: { x: number; y: number; }; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }`\n  - `project_id: string`\n  - `summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.projects.canvas.retrieveDefinition('prj_abc123', { workspaceId: 'ws_abc123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.projects.canvas.retrieveDefinition',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.projects.canvas.retrieveDefinition('prj_abc123', {\n  workspaceId: 'ws_abc123',\n});\n\nconsole.log(response.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/projects/$PROJECT_ID/canvas/definition \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+      go: {
+        method: 'client.Workspaces.Projects.Canvas.GetDefinition',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Projects.Canvas.GetDefinition(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.WorkspaceProjectCanvasGetDefinitionParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'replace_definition',
+    endpoint: '/workspaces/{workspaceId}/projects/{projectId}/canvas/definition',
+    httpMethod: 'put',
+    summary: 'Replace a canvas definition',
+    description:
+      'Validates and atomically replaces the complete project canvas definition. Supplied positions are preserved and omitted positions receive deterministic automatic layout. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.',
+    stainlessPath: '(resource) workspaces.projects.canvas > (method) replace_definition',
+    qualified: 'client.workspaces.projects.canvas.replaceDefinition',
+    params: [
+      'workspaceId: string;',
+      'projectId: string;',
+      "definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; position?: { x: number; y: number; }; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; };",
+    ],
+    response:
+      "{ canvas_url: string; definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; position: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }; project_id: string; summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }; }",
+    markdown:
+      "## replace_definition\n\n`client.workspaces.projects.canvas.replaceDefinition(workspaceId: string, projectId: string, definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; position?: object; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }): { canvas_url: string; definition: object; project_id: string; summary: object; }`\n\n**put** `/workspaces/{workspaceId}/projects/{projectId}/canvas/definition`\n\nValidates and atomically replaces the complete project canvas definition. Supplied positions are preserved and omitted positions receive deterministic automatic layout. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `projectId: string`\n  Project identifier\n\n- `definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; position?: { x: number; y: number; }; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }`\n  Complete canvas definition to replace\n  - `edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]`\n    Complete canvas edge list\n  - `node_inputs: object`\n    Complete per-node generation and action input configuration\n  - `node_outputs: object`\n    Complete current durable output attached to each node\n  - `nodes: { id: string; data: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; position?: { x: number; y: number; }; style?: object; width?: number; z_index?: number; }[]`\n    Complete replacement canvas node list\n  - `layer_editor_documents?: object`\n    Portable Layer Editor documents keyed by Layer Editor node identifier; omitted when no Layer Editor nodes exist\n\n### Returns\n\n- `{ canvas_url: string; definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; position: object; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }; project_id: string; summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }; }`\n\n  - `canvas_url: string`\n  - `definition: { edges: { id: string; source: string; source_handle: string; target: string; target_handle: string; data?: object; type?: string; }[]; node_inputs: object; node_outputs: object; nodes: { id: string; data: object; position: { x: number; y: number; }; type: string; expand_parent?: boolean; extent?: 'parent' | object[]; height?: number; hidden?: boolean; origin?: object[]; parent_id?: string; style?: object; width?: number; z_index?: number; }[]; layer_editor_documents?: object; }`\n  - `project_id: string`\n  - `summary: { edge_count: number; group_count: number; isolated_node_count: number; node_count: number; workflow_count: number; }`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.projects.canvas.replaceDefinition('prj_abc123', {\n  workspaceId: 'ws_abc123',\n  definition: {\n  edges: [{\n  id: 'edge_abc123',\n  source: 'x',\n  source_handle: 'source_handle',\n  target: 'x',\n  target_handle: 'target_handle',\n}],\n  node_inputs: { foo: { foo: 'bar' } },\n  node_outputs: { foo: { foo: 'bar' } },\n  nodes: [{\n  id: 'node_abc123',\n  data: { foo: 'bar' },\n  type: 'videoBlock',\n}],\n},\n});\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.projects.canvas.replaceDefinition',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.projects.canvas.replaceDefinition('prj_abc123', {\n  workspaceId: 'ws_abc123',\n  definition: {\n    edges: [\n      {\n        id: 'edge_abc123',\n        source: 'x',\n        source_handle: 'source_handle',\n        target: 'x',\n        target_handle: 'target_handle',\n      },\n    ],\n    node_inputs: { foo: { foo: 'bar' } },\n    node_outputs: { foo: { foo: 'bar' } },\n    nodes: [\n      {\n        id: 'node_abc123',\n        data: { foo: 'bar' },\n        type: 'videoBlock',\n      },\n    ],\n  },\n});\n\nconsole.log(response.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/projects/$PROJECT_ID/canvas/definition \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "definition": {\n            "edges": [\n              {\n                "id": "edge_abc123",\n                "source": "x",\n                "source_handle": "source_handle",\n                "target": "x",\n                "target_handle": "target_handle"\n              }\n            ],\n            "node_inputs": {\n              "foo": {\n                "foo": "bar"\n              }\n            },\n            "node_outputs": {\n              "foo": {\n                "foo": "bar"\n              }\n            },\n            "nodes": [\n              {\n                "id": "node_abc123",\n                "data": {\n                  "foo": "bar"\n                },\n                "type": "videoBlock"\n              }\n            ]\n          }\n        }\'',
+      },
+      go: {
+        method: 'client.Workspaces.Projects.Canvas.ReplaceDefinition',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Projects.Canvas.ReplaceDefinition(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.WorkspaceProjectCanvasReplaceDefinitionParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t\tDefinition: flora.WorkspaceProjectCanvasReplaceDefinitionParamsDefinition{\n\t\t\t\tEdges: []flora.WorkspaceProjectCanvasReplaceDefinitionParamsDefinitionEdge{{\n\t\t\t\t\tID:           "edge_abc123",\n\t\t\t\t\tSource:       "x",\n\t\t\t\t\tSourceHandle: flora.String("source_handle"),\n\t\t\t\t\tTarget:       "x",\n\t\t\t\t\tTargetHandle: flora.String("target_handle"),\n\t\t\t\t}},\n\t\t\t\tNodeInputs: map[string]map[string]any{\n\t\t\t\t\t"foo": {\n\t\t\t\t\t\t"foo": "bar",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tNodeOutputs: map[string]map[string]any{\n\t\t\t\t\t"foo": {\n\t\t\t\t\t\t"foo": "bar",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tNodes: []flora.WorkspaceProjectCanvasReplaceDefinitionParamsDefinitionNode{{\n\t\t\t\t\tID: "node_abc123",\n\t\t\t\t\tData: map[string]any{\n\t\t\t\t\t\t"foo": "bar",\n\t\t\t\t\t},\n\t\t\t\t\tType: "videoBlock",\n\t\t\t\t}},\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'apply_changeset',
+    endpoint: '/workspaces/{workspaceId}/projects/{projectId}/canvas/changeset',
+    httpMethod: 'post',
+    summary: 'Apply a canvas changeset',
+    description:
+      "Edits a project canvas: add, update, connect, disconnect and remove operations validate together and apply as ONE atomic transaction. Nothing applies if any operation is invalid, and every cause is reported with a machine-readable code in the error's fields array. Operations apply in the order add, update, connect, disconnect, remove, with groups created before their members — so one call can create a group, fill it, wire the new nodes to existing ones by the ref names it chose, and delete something else. Nodes are addressed by the short id or node UUID the project graph endpoint reports, or by a ref declared by an add operation in the same request. REMOVE IS IMMEDIATE AND IRREVERSIBLE through the API: there is no confirmation step and no undo, deleting a node also deletes its edges and any group members, so confirm destructive changesets with your user before sending them. The revision returned is the same change-detection marker the project graph endpoint reports, so it can be compared directly against a later read. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.",
+    stainlessPath: '(resource) workspaces.projects.canvas > (method) apply_changeset',
+    qualified: 'client.workspaces.projects.canvas.applyChangeset',
+    params: [
+      'workspaceId: string;',
+      'projectId: string;',
+      "add?: { ref: string; type: 'image' | 'video' | 'text' | 'audio' | 'group' | 'static_image' | 'layer_editor'; content_url?: string; group?: string; label?: string; model?: string; params?: object; position?: { x: number; y: number; }; prompt?: string; }[];",
+      'connect?: { from: string; to: string; in?: string; }[];',
+      'disconnect?: { from: string; to: string; in?: string; }[];',
+      'remove?: { id: string; }[];',
+      'update?: { id: string; label?: string; model?: string; params?: object; position?: { x: number; y: number; }; prompt?: string; }[];',
+    ],
+    response:
+      '{ applied: { added: number; connected: number; disconnected: number; removed: number; updated: number; }; canvas_url: string; created: object; project_id: string; revision: string; warnings: string[]; }',
+    markdown:
+      "## apply_changeset\n\n`client.workspaces.projects.canvas.applyChangeset(workspaceId: string, projectId: string, add?: { ref: string; type: 'image' | 'video' | 'text' | 'audio' | 'group' | 'static_image' | 'layer_editor'; content_url?: string; group?: string; label?: string; model?: string; params?: object; position?: { x: number; y: number; }; prompt?: string; }[], connect?: { from: string; to: string; in?: string; }[], disconnect?: { from: string; to: string; in?: string; }[], remove?: { id: string; }[], update?: { id: string; label?: string; model?: string; params?: object; position?: { x: number; y: number; }; prompt?: string; }[]): { applied: object; canvas_url: string; created: object; project_id: string; revision: string; warnings: string[]; }`\n\n**post** `/workspaces/{workspaceId}/projects/{projectId}/canvas/changeset`\n\nEdits a project canvas: add, update, connect, disconnect and remove operations validate together and apply as ONE atomic transaction. Nothing applies if any operation is invalid, and every cause is reported with a machine-readable code in the error's fields array. Operations apply in the order add, update, connect, disconnect, remove, with groups created before their members — so one call can create a group, fill it, wire the new nodes to existing ones by the ref names it chose, and delete something else. Nodes are addressed by the short id or node UUID the project graph endpoint reports, or by a ref declared by an add operation in the same request. REMOVE IS IMMEDIATE AND IRREVERSIBLE through the API: there is no confirmation step and no undo, deleting a node also deletes its edges and any group members, so confirm destructive changesets with your user before sending them. The revision returned is the same change-detection marker the project graph endpoint reports, so it can be compared directly against a later read. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `projectId: string`\n  Project identifier\n\n- `add?: { ref: string; type: 'image' | 'video' | 'text' | 'audio' | 'group' | 'static_image' | 'layer_editor'; content_url?: string; group?: string; label?: string; model?: string; params?: object; position?: { x: number; y: number; }; prompt?: string; }[]`\n  Nodes to create. Groups are created before their members.\n\n- `connect?: { from: string; to: string; in?: string; }[]`\n  Edges to create. Either endpoint may be a ref created by this same changeset. The canvas carries one edge per pair, so a duplicate pair is skipped with a warning.\n\n- `disconnect?: { from: string; to: string; in?: string; }[]`\n  Edges to remove, addressed by their endpoints as the graph read reports them\n\n- `remove?: { id: string; }[]`\n  Nodes to delete. Their edges and any group members go too. Removal is immediate and cannot be undone through the API.\n\n- `update?: { id: string; label?: string; model?: string; params?: object; position?: { x: number; y: number; }; prompt?: string; }[]`\n  Existing nodes to modify. One operation per node.\n\n### Returns\n\n- `{ applied: { added: number; connected: number; disconnected: number; removed: number; updated: number; }; canvas_url: string; created: object; project_id: string; revision: string; warnings: string[]; }`\n\n  - `applied: { added: number; connected: number; disconnected: number; removed: number; updated: number; }`\n  - `canvas_url: string`\n  - `created: object`\n  - `project_id: string`\n  - `revision: string`\n  - `warnings: string[]`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.projects.canvas.applyChangeset('prj_abc123', { workspaceId: 'ws_abc123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.projects.canvas.applyChangeset',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.projects.canvas.applyChangeset('prj_abc123', {\n  workspaceId: 'ws_abc123',\n});\n\nconsole.log(response.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/projects/$PROJECT_ID/canvas/changeset \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+      go: {
+        method: 'client.Workspaces.Projects.Canvas.ApplyChangeset',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Projects.Canvas.ApplyChangeset(\n\t\tcontext.TODO(),\n\t\t"prj_abc123",\n\t\tflora.WorkspaceProjectCanvasApplyChangesetParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'create_project',
+    endpoint: '/workspaces/{workspaceId}/folders/{folderId}/projects',
+    httpMethod: 'post',
+    summary: 'Create a project in a project folder',
+    description:
+      'Creates a new Flora project filed into the given project folder. The folder must belong to the workspace named in the path; private folders are reachable only by their owner, and an unreachable folder returns 404 rather than disclosing that it exists. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.',
+    stainlessPath: '(resource) workspaces.folders > (method) create_project',
+    qualified: 'client.workspaces.folders.createProject',
+    params: ['workspaceId: string;', 'folderId: string;', 'name: string;'],
+    response:
+      '{ created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }',
+    markdown:
+      "## create_project\n\n`client.workspaces.folders.createProject(workspaceId: string, folderId: string, name: string): { created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }`\n\n**post** `/workspaces/{workspaceId}/folders/{folderId}/projects`\n\nCreates a new Flora project filed into the given project folder. The folder must belong to the workspace named in the path; private folders are reachable only by their owner, and an unreachable folder returns 404 rather than disclosing that it exists. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `folderId: string`\n  Project folder identifier\n\n- `name: string`\n  Project name\n\n### Returns\n\n- `{ created_at: number; last_modified: number; name: string; origin: string; project_id: string; workspace_id: string; }`\n\n  - `created_at: number`\n  - `last_modified: number`\n  - `name: string`\n  - `origin: string`\n  - `project_id: string`\n  - `workspace_id: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.folders.createProject('fld_abc123', { workspaceId: 'ws_abc123', name: 'Spring Campaign' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.folders.createProject',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.folders.createProject('fld_abc123', {\n  workspaceId: 'ws_abc123',\n  name: 'Spring Campaign',\n});\n\nconsole.log(response.project_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/folders/$FOLDER_ID/projects \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $FLORA_API_KEY" \\\n    -d \'{\n          "name": "Spring Campaign"\n        }\'',
+      },
+      go: {
+        method: 'client.Workspaces.Folders.NewProject',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Folders.NewProject(\n\t\tcontext.TODO(),\n\t\t"fld_abc123",\n\t\tflora.WorkspaceFolderNewProjectParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t\tName:        "Spring Campaign",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ProjectID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/workspaces/{workspaceId}/library/folders',
+    httpMethod: 'post',
+    summary: 'Create a library folder',
+    description:
+      "Creates a folder in the authenticated user's FLORA library. Used by the Web Clipper to group images clipped from a page. Defaults to the credential's workspace when workspace_id is omitted. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.",
+    stainlessPath: '(resource) workspaces.library.folders > (method) create',
+    qualified: 'client.workspaces.library.folders.create',
+    params: ['workspaceId: string;', 'name?: string;'],
+    response: '{ folder_id: string; name: string; workspace_id: string; }',
+    markdown:
+      "## create\n\n`client.workspaces.library.folders.create(workspaceId: string, name?: string): { folder_id: string; name: string; workspace_id: string; }`\n\n**post** `/workspaces/{workspaceId}/library/folders`\n\nCreates a folder in the authenticated user's FLORA library. Used by the Web Clipper to group images clipped from a page. Defaults to the credential's workspace when workspace_id is omitted. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `name?: string`\n  Library folder name. Defaults to a generated name when omitted; renameable later in the library.\n\n### Returns\n\n- `{ folder_id: string; name: string; workspace_id: string; }`\n\n  - `folder_id: string`\n  - `name: string`\n  - `workspace_id: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst folder = await client.workspaces.library.folders.create('ws_abc123');\n\nconsole.log(folder);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.library.folders.create',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst folder = await client.workspaces.library.folders.create('ws_abc123');\n\nconsole.log(folder.folder_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/library/folders \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+      go: {
+        method: 'client.Workspaces.Library.Folders.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tfolder, err := client.Workspaces.Library.Folders.New(\n\t\tcontext.TODO(),\n\t\t"ws_abc123",\n\t\tflora.WorkspaceLibraryFolderNewParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", folder.FolderID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/workspaces/{workspaceId}/library/folders/{folderId}',
+    httpMethod: 'delete',
+    summary: 'Delete a library folder',
+    description:
+      'Deletes a library folder owned by the authenticated user, detaching any saved nodes still in it. Used by the Web Clipper to clean up an empty folder when a clip saved nothing.',
+    stainlessPath: '(resource) workspaces.library.folders > (method) delete',
+    qualified: 'client.workspaces.library.folders.delete',
+    params: ['workspaceId: string;', 'folderId: string;'],
+    response: '{ deleted: true; folder_id: string; workspace_id: string; }',
+    markdown:
+      "## delete\n\n`client.workspaces.library.folders.delete(workspaceId: string, folderId: string): { deleted: true; folder_id: string; workspace_id: string; }`\n\n**delete** `/workspaces/{workspaceId}/library/folders/{folderId}`\n\nDeletes a library folder owned by the authenticated user, detaching any saved nodes still in it. Used by the Web Clipper to clean up an empty folder when a clip saved nothing.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `folderId: string`\n  Library folder identifier\n\n### Returns\n\n- `{ deleted: true; folder_id: string; workspace_id: string; }`\n\n  - `deleted: true`\n  - `folder_id: string`\n  - `workspace_id: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst folder = await client.workspaces.library.folders.delete('libfolder_abc123', { workspaceId: 'ws_abc123' });\n\nconsole.log(folder);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.library.folders.delete',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst folder = await client.workspaces.library.folders.delete('libfolder_abc123', {\n  workspaceId: 'ws_abc123',\n});\n\nconsole.log(folder.folder_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/library/folders/$FOLDER_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+      go: {
+        method: 'client.Workspaces.Library.Folders.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tfolder, err := client.Workspaces.Library.Folders.Delete(\n\t\tcontext.TODO(),\n\t\t"libfolder_abc123",\n\t\tflora.WorkspaceLibraryFolderDeleteParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", folder.FolderID)\n}\n',
+      },
+    },
+  },
+  {
+    name: 'add_item',
+    endpoint: '/workspaces/{workspaceId}/library/folders/{folderId}/items',
+    httpMethod: 'post',
+    summary: 'Add an image to a library folder',
+    description:
+      "Fetches an image from a public HTTPS URL (SSRF-safe) and saves it into the given library folder as a media node. Used by the Web Clipper's send pipeline, one call per selected image. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.",
+    stainlessPath: '(resource) workspaces.library.folders > (method) add_item',
+    qualified: 'client.workspaces.library.folders.addItem',
+    params: [
+      'workspaceId: string;',
+      'folderId: string;',
+      'description?: string;',
+      'source?: string;',
+      'text?: string;',
+      "type?: 'image' | 'text';",
+    ],
+    response:
+      '{ folder_id: string; saved_node_id: string; workspace_id: string; asset_id?: string; url?: string; }',
+    markdown:
+      "## add_item\n\n`client.workspaces.library.folders.addItem(workspaceId: string, folderId: string, description?: string, source?: string, text?: string, type?: 'image' | 'text'): { folder_id: string; saved_node_id: string; workspace_id: string; asset_id?: string; url?: string; }`\n\n**post** `/workspaces/{workspaceId}/library/folders/{folderId}/items`\n\nFetches an image from a public HTTPS URL (SSRF-safe) and saves it into the given library folder as a media node. Used by the Web Clipper's send pipeline, one call per selected image. Mutating public API requests support an optional Idempotency-Key header for client retries; duplicate keys within two hours return idempotency_duplicate.\n\n### Parameters\n\n- `workspaceId: string`\n  Workspace identifier\n\n- `folderId: string`\n  Library folder identifier\n\n- `description?: string`\n  Optional caption/label for the saved item\n\n- `source?: string`\n  Public HTTPS URL of the image to save (required when type=image). FLORA fetches the bytes server-side with SSRF protection (private/loopback/metadata IPs and redirects to them are blocked) and stores them.\n\n- `text?: string`\n  Text to save as a text node (required when type=text).\n\n- `type?: 'image' | 'text'`\n  Kind of item to save.\n\n### Returns\n\n- `{ folder_id: string; saved_node_id: string; workspace_id: string; asset_id?: string; url?: string; }`\n\n  - `folder_id: string`\n  - `saved_node_id: string`\n  - `workspace_id: string`\n  - `asset_id?: string`\n  - `url?: string`\n\n### Example\n\n```typescript\nimport FLORA from '@flora-ai/flora';\n\nconst client = new FLORA();\n\nconst response = await client.workspaces.library.folders.addItem('libfolder_abc123', { workspaceId: 'ws_abc123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.workspaces.library.folders.addItem',
+        example:
+          "import FLORA from '@flora-ai/flora';\n\nconst client = new FLORA({\n  apiKey: process.env['FLORA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.workspaces.library.folders.addItem('libfolder_abc123', {\n  workspaceId: 'ws_abc123',\n});\n\nconsole.log(response.folder_id);",
+      },
+      http: {
+        example:
+          'curl https://app.flora.ai/api/v1/workspaces/$WORKSPACE_ID/library/folders/$FOLDER_ID/items \\\n    -X POST \\\n    -H "Authorization: Bearer $FLORA_API_KEY"',
+      },
+      go: {
+        method: 'client.Workspaces.Library.Folders.AddItem',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/florafauna-ai/flora-go"\n\t"github.com/florafauna-ai/flora-go/option"\n)\n\nfunc main() {\n\tclient := flora.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Workspaces.Library.Folders.AddItem(\n\t\tcontext.TODO(),\n\t\t"libfolder_abc123",\n\t\tflora.WorkspaceLibraryFolderAddItemParams{\n\t\t\tWorkspaceID: "ws_abc123",\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.FolderID)\n}\n',
+      },
+    },
+  },
+  {
     name: 'list',
     endpoint: '/projects',
     httpMethod: 'get',

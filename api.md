@@ -46,11 +46,65 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/workspaces.ts">WorkspaceListResponse</a></code>
+- <code><a href="./src/resources/workspaces/workspaces.ts">WorkspaceListResponse</a></code>
 
 Methods:
 
-- <code title="get /workspaces">client.workspaces.<a href="./src/resources/workspaces.ts">list</a>() -> WorkspaceListResponse</code>
+- <code title="get /workspaces">client.workspaces.<a href="./src/resources/workspaces/workspaces.ts">list</a>() -> WorkspaceListResponse</code>
+
+## Projects
+
+Types:
+
+- <code><a href="./src/resources/workspaces/projects/projects.ts">ProjectCreateResponse</a></code>
+- <code><a href="./src/resources/workspaces/projects/projects.ts">ProjectGraphResponse</a></code>
+- <code><a href="./src/resources/workspaces/projects/projects.ts">ProjectRunNodesResponse</a></code>
+
+Methods:
+
+- <code title="post /workspaces/{workspaceId}/projects">client.workspaces.projects.<a href="./src/resources/workspaces/projects/projects.ts">create</a>(workspaceID, { ...params }) -> ProjectCreateResponse</code>
+- <code title="get /workspaces/{workspaceId}/projects/{projectId}/graph">client.workspaces.projects.<a href="./src/resources/workspaces/projects/projects.ts">graph</a>(projectID, { ...params }) -> ProjectGraphResponse</code>
+- <code title="post /workspaces/{workspaceId}/projects/{projectId}/nodes/run">client.workspaces.projects.<a href="./src/resources/workspaces/projects/projects.ts">runNodes</a>(projectID, { ...params }) -> ProjectRunNodesResponse</code>
+
+### Canvas
+
+Types:
+
+- <code><a href="./src/resources/workspaces/projects/canvas.ts">CanvasApplyChangesetResponse</a></code>
+- <code><a href="./src/resources/workspaces/projects/canvas.ts">CanvasReplaceDefinitionResponse</a></code>
+- <code><a href="./src/resources/workspaces/projects/canvas.ts">CanvasRetrieveDefinitionResponse</a></code>
+
+Methods:
+
+- <code title="post /workspaces/{workspaceId}/projects/{projectId}/canvas/changeset">client.workspaces.projects.canvas.<a href="./src/resources/workspaces/projects/canvas.ts">applyChangeset</a>(projectID, { ...params }) -> CanvasApplyChangesetResponse</code>
+- <code title="put /workspaces/{workspaceId}/projects/{projectId}/canvas/definition">client.workspaces.projects.canvas.<a href="./src/resources/workspaces/projects/canvas.ts">replaceDefinition</a>(projectID, { ...params }) -> CanvasReplaceDefinitionResponse</code>
+- <code title="get /workspaces/{workspaceId}/projects/{projectId}/canvas/definition">client.workspaces.projects.canvas.<a href="./src/resources/workspaces/projects/canvas.ts">retrieveDefinition</a>(projectID, { ...params }) -> CanvasRetrieveDefinitionResponse</code>
+
+## Folders
+
+Types:
+
+- <code><a href="./src/resources/workspaces/folders.ts">FolderCreateProjectResponse</a></code>
+
+Methods:
+
+- <code title="post /workspaces/{workspaceId}/folders/{folderId}/projects">client.workspaces.folders.<a href="./src/resources/workspaces/folders.ts">createProject</a>(folderID, { ...params }) -> FolderCreateProjectResponse</code>
+
+## Library
+
+### Folders
+
+Types:
+
+- <code><a href="./src/resources/workspaces/library/folders.ts">FolderCreateResponse</a></code>
+- <code><a href="./src/resources/workspaces/library/folders.ts">FolderDeleteResponse</a></code>
+- <code><a href="./src/resources/workspaces/library/folders.ts">FolderAddItemResponse</a></code>
+
+Methods:
+
+- <code title="post /workspaces/{workspaceId}/library/folders">client.workspaces.library.folders.<a href="./src/resources/workspaces/library/folders.ts">create</a>(workspaceID, { ...params }) -> FolderCreateResponse</code>
+- <code title="delete /workspaces/{workspaceId}/library/folders/{folderId}">client.workspaces.library.folders.<a href="./src/resources/workspaces/library/folders.ts">delete</a>(folderID, { ...params }) -> FolderDeleteResponse</code>
+- <code title="post /workspaces/{workspaceId}/library/folders/{folderId}/items">client.workspaces.library.folders.<a href="./src/resources/workspaces/library/folders.ts">addItem</a>(folderID, { ...params }) -> FolderAddItemResponse</code>
 
 # Projects
 
