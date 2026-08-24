@@ -321,7 +321,7 @@ export declare namespace Techniques {
     type RunListResponse as RunListResponse,
     type RunListResponsesTechniqueRunsCursorPage as RunListResponsesTechniqueRunsCursorPage,
     type RunCreateParams as RunCreateParams,
-    type RunListParams as RunListParams,
     type RunRetrieveParams as RunRetrieveParams,
+    type RunListParams as RunListParams,
   };
 }

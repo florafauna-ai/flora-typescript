@@ -30,30 +30,6 @@ export class Projects extends APIResource {
   actions: ActionsAPI.Actions = new ActionsAPI.Actions(this._client);
 
   /**
-   * Returns projects in the requested workspace that are accessible to the
-   * authenticated public API key, ordered by recent activity.
-   *
-   * @example
-   * ```ts
-   * // Automatically fetches more pages as needed.
-   * for await (const projectListResponse of client.projects.list(
-   *   { workspace_id: 'ws_abc123' },
-   * )) {
-   *   // ...
-   * }
-   * ```
-   */
-  list(
-    query: ProjectListParams,
-    options?: RequestOptions,
-  ): PagePromise<ProjectListResponsesProjectsCursorPage, ProjectListResponse> {
-    return this._client.getAPIList('/projects', ProjectsCursorPage<ProjectListResponse>, {
-      query,
-      ...options,
-    });
-  }
-
-  /**
    * Creates a new Flora project in the requested workspace. To file the project into
    * a project folder, use POST
    * /workspaces/{workspace_id}/folders/{folder_id}/projects. Mutating public API
@@ -85,6 +61,30 @@ export class Projects extends APIResource {
    */
   retrieve(projectID: string, options?: RequestOptions): APIPromise<ProjectRetrieveResponse> {
     return this._client.get(path`/projects/${projectID}`, options);
+  }
+
+  /**
+   * Returns projects in the requested workspace that are accessible to the
+   * authenticated public API key, ordered by recent activity.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const projectListResponse of client.projects.list(
+   *   { workspace_id: 'ws_abc123' },
+   * )) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(
+    query: ProjectListParams,
+    options?: RequestOptions,
+  ): PagePromise<ProjectListResponsesProjectsCursorPage, ProjectListResponse> {
+    return this._client.getAPIList('/projects', ProjectsCursorPage<ProjectListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -228,18 +228,6 @@ export interface ProjectListNodesResponse {
   width?: number | null;
 }
 
-export interface ProjectListParams extends ProjectsCursorPageParams {
-  /**
-   * Workspace identifier
-   */
-  workspace_id: string;
-
-  /**
-   * Search query
-   */
-  query?: string;
-}
-
 export interface ProjectCreateParams {
   /**
    * Project name
@@ -250,6 +238,18 @@ export interface ProjectCreateParams {
    * Workspace identifier
    */
   workspace_id: string;
+}
+
+export interface ProjectListParams extends ProjectsCursorPageParams {
+  /**
+   * Workspace identifier
+   */
+  workspace_id: string;
+
+  /**
+   * Search query
+   */
+  query?: string;
 }
 
 export interface ProjectListNodesParams extends CanvasNodesCursorPageParams {}
@@ -266,8 +266,8 @@ export declare namespace Projects {
     type ProjectListNodesResponse as ProjectListNodesResponse,
     type ProjectListResponsesProjectsCursorPage as ProjectListResponsesProjectsCursorPage,
     type ProjectListNodesResponsesCanvasNodesCursorPage as ProjectListNodesResponsesCanvasNodesCursorPage,
-    type ProjectListParams as ProjectListParams,
     type ProjectCreateParams as ProjectCreateParams,
+    type ProjectListParams as ProjectListParams,
     type ProjectListNodesParams as ProjectListNodesParams,
   };
 

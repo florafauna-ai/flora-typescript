@@ -40,6 +40,39 @@ export class Assets extends APIResource {
   }
 
   /**
+   * Returns metadata for one asset when it is accessible to the authenticated public
+   * API key. Missing and inaccessible assets both return 404.
+   *
+   * @example
+   * ```ts
+   * const asset = await client.assets.retrieve('asset_abc123');
+   * ```
+   */
+  retrieve(assetID: string, options?: RequestOptions): APIPromise<AssetRetrieveResponse> {
+    return this._client.get(path`/assets/${assetID}`, options);
+  }
+
+  /**
+   * Returns assets visible to the authenticated public API key. Filter by workspace,
+   * project canvas, search query, cursor, and limit without exposing raw file bytes
+   * or internal graph data.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const assetListResponse of client.assets.list()) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(
+    query: AssetListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<AssetListResponsesAssetsCursorPage, AssetListResponse> {
+    return this._client.getAPIList('/assets', AssetsCursorPage<AssetListResponse>, { query, ...options });
+  }
+
+  /**
    * Marks a signed asset upload as complete after the file has been uploaded.
    * Mutating public API requests support an optional Idempotency-Key header for
    * client retries; duplicate keys within two hours return idempotency_duplicate.
@@ -70,36 +103,35 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Returns assets visible to the authenticated public API key. Filter by workspace,
-   * project canvas, search query, cursor, and limit without exposing raw file bytes
-   * or internal graph data.
+   * Uploads a file to FLORA in a single call, picking the optimal path for the
+   * input and size and polling until the asset is ready.
+   *
+   * - a public `http(s)://` URL is fetched server-side (no bytes leave the client);
+   * - a local file ≤ 4 MB is sent as direct multipart bytes in one request;
+   * - a larger local file reserves a signed upload URL, streams the bytes, and is
+   *   marked complete.
+   *
+   * Local input can be a filesystem path (Node.js), `Blob`, `Buffer`, stream, or
+   * `File`. Resolves to the final, ready asset.
    *
    * @example
    * ```ts
-   * // Automatically fetches more pages as needed.
-   * for await (const assetListResponse of client.assets.list()) {
-   *   // ...
-   * }
+   * // Local file:
+   * const asset = await client.assets.upload('./hero.png', { workspace_id: 'ws_abc123' });
+   *
+   * // Public URL (fetched server-side):
+   * const fromUrl = await client.assets.upload('https://example.com/image.png', {
+   *   workspace_id: 'ws_abc123',
+   * });
+   * console.log(asset.url);
    * ```
    */
-  list(
-    query: AssetListParams | null | undefined = {},
+  upload(
+    file: AssetUploadable,
+    params: AssetUploadParams,
     options?: RequestOptions,
-  ): PagePromise<AssetListResponsesAssetsCursorPage, AssetListResponse> {
-    return this._client.getAPIList('/assets', AssetsCursorPage<AssetListResponse>, { query, ...options });
-  }
-
-  /**
-   * Returns metadata for one asset when it is accessible to the authenticated public
-   * API key. Missing and inaccessible assets both return 404.
-   *
-   * @example
-   * ```ts
-   * const asset = await client.assets.retrieve('asset_abc123');
-   * ```
-   */
-  retrieve(assetID: string, options?: RequestOptions): APIPromise<AssetRetrieveResponse> {
-    return this._client.get(path`/assets/${assetID}`, options);
+  ): Promise<AssetRetrieveResponse> {
+    return uploadAsset(this._client, file, params, options);
   }
 
   /**
