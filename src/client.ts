@@ -69,7 +69,6 @@ import {
   RunStartTechniqueResponse,
   Runs,
 } from './resources/runs';
-import { WorkspaceListResponse, Workspaces } from './resources/workspaces';
 import {
   ProjectCreateParams,
   ProjectCreateResponse,
@@ -89,6 +88,7 @@ import {
   TechniqueRetrieveResponse,
   Techniques,
 } from './resources/techniques/techniques';
+import { WorkspaceListResponse, Workspaces } from './resources/workspaces/workspaces';
 import { Webhooks } from './lib/webhooks';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -953,8 +953,8 @@ export declare namespace FLORA {
     type ProjectListNodesResponse as ProjectListNodesResponse,
     type ProjectListResponsesProjectsCursorPage as ProjectListResponsesProjectsCursorPage,
     type ProjectListNodesResponsesCanvasNodesCursorPage as ProjectListNodesResponsesCanvasNodesCursorPage,
-    type ProjectListParams as ProjectListParams,
     type ProjectCreateParams as ProjectCreateParams,
+    type ProjectListParams as ProjectListParams,
     type ProjectListNodesParams as ProjectListNodesParams,
   };
 

@@ -9,8 +9,8 @@ const client = new FLORA({
 
 describe('resource actions', () => {
   // Mock server tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.actions.list();
+  test.skip('retrieve', async () => {
+    const responsePromise = client.actions.retrieve('color-grade-image-browser');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,8 +21,8 @@ describe('resource actions', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.actions.retrieve('color-grade-image-browser');
+  test.skip('list', async () => {
+    const responsePromise = client.actions.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

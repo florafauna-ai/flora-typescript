@@ -97,6 +97,11 @@ export namespace TechniqueRetrieveResponse {
     accepts_element?: boolean;
 
     /**
+     * When true, multiple values may be provided for this input (one run per value)
+     */
+    allow_multiple?: boolean;
+
+    /**
      * Technique input or output description
      */
     description?: string;
@@ -137,6 +142,11 @@ export namespace TechniqueRetrieveResponse {
      * When true, fill this input by passing an element id as the input value
      */
     accepts_element?: boolean;
+
+    /**
+     * When true, multiple values may be provided for this input (one run per value)
+     */
+    allow_multiple?: boolean;
 
     /**
      * Technique input or output description
@@ -209,6 +219,11 @@ export namespace TechniqueListResponse {
     accepts_element?: boolean;
 
     /**
+     * When true, multiple values may be provided for this input (one run per value)
+     */
+    allow_multiple?: boolean;
+
+    /**
      * Technique input or output description
      */
     description?: string;
@@ -249,6 +264,11 @@ export namespace TechniqueListResponse {
      * When true, fill this input by passing an element id as the input value
      */
     accepts_element?: boolean;
+
+    /**
+     * When true, multiple values may be provided for this input (one run per value)
+     */
+    allow_multiple?: boolean;
 
     /**
      * Technique input or output description
@@ -301,7 +321,7 @@ export declare namespace Techniques {
     type RunListResponse as RunListResponse,
     type RunListResponsesTechniqueRunsCursorPage as RunListResponsesTechniqueRunsCursorPage,
     type RunCreateParams as RunCreateParams,
-    type RunListParams as RunListParams,
     type RunRetrieveParams as RunRetrieveParams,
+    type RunListParams as RunListParams,
   };
 }

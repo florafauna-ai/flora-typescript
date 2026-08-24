@@ -7,14 +7,6 @@ import { path } from '../internal/utils/path';
 
 export class Actions extends APIResource {
   /**
-   * Returns released prebuilt Flora actions that can be executed by the public API.
-   * Action identifiers are raw slugs such as rotate-image, not action-prefixed IDs.
-   */
-  list(options?: RequestOptions): APIPromise<ActionListResponse> {
-    return this._client.get('/actions', options);
-  }
-
-  /**
    * Returns metadata for one released prebuilt Flora action. Action identifiers are
    * raw slugs such as rotate-image, not action-prefixed IDs.
    */
@@ -63,6 +55,14 @@ export class Actions extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ActionRetrieveResponse> {
     return this._client.get(path`/actions/${actionID}`, options);
+  }
+
+  /**
+   * Returns released prebuilt Flora actions that can be executed by the public API.
+   * Action identifiers are raw slugs such as rotate-image, not action-prefixed IDs.
+   */
+  list(options?: RequestOptions): APIPromise<ActionListResponse> {
+    return this._client.get('/actions', options);
   }
 
   /**
@@ -991,6 +991,11 @@ export declare namespace ActionRunParams {
        * Center
        */
       center?: Params.Center;
+
+      /**
+       * Lock ratio
+       */
+      lock_aspect?: boolean;
 
       /**
        * Rotation (deg)
@@ -2577,7 +2582,7 @@ export declare namespace ActionRunParams {
       /**
        * Split Mode
        */
-      split_mode?: 'separator' | 'paragraph' | 'lines' | 'charCount';
+      split_mode?: 'separator' | 'paragraph' | 'bullets' | 'lines' | 'charCount';
 
       /**
        * Trim Whitespace

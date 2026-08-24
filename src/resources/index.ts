@@ -35,8 +35,8 @@ export {
   type ProjectRetrieveResponse,
   type ProjectListResponse,
   type ProjectListNodesResponse,
-  type ProjectListParams,
   type ProjectCreateParams,
+  type ProjectListParams,
   type ProjectListNodesParams,
   type ProjectListResponsesProjectsCursorPage,
   type ProjectListNodesResponsesCanvasNodesCursorPage,
@@ -55,4 +55,4 @@ export {
   type TechniqueListParams,
   type TechniqueListResponsesTechniquesCursorPage,
 } from './techniques/techniques';
-export { Workspaces, type WorkspaceListResponse } from './workspaces';
+export { Workspaces, type WorkspaceListResponse } from './workspaces/workspaces';
