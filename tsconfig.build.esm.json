@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "incremental": false,
+    "declaration": true,
+    "sourceMap": false,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "rootDir": "src",
+    "outDir": "dist/esm"
+  },
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts"]
+}

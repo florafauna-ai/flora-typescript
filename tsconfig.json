@@ -1,37 +1,9 @@
 {
-  "include": ["src", "tests", "examples"],
-  "exclude": [],
+  "extends": ["@flora-ai/config/tsconfig-node"],
   "compilerOptions": {
-    "target": "es2020",
-    "lib": ["es2020"],
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "paths": {
-      "@flora-ai/flora/*": ["./src/*"],
-      "@flora-ai/flora": ["./src/index.ts"]
-    },
-    "noEmit": true,
-
-    "resolveJsonModule": true,
-
-    "forceConsistentCasingInFileNames": true,
-
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
-    "alwaysStrict": true,
-    "exactOptionalPropertyTypes": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "isolatedModules": false,
-
-    "skipLibCheck": true
-  }
+    // ES2022 rather than ESNext: the generated fetch polyfill's iterators don't
+    // satisfy esnext's iterator-helper `HeadersIterator` shape.
+    "lib": ["ES2022", "DOM", "DOM.Iterable"]
+  },
+  "include": ["src", "scripts", "knip.config.ts", "vitest.config.ts"]
 }
