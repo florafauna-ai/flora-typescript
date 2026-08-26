@@ -1,0 +1,30 @@
+{
+  "$schema": "../../node_modules/oxlint/configuration_schema.json",
+  "extends": ["../../packages/config/oxlint-base.json"],
+  // oxlint "extends" merges rules, overrides, and categories, but it replaces the plugins array.
+  "plugins": ["import", "jsdoc", "node", "oxc", "promise", "unicorn"],
+  // Fern emits this tree; its style is the generator's, not ours.
+  "ignorePatterns": ["src/generated/**", "dist/**"],
+  "rules": {
+    // The SDK ships to customers as a dependency-free package: nothing from the
+    // monorepo may leak in.
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": [
+              "@flora-ai/*",
+              "**/apps/**",
+              "**/packages/**",
+              "**/services/**",
+              "es-toolkit",
+              "es-toolkit/**"
+            ],
+            "message": "`@flora-ai/flora` is published standalone and must stay dependency-free; only relative imports are allowed."
+          }
+        ]
+      }
+    ]
+  }
+}
