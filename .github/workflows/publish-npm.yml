@@ -4,10 +4,6 @@
 name: Publish NPM
 on:
   workflow_dispatch:
-    inputs:
-      path:
-        description: The path to run the release in, e.g. '.' or 'packages/mcp-server'
-        required: true
 
   release:
     types: [published]
@@ -17,40 +13,27 @@ jobs:
     name: publish
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       id-token: write
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Set up Node
-        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: '20'
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Set up pnpm
         uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
 
       - name: Install dependencies
-        run: |
-          pnpm install
+        run: pnpm install --frozen-lockfile
 
+      - name: Build
+        run: pnpm build
+
+      # Trusted publishing (OIDC) needs npm 11.5 or later.
       - name: Publish to NPM
-        run: |
-          if [ -n "$INPUT_PATH" ]; then
-            PATHS_RELEASED=$(node -e 'console.log(JSON.stringify([process.argv[1]]))' "$INPUT_PATH")
-          else
-            PATHS_RELEASED='[".","packages/mcp-server"]'
-          fi
-          DATA=$(PATHS_RELEASED="$PATHS_RELEASED" node -e 'console.log(JSON.stringify({ paths_released: process.env.PATHS_RELEASED }))')
-          pnpm tsn scripts/publish-packages.ts "$DATA"
-        env:
-          INPUT_PATH: ${{ github.event.inputs.path }}
-
-      - name: Upload MCP Server DXT GitHub release asset
-        if: github.event_name == 'release'
-        run: |
-          gh release upload ${{ github.event.release.tag_name }} \
-            packages/mcp-server/flora_ai_flora_api.mcpb
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx --yes npm@11.6.2 publish --provenance --access public

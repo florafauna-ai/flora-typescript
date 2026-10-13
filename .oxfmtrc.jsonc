@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+
+  // Layout
+  "printWidth": 100,
+  "singleAttributePerLine": true,
+  "endOfLine": "lf",
+  "useTabs": false,
+  "tabWidth": 2,
+
+  // Syntax
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "semi": false,
+  "trailingComma": "all",
+  "quoteProps": "as-needed",
+  "jsxSingleQuote": false,
+  "experimentalSortPackageJson": false,
+  "sortImports": true,
+
+  "ignorePatterns": [
+    "pnpm-lock.yaml",
+    "dist/",
+    "coverage/",
+    // Fern emits this tree; its style is the generator's, not ours.
+    "src/generated/",
+  ],
+}

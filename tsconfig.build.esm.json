@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // This config emits; tsconfig.json allows .ts import spellings only for
+    // no-emit type checks, so it is switched off here.
+    "allowImportingTsExtensions": false,
+    "noEmit": false,
+    "incremental": false,
+    "declaration": true,
+    "sourceMap": false,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "rootDir": "src",
+    "outDir": "dist/esm"
+  },
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts"]
+}

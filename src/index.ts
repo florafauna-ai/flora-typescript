@@ -1,35 +1,29 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
-export { FLORA as default } from './client';
-
-export { type Uploadable, toFile } from './core/uploads';
-export { APIPromise } from './core/api-promise';
-export { FLORA, type ClientOptions } from './client';
-export { PagePromise } from './core/pagination';
+// Public entry point. Everything Fern generates is re-exported from
+// ./generated; the hand-written layer below adds what the OpenAPI document
+// cannot express (multipart uploads, webhook verification).
+export * from "./generated/index.js"
+export * as Flora from "./api.js"
+export { OPERATIONS, type OperationId, type SurfaceAccess } from "./access.js"
+export { FloraClient } from "./client.js"
+export { AssetsClient } from "./lib/assets-client.js"
+export type { AssetUploadable, AssetUploadParams } from "./lib/assets-client.js"
 export {
-  Webhooks,
-  WebhookVerificationError,
   type WebhookEvent,
-  type WebhookRunData,
   type WebhookEventType,
-  type WebhookRunType,
-  type WebhookRunStatus,
-  type WebhookPayload,
   type WebhookHeaders,
+  type WebhookPayload,
+  type WebhookRunData,
+  type WebhookRunStatus,
+  type WebhookRunType,
   type WebhookUnwrapOptions,
-} from './lib/webhooks';
+  WebhookVerificationError,
+  Webhooks,
+} from "./lib/webhooks.js"
 export {
-  FLORAError,
-  APIError,
-  APIConnectionError,
-  APIConnectionTimeoutError,
-  APIUserAbortError,
-  NotFoundError,
-  ConflictError,
-  RateLimitError,
-  BadRequestError,
-  AuthenticationError,
-  InternalServerError,
-  PermissionDeniedError,
-  UnprocessableEntityError,
-} from './core/error';
+  DeviceLoginClient,
+  PreviewDeviceLoginClient,
+  DeviceLoginError,
+  type DeviceRootToken,
+  type DeviceRootTokenRequest,
+  type GrantedWorkspaces,
+} from "./lib/device-login.js"
