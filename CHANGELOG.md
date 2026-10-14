@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.21.1 (API 5.10.0)
+
+- Fix: `FloraError.requestId` reads the `Flora-Request-Id` response header,
+  which the API sets on every response. It read `x-request-id`, which the API
+  never sends, so it was always `undefined`.
+
 ## 0.21.0 (API 5.10.0)
 
 - New: bulk signed uploads. `assets.reserveUploads` reserves up to 25 signed
