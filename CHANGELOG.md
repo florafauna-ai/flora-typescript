@@ -1,5 +1,110 @@
 # Changelog
 
+## [0.22.0](https://github.com/florafauna-ai/flora-typescript/compare/v0.21.1...v0.22.0) (2026-10-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** workspace-scoped project creation, folder placement moves to the path
+
+### Features
+
+* **actions:** add `optional` and `multiple` keys to `[@flora-inputs](https://github.com/flora-inputs)` schema ([bac0776](https://github.com/florafauna-ai/flora-typescript/commit/bac0776b4f04769d18eef1544e5d1bf156e717af))
+* **actions:** point3d param, browser-action framework improvements, and action-set polish ([3915d09](https://github.com/florafauna-ai/flora-typescript/commit/3915d0969c2a84bdc566f45e0fb5f3f01400f6ec))
+* **actions:** release v2 browser actions, unlist legacy twins ([7ceed85](https://github.com/florafauna-ai/flora-typescript/commit/7ceed85be9cf9396649a806c0d9ef9a6e0630fc8))
+* add custom_casings to make client class name FLORA (all caps) ([8b663b4](https://github.com/florafauna-ai/flora-typescript/commit/8b663b4565524c031fcce9b7af50b1530219686b))
+* Add MCP OAuth resource metadata ([2c12390](https://github.com/florafauna-ai/flora-typescript/commit/2c12390e7f27e436acb48cf028532a04630c3829))
+* Add OpenAPI update script ([6fa3e9d](https://github.com/florafauna-ai/flora-typescript/commit/6fa3e9de888767200e134845b91ca6e4f4b5522f))
+* **api/v1:** fire webhook on generate run terminal state (ENG-5357) ([034817b](https://github.com/florafauna-ai/flora-typescript/commit/034817b1b0f860cc9c98561c6c603c9c17433362))
+* **api/v1:** signed webhook callbacks for technique runs ([42a4532](https://github.com/florafauna-ai/flora-typescript/commit/42a45324e4c860a594a436b4fc7a222f19018d82))
+* **api:** api update ([7ba85df](https://github.com/florafauna-ai/flora-typescript/commit/7ba85dffef71e26fe06632cfc883d9b7dd676d8f))
+* **api:** api update ([2d27b73](https://github.com/florafauna-ai/flora-typescript/commit/2d27b73ed76d7cf4fb99bc6a150de7402405a91c))
+* **api:** api update ([1aa34f8](https://github.com/florafauna-ai/flora-typescript/commit/1aa34f83d3f685d9bcefd2d75ae8e8ff03c6fb29))
+* **api:** api update ([a25084c](https://github.com/florafauna-ai/flora-typescript/commit/a25084cb3c986eea234bfcddf670756624f14947))
+* **api:** direct-bytes upload, SSRF-safe URL fetch, symmetric project_id, upfront limits ([ec91ede](https://github.com/florafauna-ai/flora-typescript/commit/ec91ede791cb58036271b5ee43393455a94e6c07))
+* **api:** enforce action param values against their schema ([3a333d7](https://github.com/florafauna-ai/flora-typescript/commit/3a333d7aa15aa78ed709b9faaf75634d47b07220))
+* **api:** workspace-scoped project creation, folder placement moves to the path ([7f94958](https://github.com/florafauna-ai/flora-typescript/commit/7f9495888393f0f408ac4322ff7dc437d018f0df))
+* **assets:** add assets.upload() one-call helper (3-path: url / direct / signed-url) ([4087c2e](https://github.com/florafauna-ai/flora-typescript/commit/4087c2e07ee61dd24a6a57146ced096768bd2c9f))
+* bump openapi ([cb8e726](https://github.com/florafauna-ai/flora-typescript/commit/cb8e726701ee377d873eace1844b5cfca5dac4f1))
+* **elements-v2:** server-side guards for reference generation ([51f98bd](https://github.com/florafauna-ai/flora-typescript/commit/51f98bda7cc5094bdae15b8144eb61579f22c7a6))
+* enable Cloudflare Worker generation for MCP server ([5fdf163](https://github.com/florafauna-ai/flora-typescript/commit/5fdf163fe8b65fa616ccc0e26944766a63e2541f))
+* Expose generations.retrieve(run_id) in the SDK (ENG-5104) ([76f9527](https://github.com/florafauna-ai/flora-typescript/commit/76f9527b5988afa80c1736ee4dc024e044871a56))
+* Hide feedback endpoint from non-MCP outputs ([09ef8f5](https://github.com/florafauna-ai/flora-typescript/commit/09ef8f513333e7b51afbf28935576174fc3214a9))
+* redirect MCP OAuth to Clerk instead of API key form ([f403d8f](https://github.com/florafauna-ai/flora-typescript/commit/f403d8fc0daba0ef6bc733d7971d0194ff5aced7))
+* redirect MCP OAuth to Clerk instead of API key form ([27ff4e8](https://github.com/florafauna-ai/flora-typescript/commit/27ff4e8a0b502a284587e133748079cefa5a5866))
+* **sdk:** scaffold stlc SDK generation pipeline (Stainless migration) ([ad1fe25](https://github.com/florafauna-ai/flora-typescript/commit/ad1fe2537ab7afdd07152a389107da774bc152cb))
+* **techniques:** allow techniques to accept an element as an input (ENG-5227) ([7ec1fae](https://github.com/florafauna-ai/flora-typescript/commit/7ec1faedc49dc6e175f01c4ee911eedac9e60d95))
+* **techniques:** allowMultiple input field + flagged builder toggle (ENG-6224) ([3826b28](https://github.com/florafauna-ai/flora-typescript/commit/3826b28e5fdfb72d4462c75f087e157571fe8eb5))
+* update api ver ([98698b0](https://github.com/florafauna-ai/flora-typescript/commit/98698b083acc8ff8b0efcc175bb0a16b03b72830))
+* update oas ([138e0de](https://github.com/florafauna-ai/flora-typescript/commit/138e0de0b7d5bf9b5ca4702ca80621bbf7ef04de))
+* use oauth_authorization_flow with Clerk for MCP server auth ([2d19792](https://github.com/florafauna-ai/flora-typescript/commit/2d19792ff87160460e66eb51ff987c3844836411))
+* v0.21.0 ([b545ab4](https://github.com/florafauna-ai/flora-typescript/commit/b545ab4e1c3deaa23e5a1e80466c5991de5783d5))
+* **webhooks:** add client.webhooks.unwrap() signature-verification helper ([e9e21ed](https://github.com/florafauna-ai/flora-typescript/commit/e9e21edcff1f8a940d39e7de4ae2396a2ef4496d))
+* **webhooks:** add client.webhooks.unwrap() signature-verification helper ([df8de05](https://github.com/florafauna-ai/flora-typescript/commit/df8de05ffbfa6a140acc1655c5dcf6fe4da9028c))
+* **webhooks:** add client.webhooks.unwrap() signature-verification helper ([24888cf](https://github.com/florafauna-ai/flora-typescript/commit/24888cfdf8447a4ba1ee857becba7e5332dbce3a))
+
+
+### Bug Fixes
+
+* **assets:** drop duplicate upload() left by custom-code re-apply ([55f3b22](https://github.com/florafauna-ai/flora-typescript/commit/55f3b22536311bda150e5e4dabe3d029b59e48a1))
+* **client:** send content-type header for requests with an omitted optional body ([334cb7f](https://github.com/florafauna-ai/flora-typescript/commit/334cb7f59dae042fd0ca053bfbea5ad074f2d0f1))
+* **mcp:** restore remote code execution and hosted docs search for self-hosted builds ([6c5e033](https://github.com/florafauna-ai/flora-typescript/commit/6c5e033a4d33c038c15b83eca1f87e1157c32921))
+* pass Clerk access token as apiKey in MCPProps for Flora SDK ([d10aaf4](https://github.com/florafauna-ai/flora-typescript/commit/d10aaf40095bdc88bd207d3a37dd6f0e428356fb))
+* quote publish workflow payload ([02a5eb5](https://github.com/florafauna-ai/flora-typescript/commit/02a5eb5e1c7c2fd5e9d273236f252ba36dc110ee))
+* quote publish workflow payload ([855bb7d](https://github.com/florafauna-ai/flora-typescript/commit/855bb7dcf7a851fc4fc9b5528e2b2364f5296d27))
+* read FloraError.requestId from the Flora-Request-Id header ([#43](https://github.com/florafauna-ai/flora-typescript/issues/43)) ([0a4e4df](https://github.com/florafauna-ai/flora-typescript/commit/0a4e4df15f513c714ff157946c40f00848b09ae0))
+* revert to client_secret_post for Clerk token exchange ([706638f](https://github.com/florafauna-ai/flora-typescript/commit/706638fcdc4a20b4cff4add8cdb05b4b699cfd2c))
+* **stainless:** restore remote code execution + hosted docs search in generated flora-mcp ([e21d3f8](https://github.com/florafauna-ai/flora-typescript/commit/e21d3f8303146a01a9aa0c9b5db6d066bc77b808))
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([8ed4f6d](https://github.com/florafauna-ai/flora-typescript/commit/8ed4f6d390d8cbb83dd6bf7ca7cc10f07ae30441))
+* use client_secret_basic auth for Clerk token exchange ([fddb53e](https://github.com/florafauna-ai/flora-typescript/commit/fddb53e33b8214c5881818ff46a3878b8f24a319))
+
+
+### Chores
+
+* bump version to 0.7.2 ([f487096](https://github.com/florafauna-ai/flora-typescript/commit/f48709690d3712b47f86b02b9356d0ce3812bb2c))
+* bump version to 0.8.2 ([90c8d1a](https://github.com/florafauna-ai/flora-typescript/commit/90c8d1afb640c7aba2ec2fe87caccbc5024a781b))
+* **config:** hide deprecated /runs/* from docs, keep generating in SDKs ([839a6ef](https://github.com/florafauna-ai/flora-typescript/commit/839a6effbd8a1eb87c7146d1b254e532d8de433d))
+* disable generate_cloudflare_worker — CF Worker hoisted to own repo ([e72c85a](https://github.com/florafauna-ai/flora-typescript/commit/e72c85ab3e6ecd77b48b2180f85d6493c8f06109))
+* format upload tests ([a3b5f44](https://github.com/florafauna-ai/flora-typescript/commit/a3b5f4451156e71d41846a2c2fe7638eab40e938))
+* remove cloudflare-worker directory — hoisted to florafauna-ai/flora-mcp-worker ([aacd358](https://github.com/florafauna-ai/flora-typescript/commit/aacd358b96e3668bf45b80b2222261ab984bb00f))
+* remove cloudflare-worker directory — hoisted to florafauna-ai/flora-mcp-worker ([77a09cd](https://github.com/florafauna-ai/flora-typescript/commit/77a09cd22e4034468d5209842236941201c05608))
+* **sdk:** manual regenerate from main 30364a4578 ([5732dff](https://github.com/florafauna-ai/flora-typescript/commit/5732dffdb0556fc63421e4e87aebf40efe876af9))
+* **stlc:** force generate+promote to ship webhooks.unwrap() ([eac0b86](https://github.com/florafauna-ai/flora-typescript/commit/eac0b867c4b69afaa0418f1cdac7998a46d2def8))
+* sync openapi spec from flora-frontend main ([7e89d53](https://github.com/florafauna-ai/flora-typescript/commit/7e89d53726eaf1c43dfdd1c76e342f5f10fa7d8a))
+* **tests:** remove redundant File import ([701af7f](https://github.com/florafauna-ai/flora-typescript/commit/701af7f247846ec78f2dec2701c84d15ca67a384))
+* update CF worker with Flora branding and correct config ([68bb924](https://github.com/florafauna-ai/flora-typescript/commit/68bb924e58d301cf762a81a9adec3c47421501f2))
+* update CF worker with Flora branding and correct config ([a8766d1](https://github.com/florafauna-ai/flora-typescript/commit/a8766d1c5c3126ee972067a9d06d674db9007f93))
+* update SDK settings ([b96cd34](https://github.com/florafauna-ai/flora-typescript/commit/b96cd3419478efefd17a76c323ff9e0b91840178))
+* update SDK settings ([8577bc0](https://github.com/florafauna-ai/flora-typescript/commit/8577bc0dbed47b6eb2da9cdbf129e513d8ed797f))
+* update SDK settings ([18ee210](https://github.com/florafauna-ai/flora-typescript/commit/18ee21019865950d7ef1fc85e8ba8e7df5914be8))
+* update SDK settings ([69436a3](https://github.com/florafauna-ai/flora-typescript/commit/69436a38603011d2056890443266aa08a81254ac))
+* update SDK settings ([f50ec3a](https://github.com/florafauna-ai/flora-typescript/commit/f50ec3a51d59f6f915e80dce555d47f836dab416))
+* update SDK settings ([87b3efa](https://github.com/florafauna-ai/flora-typescript/commit/87b3efa46adc58a0af2e769975b8c7a511c7899d))
+* update SDK settings ([1976d8b](https://github.com/florafauna-ai/flora-typescript/commit/1976d8b43f448f61ad24f6c27a4391e43c9bce6f))
+* update SDK settings ([20d4061](https://github.com/florafauna-ai/flora-typescript/commit/20d4061d4d8604545a2f628911a7cbda47669df1))
+* update SDK settings ([10b1cbf](https://github.com/florafauna-ai/flora-typescript/commit/10b1cbfc220933e2f95878e2f21480f7776c47c8))
+
+
+### Documentation
+
+* **changelog:** curate 0.9.0 notes, drop noise + Clerk refs ([00a5b39](https://github.com/florafauna-ai/flora-typescript/commit/00a5b3937bca79e687da8cb9ec4bb6483419051d))
+* redirect README to developer.flora.ai, remove stale MCP install block ([019c271](https://github.com/florafauna-ai/flora-typescript/commit/019c271a05accc54ea721a090d4e7a037a21d1e8))
+* redirect README to developer.flora.ai, remove stale MCP install block ([3125ac1](https://github.com/florafauna-ai/flora-typescript/commit/3125ac15ae3e5b7a2d3d6db4d4b8bad29cbc39a0))
+* rewrite changelog with user-facing release descriptions ([0c95338](https://github.com/florafauna-ai/flora-typescript/commit/0c9533873f0b6482a548e0f4b8813ab41e8decdf))
+* rewrite changelog with user-facing release descriptions ([414fa7d](https://github.com/florafauna-ai/flora-typescript/commit/414fa7d828db169d2ad7b9a9e6fc489442e8b6d6))
+
+
+### Styles
+
+* fix prettier formatting in app.ts ([2e0afa9](https://github.com/florafauna-ai/flora-typescript/commit/2e0afa9e4540f825497a096e09041510346a20ae))
+* prettier-format upload.test.ts ([ceb0d2d](https://github.com/florafauna-ai/flora-typescript/commit/ceb0d2de05d42a1d432cd89196cf9d45d1fce8da))
+* prettier-format upload.test.ts ([781e917](https://github.com/florafauna-ai/flora-typescript/commit/781e917b705423536967991124fe7d0ed6e5eb15))
+
+
+### Refactors
+
+* **assets:** make GCS the sole upload store, remove ImageKit write path ([28c79a9](https://github.com/florafauna-ai/flora-typescript/commit/28c79a9013ff6f6de01468a7278ee8bcba31ca44))
+
 ## 0.21.1 (API 5.10.0)
 
 - Fix: `FloraError.requestId` reads the `Flora-Request-Id` response header,
