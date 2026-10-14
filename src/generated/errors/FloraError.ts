@@ -38,7 +38,7 @@ export class FloraError extends Error {
     }
 
     public get requestId(): string | undefined {
-        return this.rawResponse?.headers?.get("x-request-id") ?? undefined;
+        return this.rawResponse?.headers?.get("flora-request-id") ?? undefined;
     }
 }
 
